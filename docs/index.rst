@@ -17,7 +17,7 @@ Re:VIEW の「カスタマイズ」および「よくある質問と回答」を
 カスタマイズ
 ----------------
 .. toctree::
-  :maxdepth: 2
+  :maxdepth: 1
 
   review-ext-basic
-
+  other-idxtype
