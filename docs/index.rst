@@ -1,20 +1,23 @@
-.. Re:VIEW knowledge documentation master file, created by
-   sphinx-quickstart on Mon Jul 30 22:05:27 2018.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Re:VIEW ナレッジベース
+===========================
 
-Welcome to Re:VIEW knowledge's documentation!
-=============================================
+Re:VIEW の「カスタマイズ」および「よくある質問と回答」を集約します。
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+検索
+------
 
-
-Indices and tables
-==================
-
+* :ref:`search`
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
+
+カスタマイズ
+----------------
+.. toctree::
+  :maxdepth: 2
+
+  review-ext-basic
+
