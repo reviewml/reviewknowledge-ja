@@ -17,12 +17,13 @@ Re:VIEW の「カスタマイズ」および「よくある質問と回答」を
 .. toctree::
   :maxdepth: 1
 
-  review-ext-basic
-  other-idxtype
+  reviewext/review-ext-basic
+  reviewext/other-idxtype
 
 FAQ
 -----------------
 .. toctree::
-  :maxdepth: 2
+  :maxdepth: 3
 
   faq/faq-trivial
+  faq/faq-license
