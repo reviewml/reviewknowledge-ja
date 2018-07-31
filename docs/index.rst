@@ -1,7 +1,9 @@
 Re:VIEW ナレッジベース
 ===========================
 
-Re:VIEW の「カスタマイズ」および「よくある質問と回答」を集約します。
+Re:VIEW のカスタマイズおよび「よくある質問と回答」を集約します。
+
+ご意見・ご要望については、 https://github.com/reviewml/reviewknowledge-ja の issue 投稿、または Twitter @kmuto までお寄せください。
 
 .. toctree::
    :maxdepth: 2
@@ -12,18 +14,34 @@ Re:VIEW の「カスタマイズ」および「よくある質問と回答」を
 
 * :ref:`search`
 
-カスタマイズ
-----------------
+review-ext.rb による拡張
+--------------------------
 .. toctree::
   :maxdepth: 1
 
   reviewext/review-ext-basic
   reviewext/other-idxtype
 
-FAQ
------------------
+LaTeX に関連すること
+--------------------------
+.. toctree::
+  :maxdepth: 1
+
+EPUB に関連すること
+--------------------------
+.. toctree::
+  :maxdepth: 1
+
+InDesign に関連すること
+--------------------------
+.. toctree::
+  :maxdepth: 1
+
+FAQ（よくある質問と回答）
+-------------------------
 .. toctree::
   :maxdepth: 3
 
   faq/faq-trivial
   faq/faq-license
+  faq/faq-usage
