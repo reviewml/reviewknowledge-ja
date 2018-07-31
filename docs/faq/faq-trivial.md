@@ -10,19 +10,25 @@ FAQ（よくある質問と回答）のこのセクションは、直接に Re:V
 
 ## Re:VIEW とは何ですか？
 
-TBD
+Re:VIEW は、主に書籍制作向けのテキストマークアップ言語仕様、およびその変換システムです。指定の記法で記述した原稿ファイルを、HTML、LaTeX、InDesign 用 XML、プレインテキストなどに変換することができます。さらに、HTML を使った EPUB、LaTeX 環境を経由した PDF をそれぞれコマンド1つで作成可能です。
 
-## Re:VIEW の Web サイトはありますか？
+## Re:VIEW の Web サイトはどこですか？
 
-- ランディングページ https://reviewml.org/
-- 開発サイト（GitHub） https://github.com/kmuto/review
-- Re:VIEW knowledge https://review-knowledge-ja.readthedocs.io/
+- ランディングページ [https://reviewml.org/](https://reviewml.org/)
+- 開発サイト（GitHub） [https://github.com/kmuto/review](https://github.com/kmuto/review)
+- Re:VIEW knowledge [https://review-knowledge-ja.readthedocs.io/](https://review-knowledge-ja.readthedocs.io/)
 
 ## Re:VIEW は誰のためのソフトウェアですか？
 
-主に書籍の編集者や著者・訳者をターゲットにしています。
+主なターゲットは、書籍の編集者や著者・訳者です。
 
-より狭義には、Re:VIEW を開発しているチームのメンバーたちが自身のドキュメント制作・管理の作業に使うために開発しているソフトウェアです。
+より狭義には、Re:VIEW を開発しているチームのメンバーたちがそれぞれ自身のドキュメント制作・管理の効率を上げるためのソフトウェアです。
+
+## 実際、誰が使っていますか？
+
+技術書分野を中心に、制作会社、出版社、同人誌制作者など広く使われています。
+
+自己申告をもとに GitHub の wiki にて、[利用実績](https://github.com/kmuto/review/wiki/利用実績) をまとめています。
 
 ## Re:VIEW は誰が作っていますか？
 
@@ -30,11 +36,29 @@ Re:VIEW は、青木峰郎（@mineroaoki）によって設計・開発されま�
 
 ## Re:VIEW のソースコードは公開されていますか？
 
-TBD
+GitHub のパブリックリポジトリ上で開発しており、ソースコードおよび開発プロセスはすべて公開されています。
+
+[https://github.com/kmuto/review](https://github.com/kmuto/review)
+
+個々の改良は issue と PR が中心ですが、年に数回、開発チームや関心の深いユーザーが face-to-face で集まって大きな方針の策定や次期バージョンの機能目標の設定などを行います。
+
+## Re:VIEW のリリーススケジュールはどうなっていますか？
+
+大まかには毎年「2月」「6月」「10月」の月末にリリースすることにしています（開発状況によって前後することがあります）。
+
+具体的には、[ニュースリリース](https://github.com/kmuto/review/blob/master/NEWS.ja.md)に修正内容をまとめ、バージョン番号を更新し、新たな gem パッケージを RubyGems に公開してダウンロードできるようにします。
+
+開発の先端は常に GitHub の master ブランチです。
+
+## Re:VIEW は何の言語で書かれていますか？
+
+Ruby 言語で書かれています。2018年7月時点では、Ruby 2.1 以上を想定しています。
+
+Ruby 実装との完全な互換性はありませんが、JavaScript による実装も存在します。[https://github.com/vvakame/review.js](https://github.com/vvakame/review.js)
 
 ## Re:VIEW の開発に参加したいですがどうしたらよいですか？
 
-TBD
+まずは、[https://github.com/kmuto/review](https://github.com/kmuto/review) への issue 登録や PR から始めてみるとよいでしょう。
 
 ## 「Re:VIEW」という名前は検索しづらいです。変えるべきではないですか？
 
@@ -42,4 +66,21 @@ TBD
 
 名前を変えることには「絶対に固有で国際的にネガティブなイメージもない妥当な名前を選ぶ」「プロジェクト名を変更する」「新しい名前を周知する」などいろいろなエネルギーが必要ですが、変更で得られる利益に見合わないと考えます。
 
-（使い方やライセンスは別FAQへ。TBD）
+## Re:VIEW の「主要なビルダ」とは何ですか？
+
+ビルダは Re:VIEW 形式の原稿ファイルを「HTML」や「LaTeX」などに変換する変換器のことです。現在いくつものビルダが Re:VIEW プログラムに収録されていますが、そのうち、以下のビルダを「主要なビルダ」としています。
+
+- HTML
+- LaTeX
+- TOP（テキスト）
+- IDGXML（InDesign XML）
+
+Re:VIEW ソフトウェアに新たな命令を追加したり既存の挙動を変更したりする場合は、これらの主要なビルダすべてでエラーとならずに動作することが求められます。
+
+また、主要なビルダはテストケースを豊富に用意しているため、コードロジックの変更による意図せぬ挙動の破壊は起きにくくなっています。
+
+## なぜ便利な「○○.gem」を使わないのですか？
+
+Re:VIEW の開発スタンスとして、外部のツールやライブラリへの依存はできるだけ避けています。中核はあくまでも Ruby の基本ライブラリの範囲で実現します。
+
+その代わり、コードハイライトのように「必須ではないが、より便利になる」オプショナルな機能については gem などの外部ライブラリの使用を許容しています。
