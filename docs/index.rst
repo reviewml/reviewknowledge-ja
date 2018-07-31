@@ -11,8 +11,6 @@ Re:VIEW の「カスタマイズ」および「よくある質問と回答」を
 ------
 
 * :ref:`search`
-* :ref:`genindex`
-* :ref:`modindex`
 
 カスタマイズ
 ----------------
@@ -21,3 +19,10 @@ Re:VIEW の「カスタマイズ」および「よくある質問と回答」を
 
   review-ext-basic
   other-idxtype
+
+FAQ
+-----------------
+.. toctree::
+  :maxdepth: 2
+
+  faq/faq-trivial
