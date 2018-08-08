@@ -45,3 +45,7 @@ FAQ（よくある質問と回答）
   faq/faq-trivial
   faq/faq-license
   faq/faq-usage
+  faq/faq-tex
+  faq/faq-epub
+  faq/faq-idgxml
+

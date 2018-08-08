@@ -2,18 +2,62 @@
 
 FAQ（よくある質問と回答）のこのセクションは、Re:VIEW の使用方法のポインタや、使う上での注意点などをまとめています。
 
-★多くなりそうなので分割する？
 ----
 
 ## Re:VIEW を動かすにはどのような環境が必要ですか？
 
+Ruby インタプリタ 2.1 以上がインストールされた OS 環境であれば、基本的に動作します。TeX を使った PDF 生成を行う場合は、別途日本語 TeX 環境のセットアップが必要です。
+
+推奨環境は Linux（特に Debian GNU/Linux 安定版 または Ubuntu 安定版）、および macOS です。
+
+Windows でも、ネイティブ環境でのセットアップ、WSL（Windows Subsystem for Linux）でのセットアップの報告があります。
+
+## Re:VIEW はどうやってインストールしたらよいですか？
+
+Ruby をセットアップ済みであれば、ターミナル（またはコマンドプロンプト）から以下のコマンドでインストールできます。
+
+```
+gem install review
+```
+
+プレビュー版をインストールするには以下のようにします。
+
+```
+gem install review --pre
+```
+
+## Ruby はどうやってインストールしたらよいですか？
+
+手順は OS によって異なります。
+
+Debian GNU/Linux、Ubuntu の場合は以下のようにしてインストールできます。
+
+```
+apt-get install ruby
+```
+
+TeX 環境など完全な環境構築としては、以下のようにするのもよいでしょう。
+
+```
+apt-get install --no-install-recommends texlive-lang-japanese texlive-fonts-recommended texlive-latex-extra lmodern fonts-lmodern tex-gyre fonts-texgyre texlive-pictures ghostscript gsfonts zip ruby-zip ruby-nokogiri mecab ruby-mecab mecab-ipadic-utf8 poppler-data cm-super graphviz gnuplot python-blockdiag python-aafigure
+```
+
+★TODO:macOS、Windows。TeXと合わせて独立ページにしたほうがいい？
+
 ## TeX 環境の構築はどうしたらよいですか？
+
 
 ## Docker のイメージはありますか？
 
 ## 基礎的なガイダンスを記した公式のドキュメントはありますか？
 
 ## Re:VIEW の入門書はありませんか？
+
+## バグを見つけました。どうしたらよいですか？
+
+GitHub の issue ページ
+[https://github.com/kmuto/review/issues](https://github.com/kmuto/review/issues)
+までお寄せください。
 
 ## プロジェクト（作業フォルダ）を作るにはどうしたらよいですか？
 
@@ -47,10 +91,6 @@ FAQ（よくある質問と回答）のこのセクションは、Re:VIEW の使
 
 ## 表のセルを連結するにはどうしたらよいですか？
 
-## InDesign ファイルに変換する maker コマンドがないようです。どうやって変換するのですか？
-
-## InDesignの IDML 形式に変換することはできますか？
-
 ## 別フォルダにあるソースコードファイルの一部を原稿内に取り込みたいと思います。動的に取り込む方法はありますか？
 
 ## catalog.yml での最小単位は章単位ですが、節や項に分けることはできませんか？
@@ -69,13 +109,17 @@ FAQ（よくある質問と回答）のこのセクションは、Re:VIEW の使
 
 ## UML やグラフの生成ツールから動的に生成して配置することはできますか？
 
-## LaTeX の紙面レイアウトに満足がいきません。どうやったら置き換えられますか？
-
-## LuaLaTeX を使うにはどうしたらよいですか？
-
 ## インライン命令内で入れ子ができません！
 
 ## インライン命令内で「}」を文字として表現したいときにはどうしたらよいですか？
 
 ## @\<m\>命令を使って TeX 式を記述したところ、「}」がたくさん登場して都度「\}」とするのが大変です。何か対策はありますか？
 
+## Re:VIEW は夏時間に対応していますか？
+
+Ruby ライブラリおよび OS の対応範囲での対応となります。実際のところ、Re:VIEW の実装で「現在時刻」に基づく処理が発生するのは、以下の2箇所のみです。
+
+- review-init 実行時に config.yml ファイルに書き出す、date: および history: のパラメータの日付の生成
+- review-epubmaker 実行時に OPF メタファイルに書き出される modified タイムスタンプの生成（バージョン 2.5 まではローカルタイム（ただし不適切な時差表記）、バージョン 3 以降は UTC）
+
+前者は日付だけなので、OS の時刻が正しく設定されていれば夏時間は影響しません。後者は「Re:VIEW バージョン 2.5 までを使用し」「夏時間からの時刻の巻き戻しの前後で2回の EPUB ビルドをして」「その2つの EPUB をリーダー上で更新する」ときに「リーダーが modified タイムスタンプを見て更新の有無を判断する」場合に、更新がうまくいかないかもしれません。要するに、まず発生することはない、ということです。
