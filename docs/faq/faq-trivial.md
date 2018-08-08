@@ -66,7 +66,7 @@ GitHub のパブリックリポジトリ上で開発しており、ソースコ�
 
 ## バージョンごとの機能差異はどこかにまとまっていますか？
 
-- [NEWS.ja.md](https://github.com/kmuto/review/blob/master/NEWS.ja.md)
+- [ニュースリリース](https://github.com/kmuto/review/blob/master/NEWS.ja.md)
 
 ## Re:VIEW は何の言語で書かれていますか？
 

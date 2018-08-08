@@ -46,12 +46,29 @@ apt-get install --no-install-recommends texlive-lang-japanese texlive-fonts-reco
 
 ## TeX 環境の構築はどうしたらよいですか？
 
+[FAQ - Re:VIEW の使い方について（TeX PDF）/TeX 環境の構築はどうしたらよいですか？](faq-tex.html)
 
 ## Docker のイメージはありますか？
 
+以下でセットアップできます。
+
+```
+docker pull vvakame/review
+```
+
+利用方法などは以下を参照してください。
+
+- [https://github.com/vvakame/docker-review](https://github.com/vvakame/docker-review)
+
 ## 基礎的なガイダンスを記した公式のドキュメントはありますか？
 
+- [Re:VIEW Quick Start Guide](https://github.com/kmuto/review/blob/master/doc/quickstart.ja.md)
+- [Re:VIEW Format Guide](https://github.com/kmuto/review/blob/master/doc/format.ja.md)
+- [その他のドキュメント](https://github.com/kmuto/review/tree/master/doc)
+
 ## Re:VIEW の入門書はありませんか？
+
+- [技術書をかこう! 〜はじめてのRe:VIEW〜 改訂版](https://techbooster.booth.pm/items/586727)（PDF・印刷書籍）
 
 ## バグを見つけました。どうしたらよいですか？
 
@@ -64,6 +81,12 @@ GitHub の issue ページ
 ## プロジェクトにどのようにコンテンツを置いたらよいですか？
 
 ## re ファイルを書くのに専用のエディタは必要ですか？
+
+re ファイルは命令を含めてすべてテキストで表現されるので、UTF-8 文字エンコーディングをサポートし、プレインテキスト形式での読み込み・書き出しが可能なテキストエディタであれば OS・ソフトウェアを問わず何でも利用できます。
+
+ただ、Re:VIEW 固有の命令を記入したり色分け表示したりといった支援モードが提供されているエディタを使ったほうが、執筆および編集には便利でしょう。
+
+## re ファイルでの執筆・編集を支援するエディタにはどのようなものがありますか？
 
 ## 図版はどこに置くのですか？ また、どのような形式に対応していますか？
 
@@ -103,15 +126,27 @@ GitHub の issue ページ
 
 ## Re:VIEW の標準の命令処理を変えたり、新たな命令を追加したりすることはできますか？
 
+`review-ext.rb` というファイルを使い、Re:VIEW のロジックを上書きできます。
+
+- [Re:VIEW のモンキーパッチによる拡張の基本](../reviewext/review-ext-basic.html)
+
 ## 索引を入れるにはどうしたらよいですか？
 
 ## プロジェクト直下がたくさんの re ファイルだらけでごちゃごちゃしてしまいました。サブフォルダにまとめて置くことはできますか？
+
+Re:VIEW 3.0 から、config.yml の `contentdir` パラメータを使って re ファイルを保持するサブフォルダを指定することができます。指定のサブフォルダに格納できるのは re ファイルのみで、画像はプロジェクトフォルダ直下にある images フォルダに入れることに変わりはありません。
 
 ## UML やグラフの生成ツールから動的に生成して配置することはできますか？
 
 ## インライン命令内で入れ子ができません！
 
+Re:VIEW の言語解析ロジック上、および記法の複雑化を避けるため、インライン命令は入れ子にすることはできません。
+
+複合した結果になる新たな命令を `review-ext.rb` で定義する必要があるかもしれません。
+
 ## インライン命令内で「}」を文字として表現したいときにはどうしたらよいですか？
+
+## インライン命令内の最後で「\」を文字として表現したいときにはどうしたらよいですか？
 
 ## @\<m\>命令を使って TeX 式を記述したところ、「}」がたくさん登場して都度「\}」とするのが大変です。何か対策はありますか？
 
