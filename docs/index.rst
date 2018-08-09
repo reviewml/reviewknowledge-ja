@@ -27,6 +27,8 @@ LaTeX に関連すること
 .. toctree::
   :maxdepth: 1
 
+  latex/control-flow
+
 EPUB に関連すること
 --------------------------
 .. toctree::
