@@ -26,6 +26,14 @@ gem install review
 gem install review --pre
 ```
 
+OS の所定の手続きに従って、gem の bin フォルダにパスを通してください。
+
+Gemfile を使っている場合は、以下の行を Gemfile に追加して `bundle` コマンドを実行します。
+
+```
+gem 'review'
+```
+
 ## Ruby はどうやってインストールしたらよいですか？
 
 手順は OS によって異なります。
@@ -74,9 +82,15 @@ docker pull vvakame/review
 
 GitHub の issue ページ
 [https://github.com/kmuto/review/issues](https://github.com/kmuto/review/issues)
-までお寄せください。
+までお寄せください（日本語または英語）。
 
 ## プロジェクト（作業フォルダ）を作るにはどうしたらよいですか？
+
+`review-init` コマンドを使います。
+
+```
+review-init プロジェクト名
+```
 
 ## プロジェクトにどのようにコンテンツを置いたらよいですか？
 
@@ -100,15 +114,98 @@ re ファイルは命令を含めてすべてテキストで表現されるの�
 
 ## EPUB に変換するにはどうしたらよいですか？
 
+以下のようにして変換します。
+
+```
+rake epub
+```
+
+以下でも可能です（`rake epub` は中でこのコマンドを実行しています）。
+
+```
+review-epubmaker config.yml
+```
+
 ## LaTeX を使った PDF に変換するにはどうしたらよいですか？
+
+以下のようにして変換します。
+
+```
+rake pdf
+```
+
+以下でも可能です（`rake pdf` は中でこのコマンドを実行しています）。
+
+```
+review-pdfmaker config.yml
+```
 
 ## Web ページに変換するにはどうしたらよいですか？
 
+以下のようにして変換します。
+
+```
+rake web
+```
+
+以下でも可能です（`rake web` は中でこのコマンドを実行しています）。
+
+```
+review-webmaker config.yml
+```
+
 ## プレインテキストに変換するにはどうしたらよいですか？
+
+以下のようにして変換します。
+
+```
+rake text
+```
+
+以下でも可能です（`rake text` は中でこのコマンドを実行しています）。
+
+```
+review-textmaker config.yml
+```
+
+校正ツールにかけるなどの理由で一切装飾のないプレインテキストが必要なときには、以下のようにします。
+
+```
+rake plaintext
+```
+
+または
+
+```
+review-textmaker -n config.yml
+```
 
 ## Re:VIEW の命令や記法に馴染めそうもありません。Markdown で記述できませんか？
 
-## どうしても LaTeX を使いたくないのですが、ほかの PDF 作成方法はありませんか？
+[md2review](https://github.com/takahashim/md2review)があります。gem としても配布されているので、以下のようにインストールできます。
+
+```
+gem install md2review
+```
+
+変換は以下のようにします。
+
+```
+md2review mdファイル > reファイル
+```
+
+命令体系が異なるため、変換結果の re ファイルの手直しは必要です。
+
+## pandoc で Re:VIEW の書式はサポートされますか？
+
+## LaTeX を使いたくないのですが、ほかの PDF 作成方法はありませんか？
+
+たとえば InDesign を使う方法と、CSS 組版を使う方法があります。
+
+- InDesign：IDGXML 形式に変換し、レイアウトデザイン向けに調整した上で、Adobe InDesign で半自動 DTP を行う。
+- CSS組版：EPUB に変換し、EPUB をそのまま PDF 変換する（[VersaType Converter](https://trim-marks.com/ja/)、[EPUB to PDF変換ツール](https://www.antenna.co.jp/epub/epubtopdf.html) など）か、EPUB の HTML を結合し、Web ブラウザ上で整形したものを PDF として保存する（[Vivliostyle.js](https://vivliostyle.org/) など）
+
+これらのいずれも困難であったり、あるいは手作業工程の DTP オペレータに引き渡すということであれば、Re:VIEW 原稿をプレインテキストに変換（`rake text`）して手作業でページを制作していくほうが妥当かもしれません。
 
 ## 表のセル区切りはなぜ空白文字ではなく「タブ1つ」なのですか？
 
