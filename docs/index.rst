@@ -1,7 +1,7 @@
 Re:VIEW ナレッジベース
 ===========================
 
-Re:VIEW のカスタマイズおよび「よくある質問と回答」を集約します。
+Re:VIEW 開発者の立場から、Re:VIEW のカスタマイズおよび「よくある質問と回答」をまとめています。
 
 ご意見・ご要望については、 https://github.com/reviewml/reviewknowledge-ja の issue 投稿、または Twitter @kmuto までお寄せください。
 
