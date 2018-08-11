@@ -28,6 +28,7 @@ LaTeX に関連すること
   :maxdepth: 1
 
   latex/control-flow
+  latex/modify-abit
 
 EPUB に関連すること
 --------------------------
@@ -42,7 +43,7 @@ InDesign に関連すること
 FAQ（よくある質問と回答）
 -------------------------
 .. toctree::
-  :maxdepth: 3
+  :maxdepth: 1
 
   faq/faq-trivial
   faq/faq-license
