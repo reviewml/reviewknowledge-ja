@@ -29,6 +29,7 @@ LaTeX に関連すること
 
   latex/control-flow
   latex/modify-abit
+  latex/tex-hook
 
 EPUB に関連すること
 --------------------------
