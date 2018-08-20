@@ -30,6 +30,7 @@ LaTeX に関連すること
   latex/control-flow
   latex/modify-abit
   latex/tex-hook
+  latex/tex-tombow
 
 EPUB に関連すること
 --------------------------
