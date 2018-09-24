@@ -31,6 +31,7 @@ LaTeX に関連すること
   latex/modify-abit
   latex/tex-hook
   latex/tex-tombow
+  latex/prepost-num
 
 EPUB に関連すること
 --------------------------
