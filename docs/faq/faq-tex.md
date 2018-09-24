@@ -56,3 +56,6 @@ PDF/X-1a、PDF/X-4 は印刷用 PDF として準拠の求められることの�
 
 - [見栄えが悪い箇所を「少しだけ」調整する](../latex/modify-abit.html)
 
+## PREDEF、POSTDEF で割り当てたファイルで図表を使うと、おかしな番号の振り方になります。
+
+- [前付（PREDEF）、後付（POSTDEF）の図表採番を本章同様にリセットする](../latex/prepost-num.html)
