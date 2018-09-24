@@ -59,3 +59,31 @@ PDF/X-1a、PDF/X-4 は印刷用 PDF として準拠の求められることの�
 ## PREDEF、POSTDEF で割り当てたファイルで図表を使うと、おかしな番号の振り方になります。
 
 - [前付（PREDEF）、後付（POSTDEF）の図表採番を本章同様にリセットする](../latex/prepost-num.html)
+
+## jsbook ベースのテンプレートで、ページを頭からの通し番号にするにはどうしたらよいですか？
+
+jsbook.cls では以下の2箇所で暗黙にページ番号を変えているため、マクロを上書きする必要があります。
+
+- titlepage（大扉などで利用）でページ番号を0にリセット
+- 前付（frontmatter）でローマ数字、本文（mainmatter）でアラビア数字化。それぞれ `pagenumbering` マクロを使用しており、このマクロで番号は0にリセットされる
+
+単純に頭からの通し番号にするには、`sty/review-custom.sty`（Re:VIEW 3 系）または `reviewmacro.sty`（Re:VIEW 2 以前）に次のように書いて jsbook.cls のマクロを上書きします。
+
+```
+\renewenvironment{titlepage}{%
+    \cleardoublepage
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse\newpage
+    \fi
+    \thispagestyle{empty}%
+%    \setcounter{page}\@ne% リセットを無効化
+  }%
+  {\if@restonecol\twocolumn \else \newpage \fi
+    \if@twoside\else
+%      \setcounter{page}\@ne% リセットを無効化
+    \fi}
+\renewcommand\pagenumbering[1]{% デフォルトのアラビア文字のみとして何もしない
+}
+```
