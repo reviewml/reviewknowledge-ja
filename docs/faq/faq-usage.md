@@ -47,7 +47,7 @@ apt-get install ruby
 TeX 環境など完全な環境構築としては、以下のようにするのもよいでしょう。
 
 ```
-apt-get install --no-install-recommends texlive-lang-japanese texlive-fonts-recommended texlive-latex-extra lmodern fonts-lmodern tex-gyre fonts-texgyre texlive-pictures ghostscript gsfonts zip ruby-zip ruby-nokogiri mecab ruby-mecab mecab-ipadic-utf8 poppler-data cm-super graphviz gnuplot python-blockdiag python-aafigure
+apt-get install --no-install-recommends texlive-lang-japanese texlive-fonts-recommended texlive-latex-extra texlive-generic-extra lmodern fonts-lmodern tex-gyre fonts-texgyre texlive-pictures ghostscript gsfonts zip ruby-zip ruby-nokogiri mecab ruby-mecab mecab-ipadic-utf8 poppler-data cm-super graphviz gnuplot python-blockdiag python-aafigure
 ```
 
 ★TODO:macOS、Windows。TeXと合わせて独立ページにしたほうがいい？
@@ -92,7 +92,35 @@ GitHub の issue ページ
 review-init プロジェクト名
 ```
 
+デフォルトでは doc サブフォルダが作成され、Re:VIEW のドキュメントがコピーされますが、不要なときには `--without-doc` オプションを付けます。
+
+```
+review-init --without-doc プロジェクト名
+```
+
 ## プロジェクトにどのようにコンテンツを置いたらよいですか？
+
+`review-init` コマンド実行後、プロジェクトには次のようなフォルダおよびファイルが置かれます。
+
+- プロジェクト名と同名の「.re」拡張子付きファイル：空の初期ファイル。ここに内容を入れていく（catalog.yml を変更すれば、このファイルでなくてもよい）
+- config.yml：書名など各種メタ情報の設定ファイル
+- catalog.yml：目次構成ファイル。re ファイルを列挙して順序を決定する
+- doc：ドキュメント
+- Rakefile：`rake` コマンド用のルールファイル
+- libs：Rakefile ルールの実体など
+- images：画像を置くフォルダ
+- layouts：LaTeX や HTML のテンプレートレイアウト
+- style.css：EPUB/HTML のスタイルシート
+- sty：LaTeX のスタイルファイル
+
+基本的なコンテンツの置き方は次のようになります。
+
+- 章ごとの re ファイルはプロジェクトフォルダ直下に置く（Re:VIEW 3 からは contentdir でも指定可）
+- 画像は images フォルダに置く。章あるいはビルダによってサブフォルダを作成することも可
+- CSS ファイルはプロジェクトフォルダ直下に置く
+
+- [Re:VIEWクイックスタートガイド](https://github.com/kmuto/review/blob/master/doc/quickstart.ja.md)
+- [プロジェクト直下がたくさんの re ファイルだらけでごちゃごちゃしてしまいました。サブフォルダにまとめて置くことはできますか？](#d127d7603580e36bf6a20ee2b0f3a264)
 
 ## re ファイルを書くのに専用のエディタは必要ですか？
 
@@ -102,15 +130,83 @@ re ファイルは命令を含めてすべてテキストで表現されるの�
 
 ## re ファイルでの執筆・編集を支援するエディタにはどのようなものがありますか？
 
+- Emacs：[review-el](https://github.com/kmuto/review-el)
+- 秀丸：[review-hidemaru](https://github.com/kmuto/review-hidemaru)
+- CotEditor：[Re:VIEW Color macro for CotEditor](https://github.com/kmuto/review-coteditor)
+- mi：[miエディタ用のReVIEWモード作ってみた](http://seuzo.net/entry/2012/02/21/222036)
+- Atom：[Re:VIEW support for Atom](https://atom.io/packages/language-review)
+- Visual Studio Code：[vscode-language-review](https://github.com/atsushieno/vscode-language-review/blob/master/README.md)、[VSCode: yet another Re:VIEW languages extension](https://github.com/erukiti/ya-language-review)
+- Vim：[syntax and helpers for ReVIEW text format](https://github.com/moro/vim-review)、[Vim syntax for Re:VIEW](https://github.com/tokorom/vim-review)
+
 ## 図版はどこに置くのですか？ また、どのような形式に対応していますか？
+
+図版の画像ファイルは、images フォルダに配置します。さらにサブフォルダで分けることもできます。このときの探索順序は次のようになっています。
+
+```
+1. images/<builder>/<chapid>/<id>.<ext>
+2. images/<builder>/<chapid>-<id>.<ext>
+3. images/<builder>/<id>.<ext>
+4. images/<chapid>/<id>.<ext>
+5. images/<chapid>-<id>.<ext>
+6. images/<id>.<ext>
+```
+
+どの画像形式に対応するかは、使用するビルダに依存します。
+
+- HTMLBuilder (EPUBMaker、WEBMaker)、MARKDOWNBuilder: .png、.jpg、.jpeg、.gif、.svg
+- LATEXBuilder (PDFMaker): .ai、.eps、.pdf、.tif、.tiff、.png、.bmp、.jpg、.jpeg、.gif
+- それ以外のビルダ: .ai、.psd、.eps、.pdf、.tif、.tiff、.png、.bmp、.jpg、.jpeg、.gif、.svg
+
+Re:VIEW 3 以降では、大文字の混ざった拡張子にも対応します。Re:VIEW 2 では「PNG」など大文字のファイル拡張子の場合はヒットしないので注意してください。
+
+- [Re:VIEW フォーマットガイド](https://github.com/kmuto/review/blob/master/doc/format.ja.md) の「図」
 
 ## config.yml ファイルはどのような役目を持っていますか？
 
+config.yml は、コンテンツの内容を除く、ほとんどの設定および Re:VIEW の制御を司るメタ情報ファイルです。
+
+このプロジェクトが準拠するRe:VIEW バージョン、書名、著者名、刊行日付、見出しへの採番レベル、目次や奥付の有無、デバッグ状態遷移の有無、カバー画像、スタイルシート、LaTeX の使用スタイルなど、多くの設定があります。詳細については、展開された config.yml ファイルのコメントの説明を参照してください。代表的な設定のみを抽出した、config.yml.sample-simple もあります。
+
+- [config.yml.sample](https://github.com/kmuto/review/blob/master/doc/config.yml.sample)
+- [config.yml.sample-simple](https://github.com/kmuto/review/blob/master/doc/config.yml.sample-simple)
+
 ## catalog.yml ファイルはどのような役目を持っていますか？
 
-## PDF（review-pdfmaker）と EPUB（review-epubmaker）で若干異なる設定にしたいと思います。ほぼ重複する内容の yml ファイルを作らずに済みませんか？
+## PDF（review-pdfmaker）と EPUB（review-epubmaker）、あるいは印刷版 PDF と 電子版 PDF のように出力方法によって若干異なる設定にしたいと思います。重複する内容の yml ファイルを作らずに済みませんか？
+
+`inherit` を使うと、ベースの yml ファイルを読み込みつつ、設定の追加や変更ができます。
+
+たとえば config.yml で次のようにしていたとします。
+
+```yaml
+ …
+date: 2018-7-21
+ …
+```
+
+ここから電子 PDF 版用だけ別の日付にしたいとして、config-epdf.yml などの適当なファイル名で、`inherit` を使って config.yml を取り込み、設定値を上書きします。
+
+```yaml
+inherit: ["config.yml"]
+date: 2018-9-27
+```
+
+この config-epdf.yml を使うには、`review-pdfmaker config-epdf.yml` のように指定して実行するか、`REVIEW_CONFIG_FILE` 環境変数に `config-epdf.yml` を設定した上で `rake` コマンドを実行します。
+
+ある設定を消したいときには、値として `null` を指定します。
 
 ## 「図」「リスト」などの一部の固定文字列は locale.yml ファイルで変えられるようですが、どのように書いたらよいですか？
+
+日本語用にはまず `locale: ja` という行を入れた後、Re:VIEW の `lib/erview/i18n.yml` の定義を元に置き換えるものを定義します。たとえば図は `image`、リストは `list` が文字列定義名です。
+
+```
+locale: ja
+image: 図
+list: リスト
+```
+
+- [Re:VIEW フォーマットガイド](https://github.com/kmuto/review/blob/master/doc/format.ja.md) の「国際化（i18n）」
+- [i18n.yml](https://github.com/kmuto/review/blob/master/lib/review/i18n.yml)
 
 ## EPUB に変換するにはどうしたらよいですか？
 
@@ -198,16 +294,28 @@ md2review mdファイル > reファイル
 
 ## pandoc で Re:VIEW の書式はサポートされますか？
 
+現時点では実装の報告はありません。
+
 ## LaTeX を使いたくないのですが、ほかの PDF 作成方法はありませんか？
 
 たとえば InDesign を使う方法と、CSS 組版を使う方法があります。
 
 - InDesign：IDGXML 形式に変換し、レイアウトデザイン向けに調整した上で、Adobe InDesign で半自動 DTP を行う。
-- CSS組版：EPUB に変換し、EPUB をそのまま PDF 変換する（[VersaType Converter](https://trim-marks.com/ja/)、[EPUB to PDF変換ツール](https://www.antenna.co.jp/epub/epubtopdf.html) など）か、EPUB の HTML を結合し、Web ブラウザ上で整形したものを PDF として保存する（[Vivliostyle.js](https://vivliostyle.org/) など）
+- CSS組版：EPUB に変換し、EPUB をそのまま PDF 変換する（[VersaType Converter](https://trim-marks.com/ja/)、[EPUB to PDF変換ツール](https://www.antenna.co.jp/epub/epubtopdf.html) など）か、EPUB の HTML を結合し（Re:VIEW 3 から review-epub2html というコマンドを用意しています）、Web ブラウザ上で整形したものを PDF として保存する（[Vivliostyle.js](https://vivliostyle.org/) など）
 
 これらのいずれも困難であったり、あるいは手作業工程の DTP オペレータに引き渡すということであれば、Re:VIEW 原稿をプレインテキストに変換（`rake text`）して手作業でページを制作していくほうが妥当かもしれません。
 
-## 表のセル区切りはなぜ空白文字ではなく「タブ1つ」なのですか？
+## 表のセル区切りは、なぜ空白文字ではなく「タブ1つ」なのですか？
+
+コード断片など、セル内で空白を文字として扱いたい場合があるからです。
+
+なお、この区切り方は `lib/review/builder.rb` の次のメソッドで実装しているので、`review-ext.rb` などを使ってビルダの挙動を上書き（たとえば `/\s{2,}/` など）すれば、空白文字による区切りも可能です。
+
+```
+    def table(lines, id = nil, caption = nil)
+        …
+        rows.push(line.strip.split(/\t+/).map { |s| s.sub(/\A\./, '') })
+```
 
 ## 表のセルを連結するにはどうしたらよいですか？
 
@@ -215,11 +323,64 @@ md2review mdファイル > reファイル
 
 ## catalog.yml での最小単位は章単位ですが、節や項に分けることはできませんか？
 
+現時点の Re:VIEW の実装では、章よりも小さく分割した単位でファイルを扱うことはできません。
+
+ただし、`#@mapfile(ファイル名)` 命令と `review-preproc` コマンドを使って、分割ファイルを結合することはできます。
+
+たとえば章ファイルでは次のようにしておき、
+
+```
+= 章見出し
+#@mapfile(section1.re)
+#@end
+
+#@mapfile(section2.re)
+#@end
+```
+
+節の内容となる section1.re と section2.re ファイルを別に用意します。
+
+section1.re の内容
+```
+== 節1
+ABC
+```
+
+section2.re の内容
+```
+== 節2
+DEF
+```
+
+この状態で `rake preproc` あるいは `review-preproc --replace 章ファイル` を実行すると、章ファイルが次のように更新されます。
+
+```
+= 章見出し
+#@mapfile(section1.re)
+== 節1
+ABC
+#@end
+
+#@mapfile(section2.re)
+== 節2
+DEF
+#@end
+```
+
+実行するたびに `#@mapfile` 〜 `#@end` の中身が書き換えられます。
+
+- [review-preproc ユーザガイド](https://github.com/kmuto/review/blob/master/doc/preproc.ja.md)
+
 ## 見出しの一覧を出力することはできますか？
 
 ## Re:VIEW に対応した日本語校正ツールはありますか？
 
+- [RedPen](http://redpen.cc/)
+- [textlint](https://textlint.github.io/) および [textlint-plugin-review](https://www.npmjs.com/package/textlint-plugin-review)
+
 ## 変換途中で独自の処理を挟むことはできますか？
+
+- [フックで LaTeX 処理に割り込む](../latex/tex-hook.html)
 
 ## Re:VIEW の標準の命令処理を変えたり、新たな命令を追加したりすることはできますか？
 
@@ -229,11 +390,19 @@ md2review mdファイル > reファイル
 
 ## 索引を入れるにはどうしたらよいですか？
 
+`@<idx>` や `@<hidx>` インライン命令を使って索引を埋め込むことができます。ただし、埋め込んだ索引の抽出・整列・表示は、現時点では、LaTeX のみでの対応です。
+
+- [索引の使い方](https://github.com/kmuto/review/blob/master/doc/makeindex.ja.md)
+
 ## プロジェクト直下がたくさんの re ファイルだらけでごちゃごちゃしてしまいました。サブフォルダにまとめて置くことはできますか？
 
 Re:VIEW 3.0 から、config.yml の `contentdir` パラメータを使って re ファイルを保持するサブフォルダを指定することができます。指定のサブフォルダに格納できるのは re ファイルのみで、画像はプロジェクトフォルダ直下にある images フォルダに入れることに変わりはありません。
 
 ## UML やグラフの生成ツールから動的に生成して配置することはできますか？
+
+`//graph` ブロック命令を使い、Graphviz、Gnuplot、Blockdiag、aafigure、PlantUML のソースを記述して画像を生成できます。
+
+- [Re:VIEW フォーマットガイド](https://github.com/kmuto/review/blob/master/doc/format.ja.md) の「グラフ表現ツールを使った図」
 
 ## インライン命令内で入れ子ができません！
 
@@ -243,9 +412,21 @@ Re:VIEW の言語解析ロジック上、および記法の複雑化を避ける
 
 ## インライン命令内で「}」を文字として表現したいときにはどうしたらよいですか？
 
+`\}` と記述します。なお、`{` のほうはインライン命令内でそのまま利用できます。
+
+よって、たとえば `{}` という内容を入れたいときには、`@<tt>{{\}}` のようになります。
+
 ## インライン命令内の最後で「\」を文字として表現したいときにはどうしたらよいですか？
+インライン命令内の `\` は通常そのまま文字として扱われますが、唯一、命令の末尾に入るときだけ `\}` という表現と区別が付けられなくなります。
+
+- インライン命令内の文字列が単一の `\` だけであれば、`\\` と表現し、`@<tt>{\\}` と記述できます。
+- 複数の文字からなる文字列（たとえば `C:\Users\`）の場合は `\\` ではうまくいきません。フェンス記法を使い、`@<tt>|C:\Users\|` または `@<tt>$C:\Users\$` とします。
 
 ## @\<m\>命令を使って TeX 式を記述したところ、「}」がたくさん登場して都度「\}」とするのが大変です。何か対策はありますか？
+
+`||` または `$$` で囲む、フェンス記法があります。フェンス記法内では `\` や `}` のエスケープは不要です（逆に、`||` の場合は `|`、`$$` の場合は `$` の文字は文字列内で使用できなくなります）。
+
+`@<m>|\frac{1}{2}|` または `@<m>$\frac{1}{2}$` のようになります。
 
 ## Re:VIEW は夏時間に対応していますか？
 

@@ -46,7 +46,7 @@ InDesign に関連すること
 FAQ（よくある質問と回答）
 -------------------------
 .. toctree::
-  :maxdepth: 1
+  :maxdepth: 2
 
   faq/faq-trivial
   faq/faq-license
