@@ -9,11 +9,6 @@ Re:VIEW 開発者の立場から、Re:VIEW のカスタマイズおよび「よ�
    :maxdepth: 2
    :caption: Contents:
 
-検索
-------
-
-* :ref:`search`
-
 review-ext.rb による拡張
 --------------------------
 .. toctree::
@@ -22,8 +17,8 @@ review-ext.rb による拡張
   reviewext/review-ext-basic
   reviewext/other-idxtype
 
-LaTeX に関連すること
---------------------------
+LaTeX に関連する長めの Tips
+-----------------------------
 .. toctree::
   :maxdepth: 1
 
@@ -33,15 +28,22 @@ LaTeX に関連すること
   latex/tex-tombow
   latex/prepost-num
 
-EPUB に関連すること
---------------------------
+EPUB に関連する長めの Tips
+------------------------------
 .. toctree::
   :maxdepth: 1
 
-InDesign に関連すること
---------------------------
+InDesign に関連する長めの Tips
+------------------------------
 .. toctree::
   :maxdepth: 1
+
+印刷 に関連する長めの Tips
+------------------------------
+.. toctree::
+  :maxdepth: 1
+
+  printing/submit
 
 FAQ（よくある質問と回答）
 -------------------------
@@ -54,4 +56,3 @@ FAQ（よくある質問と回答）
   faq/faq-tex
   faq/faq-epub
   faq/faq-idgxml
-
