@@ -170,3 +170,28 @@ jsbook.cls では以下の2箇所で暗黙にページ番号を変えている�
 \renewcommand\pagenumbering[1]{% デフォルトのアラビア文字のみとして何もしない
 }
 ```
+
+## 目次を付けるにはどうしたらよいですか？
+
+config.yml の toc パラメータを true にします。
+
+```yaml
+toc: true
+```
+
+または
+
+```yaml
+pdfmaker:
+  toc: true
+```
+
+## 目次などでリンクに色や囲みが付きます。装飾なしの黒にできませんか？
+
+Re:VIEW 2 系のデフォルトのスタイルなどでは、この状況になります（Re:VIEW 3 以降ではデフォルトでリンクに色や囲みを使わないようにしています）。
+
+`sty/reviewmacro.sty` に以下のように追加することで、リンクを表す表現を取り下げます。
+
+```
+\hypersetup{hidelinks}
+```
