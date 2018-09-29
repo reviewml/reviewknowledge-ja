@@ -252,7 +252,7 @@ Acrobat Pro のプリフライト機能を利用して RGB→CMYK 変換、あ�
 
 - 「カラーをJapan Color Coated 2001に変換（特色を維持）」「カラーを白黒に変換」
 
-なお、Acrobat Pro の色変換には何らかの不具合が存在し、特定の PDF の変換において「点線が実線になる」「線が太くなる」といった現象が発生します。筆者の経験では、[callas pdfToolbox](https://www.callassoftware.com/en/products/pdftoolbox](https://www.callassoftware.com/en/products/pdftoolbox) での色変換については、現時点で問題は生じていません。
+なお、Acrobat Pro の色変換には何らかの不具合が存在し、特定の PDF の変換において「点線が実線になる」「線が太くなる」といった現象が発生します。筆者の経験では、[callas pdfToolbox](https://www.callassoftware.com/en/products/pdftoolbox) での色変換については、現時点で問題は生じていません。
 
 Ghostscript でも RGB→CMYK 変換はできますが、壊れた箇所などがないか、十分に注意が必要です。以下で使用しているカラープロファイルの JapanColor2001Coated.icc は、[Japan Color](http://japancolor.jp/icc.html) で配布されています。
 
@@ -294,7 +294,7 @@ PDF には、印刷用に適するとされる標準仕様があります。国�
 
 入稿仕様で、これらの標準に沿った PDF を入稿することを求められることがあります。PDF/X-4 が RGB をサポートしているからといって、必ずしも印刷所が RGB を受け付けるわけではないことには注意してください。PDF/X-4 を指定されている、あるいは PDF/X-4 でなければ表現できない、というのでなければ、PDF/X-1a でもなんら問題ありません。
 
-現時点で、LaTeX やブラウザから出力した PDF を PDF/X-1a、PDF/X-4 準拠とするには、有償の [Acrobat Pro([https://acrobat.adobe.com/jp/ja/acrobat.html) か [callas pdfToolbox](https://www.callassoftware.com/en/products/pdftoolbox) を使う必要があります。
+現時点で、LaTeX やブラウザから出力した PDF を PDF/X-1a、PDF/X-4 準拠とするには、有償の [Acrobat Pro]([https://acrobat.adobe.com/jp/ja/acrobat.html) か [callas pdfToolbox](https://www.callassoftware.com/en/products/pdftoolbox) を使う必要があります。
 
 実際には PDF をそのまま入稿しても印刷所で問題なく印刷できるでしょうが、標準準拠は一定のデータ水準に達していることを保証し、印刷事故を未然に防ぐ重要な役割を担っています。
 
