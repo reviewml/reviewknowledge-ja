@@ -195,3 +195,52 @@ Re:VIEW 2 系のデフォルトのスタイルなどでは、この状況にな�
 ```
 \hypersetup{hidelinks}
 ```
+
+## 表紙を全面に貼り付けるにはどうしたらよいですか？
+
+**★Re:VIEW 3 以降ではデフォルトで全面貼り付け命令を追加予定です。ここに記した実装・命令名や手順も変更になる可能性があります。**
+
+Re:VIEW 2 系では全面に貼り付ける命令をまだ用意していないため、命令の追加および表紙部分の LaTeX ソースを置き換えることで対処します。
+
+表紙の画像ファイルを用意しておきます（実寸・PDF 形式を推奨します）。ここでは `images/cover.pdf` に入れておくとします。
+
+全面貼り付けを提供する LaTeX マクロを `sty/reviewmacro.sty` に追加します。
+
+```
+\newcommand*\includecover[2][]{%
+ \clearpage
+ \thispagestyle{empty}%
+\vbox to \textheight{%
+  \vskip-\dimexpr\headheight + 1in\relax%
+  \vbox to \paperheight{\vss%
+    \hbox to \textwidth{%
+      \hskip-\dimexpr\oddsidemargin + 1in\relax%
+      \hbox to \paperwidth{\hss
+        \includegraphics[#1]{#2}%
+        \hss}%
+    \hss}%
+  \vss}%
+\vss}%
+}
+```
+
+表紙部分を差し替える LaTeX 断片ファイルを作成します。ここでは `cover.tex` という名前でプロジェクトフォルダに置いておくことにします。
+
+```
+\includecover[width=\paperwidth,height=\paperheight]{images/cover.pdf}
+```
+
+この `cover.tex` を使うよう、`config.yml` を設定します。
+
+```
+pdfmaker:
+  cover: cover.tex
+```
+
+これで、表紙が全面貼り付けになります。定義したマクロ自体は、re ファイル内でも embed 命令を使って普通の紙面内に使うことができます。
+
+```
+//embed[latex]{
+\includecover{images/sashie.pdf}
+//}
+```
