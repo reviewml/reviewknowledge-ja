@@ -138,6 +138,12 @@ re ファイルは命令を含めてすべてテキストで表現されるの�
 - Visual Studio Code：[vscode-language-review](https://github.com/atsushieno/vscode-language-review/blob/master/README.md)、[VSCode: yet another Re:VIEW languages extension](https://github.com/erukiti/ya-language-review)
 - Vim：[syntax and helpers for ReVIEW text format](https://github.com/moro/vim-review)、[Vim syntax for Re:VIEW](https://github.com/tokorom/vim-review)
 
+## Visual Studio Code を使ったところ、^H などのおかしな文字が入り、PDF の生成に失敗します!
+
+Re:VIEW 側の問題ではないのですが、Visual Studio Code（VS Code）でバックスペースの文字が入ってしまうことがあるようです。設定と拡張機能によって対処する手段が示されています。
+
+- [VS Code の日本語入力で制御文字が紛れ込む問題](https://astropengu.in/blog/2/)
+
 ## 図版はどこに置くのですか？ また、どのような形式に対応していますか？
 
 図版の画像ファイルは、images フォルダに配置します。さらにサブフォルダで分けることもできます。このときの探索順序は次のようになっています。
