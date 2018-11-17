@@ -28,6 +28,7 @@ LaTeX に関連する長めの Tips
   latex/tex-tombow
   latex/prepost-num
   latex/bookmark-tree
+  latex/review3-latex
 
 EPUB に関連する長めの Tips
 ------------------------------
