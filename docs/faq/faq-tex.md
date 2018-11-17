@@ -347,4 +347,4 @@ texdocumentclass: ["review-jsbook", "media=print,paper=a5,openany"]
 
 ## 各書体を変えるにはどうしたらよいですか？
 
-★膨大になりそうなので単記事化
+- [使用書体の変更（upLaTeX 編）](../latex/uptex-fonts.html)

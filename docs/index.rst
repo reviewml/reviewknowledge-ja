@@ -29,6 +29,7 @@ LaTeX に関連する長めの Tips
   latex/prepost-num
   latex/bookmark-tree
   latex/review3-latex
+  latex/uptex-fonts
 
 EPUB に関連する長めの Tips
 ------------------------------
