@@ -2,8 +2,6 @@
 
 FAQ（よくある質問と回答）のこのセクションは、Re:VIEW のソフトウェアおよび Re:VIEW が生成する成果物ファイルのライセンスについて記しています。
 
-！注意！ このセクションの内容はまだ内容の正確性を詰め切れていません。
-
 ----
 
 ## Re:VIEW のライセンスは何ですか？
@@ -43,11 +41,9 @@ Re:VIEW を使ったドキュメントや生成されるファイルには Re:VI
 - Gemfile、Rakefile、doc、lib/tasks/review.rake、style.css には Re:VIEW ソフトウェアの MIT ライセンスが適用されます。
 - catalog.yml、config.yml、images、layouts、初期 re ファイル には Re:VIEW ソフトウェアのライセンスは及びません。
 
-（★このあたりは展開時にちゃんとライセンスファイルを置くべき #1093）
-
 ## Re:VIEW ソフトウェアの権利者表記はどのように記すべきですか？
 
-以下のとおりです（2018年7月時点）。
+以下のとおりです（2018年11月時点）。
 
 「Copyright (c) 2006-2018 Minero Aoki, Kenshi Muto, Masayoshi Takahashi, Masanori Kado.」
 

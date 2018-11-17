@@ -22,6 +22,8 @@ debug: true
 ```
 とすると、デバッグモードとなり、一時フォルダの代わりにプロジェクトフォルダ内に「book-pdf」（book の部分は bookname の値に依存）のようなフォルダが作られます。このフォルダは実行後も消去されないので、ここから LaTeX テキストファイルを開き、エラーの行を参照して解析できます。
 
+また、`review-pdfmaker --debug config.yml` のように `--debug` オプションを付けるとconfig.yml の設定に関わらず一時的にデバッグモードになります。
+
 ## LaTeX のエラーの意味がわかりません。
 
 LaTeX でエラーが発生したときには、「!」から始まるエラーメッセージが表示されています（デバッグモードにして実行し、`__REVIEW_BOOK__.log` または `book.log` を参照するのもよいでしょう）。
@@ -35,7 +37,15 @@ Re:VIEW に起因する問題と思われる場合は issue で報告してく�
 
 ## LaTeX の紙面サイズを変更するにはどうしたらよいですか？
 
-jsbook ベースのレイアウトを使っている場合は、config.yml の texdocumentclass パラメータに対するオプションで指定できます（正確には、これがドキュメントクラスに直接渡されます）。
+Re:VIEW 3 からは、ドキュメントクラスオプションの `paper` で紙面サイズを指定可能です。
+
+```yaml
+texdocumentclass: ["review-jsbook", "media=print,paper=a5"]
+```
+
+a5 の部分を b5 などに書き換えれば変更されます。
+
+Re:VIEW 2 以前で jsbook ベースのレイアウトを使っている場合は、config.yml の texdocumentclass パラメータに対するオプションで指定できます（正確には、これがドキュメントクラスに直接渡されます）。
 
 デフォルトは以下のようになっています。
 
@@ -64,14 +74,12 @@ jsbook において文字列で指定可能な紙サイズを以下に示しま�
 - `legalpaper`：リーガル（8.5in x 14in）
 - `executivepaper`：エグゼクティブ（7.25in x 10.5in）
 
-`sty/review-custom.sty`（Re:VIEW 3 系）または `sty/reviewmacro.sty`（Re:VIEW 2 以前）に mm などの単位で数値を明示することもできます。
+`sty/reviewmacro.sty` に mm などの単位で数値を明示することもできます。
 
 ```
 \setlength\paperwidth{幅truemm}
 \setlength\paperheight{高さtruemm}
 ```
-
-jsbook 以外のレイアウトクラスファイルを使っている場合は、指定方法が異なる可能性があります。
 
 ## LaTeX の紙面レイアウトに満足がいきません。どうやったら置き換えられますか？
 
@@ -83,7 +91,7 @@ LaTeX はマクロの集合体です。Re:VIEW から読み込まれるカスタ
 
 ## LaTeX の紙面レイアウトとして他のテンプレートはありますか？
 
-デフォルトのもの以外に広く使われているものとして、TechBooster 提供のテンプレートがあります。
+デフォルトのもの以外に広く使われているものとして、TechBooster 提供のテンプレートがあります（2018年11月時点では Re:VIEW 3 には対応していません）。
 
 - [https://github.com/TechBooster/ReVIEW-Template](https://github.com/TechBooster/ReVIEW-Template)
 
@@ -97,6 +105,8 @@ Re:VIEW 3 以上で LuaTeX への対応を進めています。ただし、現�
 4. プロジェクトの sty フォルダのファイル群で LuaTeX-ja に対応していないところを調整する。
 
 ## トンボを付けるにはどうしたらよいですか？
+
+Re:VIEW 3 ではデフォルト（`media=print` のとき）でトンボが付きます。Re:VIEW 2 以前の場合は下記を参照してください。
 
 - [jsbook ベースのドキュメントにトンボおよびデジタルトンボを配置する](../latex/tex-tombow.html)
 
@@ -145,12 +155,14 @@ gs -q -r600 -dNOPAUSE -sDEVICE=pdfwrite -o 出力PDF名 -dPDFSETTINGS=/prepress 
 
 ## jsbook ベースのテンプレートで、ページを頭からの通し番号にするにはどうしたらよいですか？
 
-jsbook.cls では以下の2箇所で暗黙にページ番号を変えているため、マクロを上書きする必要があります。
+Re:VIEW 3 以降では、`serial_pagination=true` ドキュメントクラスオプションで通し番号になります。
+
+Re:VIEW 2 以前の場合、jsbook.cls では以下の2箇所で暗黙にページ番号を変えているため、マクロを上書きする必要があります。
 
 - titlepage（大扉などで利用）でページ番号を0にリセット
 - 前付（frontmatter）でローマ数字、本文（mainmatter）でアラビア数字化。それぞれ `pagenumbering` マクロを使用しており、このマクロで番号は0にリセットされる
 
-単純に頭からの通し番号にするには、`sty/review-custom.sty`（Re:VIEW 3 系）または `sty/reviewmacro.sty`（Re:VIEW 2 以前）に次のように書いて jsbook.cls のマクロを上書きします。
+単純に頭からの通し番号にするには、`sty/reviewmacro.sty`に次のように書いて jsbook.cls のマクロを上書きします。
 
 ```
 \renewenvironment{titlepage}{%
@@ -170,6 +182,10 @@ jsbook.cls では以下の2箇所で暗黙にページ番号を変えている�
 \renewcommand\pagenumbering[1]{% デフォルトのアラビア文字のみとして何もしない
 }
 ```
+
+## 開始ページ番号を変えるにはどうしたらよいですか？
+
+Re:VIEW 3 以降では、ドキュメントクラスオプション `startpage=開始ページ番号` で大扉の開始ページ番号を指定できます。
 
 ## 目次を付けるにはどうしたらよいですか？
 
@@ -198,7 +214,7 @@ Re:VIEW 2 系のデフォルトのスタイルなどでは、この状況にな�
 
 ## 表紙を全面に貼り付けるにはどうしたらよいですか？
 
-**★Re:VIEW 3 以降ではデフォルトで全面貼り付け命令を追加予定です。ここに記した実装・命令名や手順も変更になる可能性があります。**
+Re:VIEW 3 以降ではデフォルトで全面貼り付けになっています。
 
 Re:VIEW 2 系では全面に貼り付ける命令をまだ用意していないため、命令の追加および表紙部分の LaTeX ソースを置き換えることで対処します。
 
@@ -244,3 +260,91 @@ pdfmaker:
 \includecover{images/sashie.pdf}
 //}
 ```
+
+## 挿絵を全面に入れるにはどうしたらよいですか？
+
+Re:VIEW 3 の場合、`\includefullpagegraphics` 命令を利用できます。
+
+```
+//embed[latex]{
+\includefullpagegraphics{images/sashie.pdf}
+//}
+```
+
+画像ファイルは実寸で、中央合わせで配置されます。塗り足し領域がある場合にはそれを含めたサイズで用意します。
+
+Re:VIEW 2 の場合は上記の `\includecover` を使ってみるとよいでしょう。
+
+## Illustrator AI ファイルを配置したところ、何かおかしいです
+
+厳密には、TeX（というよりは dvi ウェア）は Illustrator のネイティブ形式である AI ファイルをサポートしているというわけではなく、「PDF 互換ファイル」オプション付きで保存された AI ファイルの PDF 部分を使用しています。このオプションなしで保存されている AI ファイルは表示できないので、Illustrator でオプションを有効にして再保存する必要があります。
+
+また、Illustrator 上でレイヤーをオフにして非表示にしていても、TeX に貼り付けた場合には表示されてしまうため、事前に表示不要なレイヤーを削除しておく必要があります。
+
+## Photoshop psd ファイルを配置できません
+
+2018年11月時点では、Photoshop のネイティブ形式である psd ファイルはサポートされていません。
+
+ただし、graphicxpsd パッケージを使うと、sips（macOS のツール）または covert（ImageMagick）を使用して、コンパイル時に psd ファイルを PDF に変換して利用できます。graphicxpsd パッケージは TeXLive 2017 以降に収録されているほか、`tlmgr install graphicxpsd` でインストールすることもできます。
+
+sty/review-custom.sty でスタイルファイルを読み込むよう設定します。
+
+```
+\usepackage{graphicxpsd}
+```
+
+外部コマンド実行を許容するため、config.yml の texoptions に `--shell-escape` を追加します。
+
+```
+texoptions: "-interaction=nonstopmode -file-line-error --shell-escape"
+```
+
+## 隠しノンブルを入れるにはどうしたらよいですか？
+
+同人誌印刷では、全ページにページ番号を入れることを求められ、ノドに小さくページ番号を入れる「隠しノンブル」という手法が推奨されることがあるようです。
+
+Re:VIEW 3 以降では、ドキュメントクラスオプション `hiddenfolio=プリセット名` を使い、隠しノンブルを指定できます。
+
+詳細については [Re:VIEW 3からのLaTeX処理](../latex/review3-latex.html) の「ページ番号に関する調整」を参照してください。
+
+## コラム内に image や table を置くとエラーになります
+
+コラムのような囲み内で「フロート」の図表を使うと、TeX のコンパイルエラーになります。Re:VIEW 3 では次のように「必ず指定箇所に置く（H）」を図表に指定することで、エラーを回避できます。
+
+```
+\floatplacement{figure}{H}
+\floatplacement{table}{H}
+```
+
+- [図表のフロートを制御する](../latex/control-flow.html)
+
+## 表内で @\<br\> を使ったときの見た目がよくありません
+
+★#1207
+
+## 奥付を必ず偶数ページにするにはどうしたらよいですか？
+
+Re:VIEW 3 では、`\reviewcolophonpagecont` マクロを調整し、最初に `\oddclearpage` を実行するようにします。sty/review-custom.sty に次のように追加します。
+
+```
+\let\reviewcolophonpagecontorg\reviewcolophonpagecont
+\def\reviewcolophonpagecont{\clearoddpage\reviewcolophonpagecontorg}
+```
+
+この設定で POSTDEF が空の場合、CHAPS または APPENDIX の章の最後が白ページだと、白ページが連続します。これは `\backmatter` マクロ内で改ページが行われていることが原因なので、`\backmatter` の呼び出し元の `\reviewbackmatterhook` を空にするよう sty/review-custom.sty に次のように追加します。
+
+```
+\def\reviewbackmatterhook{}
+```
+
+## 章が奇数ページ始まりになっていますが偶数ページからも始まるようにしたいです
+
+ドキュメントクラスオプションに `openany` を付けます。
+
+```yaml
+texdocumentclass: ["review-jsbook", "media=print,paper=a5,openany"]
+```
+
+## 各書体を変えるにはどうしたらよいですか？
+
+★膨大になりそうなので単記事化
