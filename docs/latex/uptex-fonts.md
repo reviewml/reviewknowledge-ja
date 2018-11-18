@@ -86,7 +86,7 @@ review-jsbook のデフォルトの文字装飾設定では、明朝・ゴシッ
 和文にはイタリックがかからないので、代わりにモリサワの「じゅん101」の丸文字を割り当ててみます。sty/review-custom.sty には次のように追加します。
 
 ```
-\setmarugothic{A-OTF-Jun101Pro-Light.otf}
+\setmarugothicfont{A-OTF-Jun101Pro-Light.otf}
 \renewcommand{\reviewit}[1]{\textit{\mgfamily #1}}
 ```
 
