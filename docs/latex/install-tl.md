@@ -12,42 +12,11 @@ OS のパッケージに頼らず、TeXLive の最新版をインストールす
 
 ここでは「Re:VIEW の PDF 変換が通りさえすればよい」という割り切りのもとで TeXLive のセットアップ手順を紹介します。
 
-## Debian GNU/Linux または Ubuntu Linux の場合（OS パッケージの利用）
-Debian GNU/Linux、Ubuntu Linux の場合は、現時点でも TeXLive 2016 あるいは TeXLive 2018 が deb パッケージとしてそれぞれのディストリビュータから提供されているので、これを使うのが最も簡単です。
+- 執筆時点の TeXLive 2018 に基づいています。
+- テスト環境の都合で、Linux および macOS のみの説明としています。★Windows についてもいずれ書き足したいところです。
+- Debian GNU/Linux、Ubuntu Linux で OS のパッケージを利用して最小構成を構築したい場合は、[Re:VIEW image for Docker](https://hub.docker.com/r/vvakame/review/) の Dockerfile の内容が参考になるでしょう。
 
-なるべく最小に絞ったパッケージ選定としては以下のようになります（これは [Re:VIEW image for Docker](https://hub.docker.com/r/vvakame/review/) 版でも選定しているものです）。
-
-```
-$ sudo apt-get install texlive-lang-japanese texlive-fonts-recommended \
-  texlive-latex-extra lmodern fonts-lmodern tex-gyre fonts-texgyre \
-  texlive-pictures ghostscript gsfonts
-```
-
-日本語フォントの埋め込みはデフォルトでなしになっています。ひとまず IPA フォントを設定するには次のようにします。
-
-```
-$ sudo kanji-config-updmap-sys ipaex
-```
-
-Google の [Noto](https://www.google.com/get/noto/) フォントを利用したい場合は、次の手順で進めます（Docker 版ではすでにこれが構成されています）。
-
-Debian GNU/Linux Stretch の場合はセリフ体がまだ収録されていない版なので、バックポートリポジトリを有効にします。
-
-```
-$ sudo sh -c "echo 'deb http://ftp.jp.debian.org/debian/ stretch-backports main' >> /etc/apt/sources.list.d/backports.list"
-$ sudo apt-get update
-```
-
-Noto フォントパッケージをインストールします。
-
-```
-apt-get -y install fonts-noto-cjk/stretch-backports fonts-noto-cjk-extra/stretch-backports （Debian Stretch の場合）
-apt-get -y install fonts-noto-cjk fonts-noto-cjk-extra （Ubuntu や Debian Buster 以降の場合）
-```
-
-
-
-## TeXLive のインストール（自身で選定する方法）
+## TeXLive のインストール
 TeXLive のインストーラは install-tl という名前のファイルです。Linux・macOS いずれでも、[サイト](https://www.tug.org/texlive/acquire-netinstall.html)から「install-tl-unx.tar.gz」をダウンロードします。
 
 ここではホームの Download フォルダにダウンロードしたとします。ターミナルを開いて以下のように tar.gz アーカイブファイルを展開し、そのフォルダに移動します。
@@ -60,7 +29,7 @@ install-tl-20181205/...
 $ cd install-tl-*
 ```
 
-次に、この中の install-tl を root 権限で実行します。このとき、ダウンロードリポジトリを指定できます。デフォルトのままだと CDN のミラーサイトになるのですが、TeXLive のミラーサイトの品質はバラバラで、速度が出なかったり、はたまたミラーがちゃんとできていなかったりなどのつまらない問題にひっかかることが多いため、最も安定していて速度も出る JAIST を選んでいます。
+次に、この中の install-tl を root 権限で実行します。このとき、ダウンロードリポジトリを指定できます。デフォルトのままだと CDN のミラーサイトになるのですが、TeXLive のミラーサイトの品質はバラバラで、速度が出なかったり、はたまたミラーがちゃんとできていなかったりなどの余計な問題にひっかかることが多いため、最も安定していて速度も出る JAIST を選んでいます。
 
 ```
 sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet/
@@ -144,6 +113,9 @@ Primary author of e-upTeX: Peter Breitenlohner.
 
 Re:VIEW のプロジェクトで `rake pdf` を実行して、正常に PDF が生成されることも確認します。
 
+## パッケージの追加と TeXLive の更新、
+★
+
 ## フォントの設定（macOS）
 
 生成される PDF の日本語フォントには、デフォルトで IPA フォントが割り当てられています。せっかくの macOS のヒラギノフォントを活かすには、もう少し設定が必要です。商業フォントのように外部のファイルを使用するパッケージは TeXLive の主リポジトリとは分離された TLContrib というリポジトリに置かれています。
@@ -194,6 +166,8 @@ Sierra 以前の場合：
 $ sudo kanji-config-updmap-sys --jis2004 hiragino-elcapitan-pron
 ```
 
+★JISとpronの意味説明
+
 これで出来上がりです。Re:VIEW プロジェクトをコンパイルして、書体が変わることを確認しましょう。
 
 小塚やモリサワのフォントを購入あるいは購読しているならば、それを使うこともできます。システムにこれらのフォントが入っていれば、cjk-gs-integrate-macos コマンドの実行で /usr/local/texlive/texmf-local/fonts/opentype/cjk-gs-integrate フォルダにフォントファイルへのリンクができています。
@@ -226,5 +200,13 @@ Linux でもおおむね macOS と考え方は同じですが、cjk-gs-integrate
 
 小塚やモリサワのフォントを購入あるいは購読しているならば、macOS の手順と同じように TLContrib から japanese-otf-nonfree および japanese-otf-uptex-nonfree パッケージをインストールします。
 
+```
+$ sudo tlmgr repository add http://contrib.texlive.info/current tlcontrib
+$ sudo tlmgr pinning add tlcontrib '*'
+```
+
 /usr/local/texlive/texmf-local/fonts/opentype/morisawa などを作って、使用権を持つフォントファイルを配置あるいはシンボリックリンクを張ったら、
 
+★
+
+★Noto
