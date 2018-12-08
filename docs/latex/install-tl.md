@@ -17,9 +17,9 @@ OS のパッケージに頼らず、TeXLive の最新版をインストールす
 - Debian GNU/Linux、Ubuntu Linux で OS のパッケージを利用して最小構成を構築したい場合は、[Re:VIEW image for Docker](https://hub.docker.com/r/vvakame/review/) の Dockerfile の内容が参考になるでしょう。
 
 ## TeXLive のインストール
-TeXLive のインストーラは install-tl という名前のファイルです。Linux・macOS いずれでも、[サイト](https://www.tug.org/texlive/acquire-netinstall.html)から「install-tl-unx.tar.gz」をダウンロードします。
+TeXLive のインストーラは `install-tl` という名前のファイルです。Linux・macOS いずれでも、[サイト](https://www.tug.org/texlive/acquire-netinstall.html)から「install-tl-unx.tar.gz」をダウンロードします。
 
-ここではホームの Download フォルダにダウンロードしたとします。ターミナルを開いて以下のように tar.gz アーカイブファイルを展開し、そのフォルダに移動します。
+ここではホームの `Download` フォルダにダウンロードしたとします。ターミナルを開いて以下のように tar.gz アーカイブファイルを展開し、そのフォルダに移動します。
 
 ```
 $ cd ~/Download
@@ -29,7 +29,7 @@ install-tl-20181205/...
 $ cd install-tl-*
 ```
 
-次に、この中の install-tl を root 権限で実行します。このとき、ダウンロードリポジトリを指定できます。デフォルトのままだと CDN のミラーサイトになるのですが、TeXLive のミラーサイトの品質はバラバラで、速度が出なかったり、はたまたミラーがちゃんとできていなかったりなどの余計な問題にひっかかることが多いため、最も安定していて速度も出る JAIST を選んでいます。
+次に、この中の `install-tl` を root 権限で実行します。このとき、ダウンロードリポジトリを指定できます。デフォルトのままだと CDN のミラーサイトになるのですが、TeXLive のミラーサイトの品質はバラバラで、速度が出なかったり、はたまたミラーがちゃんとできていなかったりなどの余計な問題にひっかかることが多いため、最も安定していて速度も出る JAIST を選んでいます。
 
 ```
 sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet/
@@ -49,7 +49,7 @@ sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/t
 
 メインメニューから今度はコレクションを選ぶため、`C`、Enter キーと押します。
 
-コレクションの一覧が表示されます。スキームを最小にしたので、「a. Essential programs and files」だけに `[X]` とチェックが付いている状態です。Re:VIEW で日本語利用を使う範囲で見回して、以下を使うことにします。「fundamental」のように外すとまずいのでは？と怖くなるかもしれませんが、依存関係でこれらは自動で選ばれるので問題ありません。
+コレクションの一覧が表示されます。スキームを最小にしたので、「a. Essential programs and files」だけに `[X]` とチェックが付いている状態です。Re:VIEW で日本語利用を使う範囲で見回して、以下を使うことにします。「fundamental」のように外すとまずいのでは？ と怖くなるかもしれませんが、依存関係でこれらは自動で選ばれるので問題ありません。
 
 - c. TeX auxiliary programs
 - f. Recommended fonts
@@ -61,7 +61,7 @@ sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/t
 22.40.03.png
 
 - コレクションの選定は、@munepixyz さんが作られている[最小プロファイル](https://gist.github.com/munepi/cb7999cb0f4d0c8629d1593fe3117e33)を参考にしました。
-- XeTeX パッケージは過去 dvipdfmx の実行に必要でしたが、整理されて dvipdfmx パッケージが基本コレクションに収録されるようになったので、XeTeX を使うのでなければ選択する必要はなくなっているようです。
+- XeTeX パッケージは過去 `dvipdfmx` コマンドの実行に必要でしたが、整理されて dvipdfmx パッケージが基本コレクションに収録されるようになったので、XeTeX を使うのでなければ選択する必要はなくなっているようです。
 
 必要であればほかに以下を加えるのもよいでしょう。
 
@@ -92,7 +92,8 @@ sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/t
 最後のメッセージにあるとおり、プログラムは `/usr/local/texlive/<TeXLiveバージョン>/bin/<アーキテクチャ名>` フォルダに用意されるので、ここにパスを通す必要があります。たとえば次のようにホームフォルダの `.bashrc` に追加します（これはパスの先頭に TeXLive へのパスを通します）。
 
 ```
-$ echo "PATH=/usr/local/texlive/2018/bin/x86_64-darwin:$PATH" >> ~/.bashrc
+$ echo "PATH=/usr/local/texlive/2018/bin/x86_64-darwin:$PATH" >> ~/.bashrc （macOSの場合）
+$ echo "PATH=/usr/local/texlive/2018/bin/x86_64-linux:$PATH" >> ~/.bashrc （Linuxの場合）
 ```
 
 ターミナルを開き直し、TeXLive がインストールされていることを確認しましょう。
@@ -113,16 +114,57 @@ Primary author of e-upTeX: Peter Breitenlohner.
 
 Re:VIEW のプロジェクトで `rake pdf` を実行して、正常に PDF が生成されることも確認します。
 
-## パッケージの追加と TeXLive の更新、
-★
+## Ghostscript
+
+以降のフォントの自動設定をしたかったり、あるいはドキュメント内で eps 形式のファイルを使いかったりするときには、TeXLive とは別に、Postscript インタプリタの Ghostscript が必要です。
+
+Debian GNU/Linux や Ubuntu Linux の場合は deb パッケージをインストールします。
+
+```
+$ sudo apt-get install ghostscript
+```
+
+macOS の場合は [Homebrew](https://brew.sh/index_ja) を導入した上でインストールするのがよいでしょう。
+
+```
+$ brew install ghostscript
+```
+
+- Ghostscriptなしでフォント自動設定機能だけを使う方法（Re: MacのTexliveインストールの際のシンボリックリンクの貼り直しがうまくいかない）: [https://oku.edu.mie-u.ac.jp/tex/mod/forum/discuss.php?d=2229#p13069](https://oku.edu.mie-u.ac.jp/tex/mod/forum/discuss.php?d=2229#p13069)
+
+## パッケージの追加と TeXLive の更新
+後からパッケージが必要になったり、あるいは不要になったので削除したかったりといったときの TeXLive のパッケージ管理は `tlmgr` コマンドで行います。
+
+```
+sudo tlmgr アクション
+```
+
+よく使うであろうアクションを以下に示します。
+
+- list：関知しているパッケージ一覧を表示します。頭に i が付いているのがインストール済みのパッケージです。
+- info パッケージ名：パッケージの情報を表示します。
+- install パッケージ名：パッケージをインストールします。
+- remove パッケージ名：パッケージを削除します。
+- search 検索語句：検索語句をパッケージ名や説明に含むパッケージを探します。
+- update --list：更新可能なパッケージを報告します。
+- update --all：更新可能なパッケージの更新を実行します。
+- update --self：tlmgr 自体を更新します。
+
+コレクションやスキームもパッケージの一種なので、`tlmgr install` でまとめてインストールすることも可能です。
+
+Linux で `sudo` コマンドを使う場合、secure_path 設定に TeXLive のパスを追加する必要があるかもしれません。`visudo` コマンドで以下のようにパスを加えておきましょう。
+
+```
+Defaults  secure_path="/usr/local/texlive/2018/bin/x86_64-linux:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+```
 
 ## フォントの設定（macOS）
 
-生成される PDF の日本語フォントには、デフォルトで IPA フォントが割り当てられています。せっかくの macOS のヒラギノフォントを活かすには、もう少し設定が必要です。商業フォントのように外部のファイルを使用するパッケージは TeXLive の主リポジトリとは分離された TLContrib というリポジトリに置かれています。
+生成される PDF の日本語フォント（リュウミンや中ゴシックなど）の代替書体には、デフォルトで IPA フォントが割り当てられています。せっかくの macOS のヒラギノフォントを活かすには、もう少し設定が必要です。
 
-- 以下の内容は、TeX Wiki の記事[TLContrib](https://texwiki.texjp.org/?TLContrib) をもとにしています。
+これには cjk-gs-integrate-macos というパッケージが便利です。外部の商業フォントファイルを使用する cjk-gs-integrate-macos のようなパッケージは、TeXLive の主リポジトリとは分離された TLContrib というリポジトリに置かれています。
 
-まずそのリポジトリを使うよう tlmgr コマンドで設定します。
+まずそのリポジトリを使うよう `tlmgr` コマンドで設定します。
 
 ```
 $ sudo tlmgr repository add http://contrib.texlive.info/current tlcontrib
@@ -153,12 +195,11 @@ $ sudo cjk-gs-integrate-macos --link-texmf
 $ sudo mktexlsr
 ```
 
-これで準備ができました。次に kanji-config-updmap-sys コマンドでヒラギノを利用するよう設定しますが、macOS のバージョンによりマップ名が異なります。
+これで準備ができました。次に `kanji-config-updmap-sys` コマンドでヒラギノを利用するよう設定しますが、macOS のバージョンによりマップ名が異なります。
 
 High Sierra 以降の場合：
 ```
 $ sudo kanji-config-updmap-sys --jis2004 hiragino-highsierra-pron
-
 ```
 
 Sierra 以前の場合：
@@ -166,13 +207,16 @@ Sierra 以前の場合：
 $ sudo kanji-config-updmap-sys --jis2004 hiragino-elcapitan-pron
 ```
 
-★JISとpronの意味説明
+★Mojaveは不明。/usr/local問題はどうなったっけ？
+
+- `--jis2004` オプションは、JIS2004 の例示字形を使う指定です（二点しんにょうなど）。
+- 「pron」の pro は Adobe-Japan 1-4 以降準拠の文字セットに準拠しており、n は JIS2004 字形を使っているという意味です。
 
 これで出来上がりです。Re:VIEW プロジェクトをコンパイルして、書体が変わることを確認しましょう。
 
-小塚やモリサワのフォントを購入あるいは購読しているならば、それを使うこともできます。システムにこれらのフォントが入っていれば、cjk-gs-integrate-macos コマンドの実行で /usr/local/texlive/texmf-local/fonts/opentype/cjk-gs-integrate フォルダにフォントファイルへのリンクができています。
+小塚やモリサワのフォントを購入あるいは購読しているならば、それを使うこともできます。システムにこれらのフォントが入っていれば、`cjk-gs-integrate-macos` コマンドの実行で `/usr/local/texlive/texmf-local/fonts/opentype/cjk-gs-integrate` フォルダにフォントファイルへのリンクができています。
 
-kanji-config-updmap-sys コマンドの status オプションで利用可能か調べられます。
+`kanji-config-updmap-sys` コマンドの `status` オプションで利用可能か調べられます。
 
 ```
 $ sudo kanji-config-updmap-sys status
@@ -194,19 +238,55 @@ Standby family : toppanbunkyu-sierra
 $ sudo kanji-config-updmap-sys morisawa-pr6n
 ```
 
-## フォントの設定（Linux）
+- TeX Wiki の記事[TLContrib](https://texwiki.texjp.org/?TLContrib)
 
-Linux でもおおむね macOS と考え方は同じですが、cjk-gs-integrate-macos は用意されていません。
+## フォントの設定（Linux＋モリサワやヒラギノ）
 
-小塚やモリサワのフォントを購入あるいは購読しているならば、macOS の手順と同じように TLContrib から japanese-otf-nonfree および japanese-otf-uptex-nonfree パッケージをインストールします。
+cjk-gs-integrate-macos はありませんが、Linux でもおおむね macOS と考え方は同じです。
+
+macOS の手順と同じように TLContrib から japanese-otf-nonfree および japanese-otf-uptex-nonfree パッケージをインストールします。
 
 ```
 $ sudo tlmgr repository add http://contrib.texlive.info/current tlcontrib
 $ sudo tlmgr pinning add tlcontrib '*'
+$ sudo tlmgr install japanese-otf-nonfree japanese-otf-uptex-nonfree
 ```
 
-/usr/local/texlive/texmf-local/fonts/opentype/morisawa などを作って、使用権を持つフォントファイルを配置あるいはシンボリックリンクを張ったら、
+購入済みあるいは購読している小塚やモリサワ・ヒラギノのフォントを、`/usr/share/fonts` または `/usr/local/share/fonts` に入れておきます。サブフォルダを作成してもかまいません。
+
+次に、`cjk-gs-integrate` でリンクを作成します。このツールの挙動としては、`/usr/local/texlive/TeXLiveバージョン/texmf-dist/fonts/misc/cjk-gs-integrate` フォルダにある dat ファイルに定義されているフォント名と合致した場合には、シンボリックリンクが作られます。うまく作られないときには、dat ファイルと照合して、元ファイルのファイル名が正しいかを確認しましょう。
+
+```
+$ OSFONTDIR=/usr/local/share/fonts// sudo -E cjk-gs-integrate --link-texmf
+```
+
+ここでは環境変数 OSFONTDIR で `/usr/local/share/fonts` を追加探索パスとしています（`//` は下位サブフォルダもすべて探索するという意味です）。また、環境変数を尊重するよう `sudo` コマンドには `-E` オプションを付けました。
+
+実行が済んだら、リンクしたファイルを TeX のプログラムから見つけられるよう、ファイルデータベースを更新します。
+
+```
+$ sudo mktexlsr
+```
+
+`kanji-config-updmap-sys` コマンドでマップを設定します。
+
+```
+sudo kanji-config-updmap-sys status （利用可能なマップを一覧）
+sudo kanji-config-updmap-sys --jis2004 morisawa-pr6n （JIS2004のモリサワフォント）
+```
+
+
+これで準備ができました。次に `kanji-config-updmap-sys` コマンドでヒラギノを利用するよう設定しますが、macOS のバージョンによりマップ名が異なります。
+
+High Sierra 以降の場合：
+```
+$ sudo kanji-config-updmap-sys --jis2004 hiragino-highsierra-pron
+
+```
+
+
 
 ★
 
 ★Noto
+
