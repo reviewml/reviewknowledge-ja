@@ -32,7 +32,7 @@ $ cd install-tl-*
 次に、この中の `install-tl` を root 権限で実行します。このとき、ダウンロードリポジトリを指定できます。デフォルトのままだと CDN のミラーサイトになるのですが、TeXLive のミラーサイトの品質はバラバラで、速度が出なかったり、はたまたミラーがちゃんとできていなかったりなどの余計な問題にひっかかることが多いため、最も安定していて速度も出る JAIST を選んでいます。
 
 ```
-sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet/
+$ sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet/
 ```
 
 17.58.03.png
@@ -74,7 +74,7 @@ sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/t
 
 22l.40.42
 
-以下の2つのオプションは TeX のドキュメントやソースコードのインストール設定ですが、Re:VIEW から TeX を利用するだけであれば使うことがないでしょう（レイアウトをいろいろ変更したいというときには、ネットのつまみ食いではなく、これらのオプションはそのままにしておくべきです！ `texdoc` コマンドを使って TeX のドキュメントを参照できます）。
+以下の2つのオプションは TeX のドキュメントやソースコードのインストール設定ですが、Re:VIEW から TeX を利用するだけであれば使うことがないでしょう（レイアウトをいろいろ変更したいというときには、これらのオプションはそのままにしておくべきです！ `texdoc` コマンドを使って TeX のドキュメントを参照できます。ネットのつまみ食いはお腹を壊します）。
 
 - D. install font/macro doc tree
 - S. install font/macro source tree
@@ -207,7 +207,7 @@ Sierra 以前の場合：
 $ sudo kanji-config-updmap-sys --jis2004 hiragino-elcapitan-pron
 ```
 
-★Mojaveは不明。/usr/local問題はどうなったっけ？
+★Mojaveは不明。/usr/local問題はどうなったっけ？ →/usr/localはいけるがcjk-gs-integrate-macosは改訂待ち?
 
 - `--jis2004` オプションは、JIS2004 の例示字形を使う指定です（二点しんにょうなど）。
 - 「pron」の pro は Adobe-Japan 1-4 以降準拠の文字セットに準拠しており、n は JIS2004 字形を使っているという意味です。
@@ -255,6 +255,7 @@ $ sudo tlmgr install japanese-otf-nonfree japanese-otf-uptex-nonfree
 購入済みあるいは購読している小塚やモリサワ・ヒラギノのフォントを、`/usr/share/fonts` または `/usr/local/share/fonts` に入れておきます。サブフォルダを作成してもかまいません。
 
 次に、`cjk-gs-integrate` でリンクを作成します。このツールの挙動としては、`/usr/local/texlive/TeXLiveバージョン/texmf-dist/fonts/misc/cjk-gs-integrate` フォルダにある dat ファイルに定義されているフォント名と合致した場合には、シンボリックリンクが作られます。うまく作られないときには、dat ファイルと照合して、元ファイルのファイル名が正しいかを確認しましょう。
+★/usr/local/share/fontsがfontconfigに設定されているのはDebian系だけ? RH系でもそうならcjk-gs-integrate自体で/usr/local/share/fontsをデフォルトで探索に加えてくれたほうがいいのでは？
 
 ```
 $ OSFONTDIR=/usr/local/share/fonts// sudo -E cjk-gs-integrate --link-texmf
@@ -288,5 +289,5 @@ $ sudo kanji-config-updmap-sys --jis2004 hiragino-highsierra-pron
 
 ★
 
-★Noto
+★Notoの説明はまだ変則的手段が必要? (kanji-config-updmap-sysの対象にない)
 
