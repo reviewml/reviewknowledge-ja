@@ -14,6 +14,7 @@ OS のパッケージに頼らず、TeXLive の最新版をインストールす
 
 - 執筆時点の TeXLive 2018 に基づいています。
 - テスト環境の都合で、Linux および macOS のみの説明としています。★Windows についてもいずれ書き足したいところです。
+- TeX コンパイラには upLaTeX を利用することを前提とします。特にフォントの設定については LuaLaTeX のほうがシステムフォントの探索などでのトラブルが少ないのですが、現状の Re:VIEW の基本設定は upLaTeX コンパイラ寄りになっています。
 - Debian GNU/Linux、Ubuntu Linux で OS のパッケージを利用して最小構成を構築したい場合は、[Re:VIEW image for Docker](https://hub.docker.com/r/vvakame/review/) の Dockerfile の内容が参考になるでしょう。
 
 ## TeXLive のインストール
@@ -150,7 +151,7 @@ sudo tlmgr アクション
 - update --all：更新可能なパッケージの更新を実行します。
 - update --self：tlmgr 自体を更新します。
 
-コレクションやスキームもパッケージの一種なので、`tlmgr install` でまとめてインストールすることも可能です。
+コレクションやスキームもパッケージの一種なので、`tlmgr install collection-コレクション名` や `tlmgr install scheme-スキーム名` でまとめてインストールすることも可能です。
 
 Linux で `sudo` コマンドを使う場合、secure_path 設定に TeXLive のパスを追加する必要があるかもしれません。`visudo` コマンドで以下のようにパスを加えておきましょう。
 
@@ -160,7 +161,7 @@ Defaults  secure_path="/usr/local/texlive/2018/bin/x86_64-linux:/usr/local/sbin:
 
 ## フォントの設定（macOS）
 
-生成される PDF の日本語フォント（リュウミンや中ゴシックなど）の代替書体には、デフォルトで IPA フォントが割り当てられています。せっかくの macOS のヒラギノフォントを活かすには、もう少し設定が必要です。
+生成される PDF の日本語フォント（リュウミンや中ゴシックなど）の代替書体には、デフォルトで IPA フォントが割り当てられています。macOS のシステムにデフォルトでインストールされているヒラギノフォントを利用するには、もう少し設定が必要です。
 
 これには cjk-gs-integrate-macos というパッケージが便利です。外部の商業フォントファイルを使用する cjk-gs-integrate-macos のようなパッケージは、TeXLive の主リポジトリとは分離された TLContrib というリポジトリに置かれています。
 
@@ -185,6 +186,12 @@ $ sudo cjk-gs-integrate --link-texmf --cleanup
 
 そして、macOS のシステムのフォントファイルを TeXLive から利用できるようにリンクします（`-macos` と付くことに注意してください）。
 
+Mojave の場合：
+```
+$ sudo cjk-gs-integrate --fontdef-add=cjkgs-macos-highsierra.dat --link-texmf --force
+```
+
+Hight Sierra までの場合：
 ```
 $ sudo cjk-gs-integrate-macos --link-texmf
 ```
@@ -207,14 +214,12 @@ Sierra 以前の場合：
 $ sudo kanji-config-updmap-sys --jis2004 hiragino-elcapitan-pron
 ```
 
-★Mojaveは不明。/usr/local問題はどうなったっけ？ →/usr/localはいけるがcjk-gs-integrate-macosは改訂待ち?
-
 - `--jis2004` オプションは、JIS2004 の例示字形を使う指定です（二点しんにょうなど）。
-- 「pron」の pro は Adobe-Japan 1-4 以降準拠の文字セットに準拠しており、n は JIS2004 字形を使っているという意味です。
+- 「pron」の pro は Adobe-Japan 1-4 以降準拠の文字セットに準拠しており、n は JIS2004 字形を使っているという意味です。一般には Adobe-Japan 1-6 準拠の Pr6 あるいは Pr6N のフォントを使うことになるでしょう。
 
 これで出来上がりです。Re:VIEW プロジェクトをコンパイルして、書体が変わることを確認しましょう。
 
-小塚やモリサワのフォントを購入あるいは購読しているならば、それを使うこともできます。システムにこれらのフォントが入っていれば、`cjk-gs-integrate-macos` コマンドの実行で `/usr/local/texlive/texmf-local/fonts/opentype/cjk-gs-integrate` フォルダにフォントファイルへのリンクができています。
+小塚やモリサワのフォントを購入あるいは購読しているならば、それを使うこともできます。システムにこれらのフォントが入っていれば、`cjk-gs-integrate-macos` コマンドの実行で `/usr/local/texlive/texmf-local/fonts/opentype/cjk-gs-integrate` フォルダにフォントファイルへのリンクができています。macOS のヒラギノフォントの置き方および字形は macOS のバージョンによって変わることがあるため、可能ならば変化の少ないそれらの商用フォントを利用したほうが妥当です。
 
 `kanji-config-updmap-sys` コマンドの `status` オプションで利用可能か調べられます。
 
@@ -239,8 +244,31 @@ $ sudo kanji-config-updmap-sys morisawa-pr6n
 ```
 
 - TeX Wiki の記事[TLContrib](https://texwiki.texjp.org/?TLContrib)
+- [cjk-gs〜のMojave対応](https://twitter.com/aminophen/status/1054735620776570881)
 
-## フォントの設定（Linux＋モリサワやヒラギノ）
+### kanij-config-updmap-sys のフォントセット候補
+`kanji-config-updmap-sys` コマンドで示されるフォントセット候補をまとめておきます。セットで利用するフォントが見つからない場合は候補には表示されません。`/usr/local/texlive/texmf-local/fonts` 下位フォルダにフォントファイルを入れているはずなのに表示されないときには、`sudo mktexlsr` で TeX のファイル探索データベースを更新し直してみてください。
+
+- `ms-hg`：MS 系フォント + HG フォント
+- `ipa-hg`：IPA フォント + HG フォント
+- `ipaex-hg`：IPAex フォント + HG フォント
+- `moga-mobo`：Moga フォント + Mobo フォント
+- `moga-mobo-ex`：MogaEx フォント + MoboEx フォント
+- `moga-maruberi`：Moga フォント + モトヤ L マルベリ
+- `kozuka-pro`：小塚フォント Pro
+- `kozuka-pr6`：小塚フォント Pr6
+- `kozuka-pr6n`：小塚フォント Pr6N
+- `hiragino-pro`：ヒラギノ6書体 Pro/Std + 明朝 W2
+- `hiragino-pron`：ヒラギノ6書体 ProN/StdN + 明朝 W2
+- `hiragino-elcapitan-pro`：ヒラギノ（macOS El Capitan版）Pro/Std + 明朝 W2
+- `hiragino-elcapitan-pron`：ヒラギノ（macOS El Capitan版）ProN/StdN + 明朝 W2
+- `morisawa-pro`：モリサワ7書体 Pro
+- `morisawa-pr6n`：モリサワ7書体 Pr6N
+- `yu-win`：遊書体（Windows 8 版）
+- `yu-win10`：遊書体（Windows 10 版）
+- `yu-osx`：遊書体（macOS 版）
+
+## フォントの設定（Linux＋商用フォント）
 
 cjk-gs-integrate-macos はありませんが、Linux でもおおむね macOS と考え方は同じです。
 
@@ -255,7 +283,6 @@ $ sudo tlmgr install japanese-otf-nonfree japanese-otf-uptex-nonfree
 購入済みあるいは購読している小塚やモリサワ・ヒラギノのフォントを、`/usr/share/fonts` または `/usr/local/share/fonts` に入れておきます。サブフォルダを作成してもかまいません。
 
 次に、`cjk-gs-integrate` でリンクを作成します。このツールの挙動としては、`/usr/local/texlive/TeXLiveバージョン/texmf-dist/fonts/misc/cjk-gs-integrate` フォルダにある dat ファイルに定義されているフォント名と合致した場合には、シンボリックリンクが作られます。うまく作られないときには、dat ファイルと照合して、元ファイルのファイル名が正しいかを確認しましょう。
-★/usr/local/share/fontsがfontconfigに設定されているのはDebian系だけ? RH系でもそうならcjk-gs-integrate自体で/usr/local/share/fontsをデフォルトで探索に加えてくれたほうがいいのでは？
 
 ```
 $ OSFONTDIR=/usr/local/share/fonts// sudo -E cjk-gs-integrate --link-texmf
@@ -276,18 +303,10 @@ sudo kanji-config-updmap-sys status （利用可能なマップを一覧）
 sudo kanji-config-updmap-sys --jis2004 morisawa-pr6n （JIS2004のモリサワフォント）
 ```
 
+- ★/usr/local/share/fontsがfontconfigに設定されているのはDebian系だけだろうか。RH系でもそうならcjk-gs-integrate自体で/usr/local/share/fontsをデフォルトで探索に加えてくれるよう要望すべきか？
 
-これで準備ができました。次に `kanji-config-updmap-sys` コマンドでヒラギノを利用するよう設定しますが、macOS のバージョンによりマップ名が異なります。
-
-High Sierra 以降の場合：
-```
-$ sudo kanji-config-updmap-sys --jis2004 hiragino-highsierra-pron
-
-```
-
-
-
-★
+## フォントの設定（Linux＋Noto フォント）
 
 ★Notoの説明はまだ変則的手段が必要? (kanji-config-updmap-sysの対象にない)
+
 
