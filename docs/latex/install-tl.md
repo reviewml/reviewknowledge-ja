@@ -346,7 +346,7 @@ TeX のファイルデータベースを更新するために `mktexlsr` コマ�
 $ sudo mktexlsr
 ```
 
-Noto フォントは `kanji-config-updmap-sys` の選択肢にはないので、[使用書体の変更（upLaTeX 編）](ptex-fonts.html) にあるとおり pxchfon パッケージを使います。Re:VIEW のプロジェクトの `sty/review-custom.sty` に次のように追加します。
+Noto フォントは `kanji-config-updmap-sys` の選択肢にはないので、[使用書体の変更（upLaTeX 編）](uptex-fonts.html) にあるとおり pxchfon パッケージを使います。Re:VIEW のプロジェクトの `sty/review-custom.sty` に次のように追加します。
 
 ```
 \usepackage[noto]{pxchfon}
