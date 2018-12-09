@@ -1,6 +1,6 @@
-2018/12/6 by @kmuto
+2018/12/6, 2018/12/9 by @kmuto
 
-# Re:VIEW 向け日本語 TeXLive 環境のセットアップ（Unix、macOS）
+# Re:VIEW 向け日本語 TeXLive 環境のセットアップ（Linux、macOS）
 
 OS のパッケージに頼らず、TeXLive の最新版をインストールする方法を説明します。
 
@@ -8,13 +8,13 @@ OS のパッケージに頼らず、TeXLive の最新版をインストールす
 
 [TeXLive](https://www.tug.org/texlive/) は、TeX とそれにまつわる環境一式を提供する巨大な集合体です。
 
-インストールに必要な作業自体はそう難しくはないのですが、デフォルトでは「すべて」をインストールしようとするために膨大な容量と時間を消費するほか、ネットワークからのダウンロードではエラーで失敗することも多々あります。日本語で Re:VIEW を利用する上では使わないファイルも大量です。
+インストールに必要な作業自体はそう難しくはないのですが、デフォルトでは「すべて」をインストールしようとするために膨大な容量と時間を消費するほか、ネットワークからのダウンロードではエラーで失敗することも多々あります。日本語で Re:VIEW を利用する上では使わないであろうファイルもたくさんあります。
 
 ここでは「Re:VIEW の PDF 変換が通りさえすればよい」という割り切りのもとで TeXLive のセットアップ手順を紹介します。
 
 - 執筆時点の TeXLive 2018 に基づいています。
 - テスト環境の都合で、Linux および macOS のみの説明としています。★Windows についてもいずれ書き足したいところです。
-- TeX コンパイラには upLaTeX を利用することを前提とします。特にフォントの設定については LuaLaTeX のほうがシステムフォントの探索などでのトラブルが少ないのですが、現状の Re:VIEW の基本設定は upLaTeX コンパイラ寄りになっています。
+- TeX コンパイラには upLaTeX を利用することを前提とします。特にフォントの設定については LuaLaTeX のほうがシステムフォントの探索などでのトラブルが少ないのですが、現状の Re:VIEW の基本設定では upLaTeX コンパイラをデフォルトとしています。
 - Debian GNU/Linux、Ubuntu Linux で OS のパッケージを利用して最小構成を構築したい場合は、[Re:VIEW image for Docker](https://hub.docker.com/r/vvakame/review/) の Dockerfile の内容が参考になるでしょう。
 
 ## TeXLive のインストール
@@ -36,17 +36,17 @@ $ cd install-tl-*
 $ sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet/
 ```
 
-17.58.03.png
+![TeXLive インストーラメインメニュー](images/tl-menu1.png)
 
 テキストベースのインストーラの画面が開きます。デフォルトではスキームに scheme-full が選択されていて、すべてのパッケージファイルがインストールされてしまう（5.6GB にもなる）ので、まずはこれを変更します。
 
 メニューにあるとおり `S` と入れて Enter キーを押します。
 
-17.58.12.png
-
 スキームの選択になります。TeX のスタイルなど個々の機能や拡張はパッケージとして配布されています。TeXLive ではこのパッケージを言語あるいは TeX コンパイラなどの目的単位にグループ化し、コレクションと呼んでいます。さらにこのコレクションを、依存関係も考慮してユーザー向けにもう少しわかりやすい選択肢としてまとめたものがスキームです。
 
 ここではスキームを最小のものにするために「e. minimal scheme」を選ぶことにします。`e`、Enter キーと押します。これで e 行が `[X]` となるので、`R`、Enter キーと押してメニューに戻ります。
+
+![スキームの選択](images/tl-menu2.png)
 
 メインメニューから今度はコレクションを選ぶため、`C`、Enter キーと押します。
 
@@ -59,10 +59,7 @@ $ sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive
 
 これらにチェックを付けるため「`cfxE`」とまとめて記入し、Enter キーを押します。
 
-22.40.03.png
-
-- コレクションの選定は、@munepixyz さんが作られている[最小プロファイル](https://gist.github.com/munepi/cb7999cb0f4d0c8629d1593fe3117e33)を参考にしました。
-- XeTeX パッケージは過去 `dvipdfmx` コマンドの実行に必要でしたが、整理されて dvipdfmx パッケージが基本コレクションに収録されるようになったので、XeTeX を使うのでなければ選択する必要はなくなっているようです。
+![コレクションの選択](images/tl-menu3.png)
 
 必要であればほかに以下を加えるのもよいでしょう。
 
@@ -73,7 +70,7 @@ $ sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive
 
 次はオプションを設定します。`O`、Enter キーでオプションメニューに移動します。
 
-22l.40.42
+![オプションの設定](images/tl-menu4.png)
 
 以下の2つのオプションは TeX のドキュメントやソースコードのインストール設定ですが、Re:VIEW から TeX を利用するだけであれば使うことがないでしょう（レイアウトをいろいろ変更したいというときには、これらのオプションはそのままにしておくべきです！ `texdoc` コマンドを使って TeX のドキュメントを参照できます。ネットのつまみ食いはお腹を壊します）。
 
@@ -82,13 +79,9 @@ $ sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive
 
 `D`、Enter キー、`S`、Enter キーでチェックを外し、`R`、Enter キーでメインメニューに戻ります。
 
-これで Re:VIEW を動かすに足る最小構成ができました。`I`、Enter キーでダウンロードとインストールを実行します。
+これで Re:VIEW を動かすに足る最小構成ができました。`I`、Enter キーでダウンロードとインストールを実行します。ブロードバンドであれば、20〜30分ほどでダウンロードとセットアップが完了します。
 
-22.42.13
-
-ブロードバンドであれば、20〜30分ほどでダウンロードとセットアップが完了します。
-
-18.21.31
+![TeXLive のインストール完了](images/tl-menu5.png)
 
 最後のメッセージにあるとおり、プログラムは `/usr/local/texlive/<TeXLiveバージョン>/bin/<アーキテクチャ名>` フォルダに用意されるので、ここにパスを通す必要があります。たとえば次のようにホームフォルダの `.bashrc` に追加します（これはパスの先頭に TeXLive へのパスを通します）。
 
@@ -115,7 +108,10 @@ Primary author of e-upTeX: Peter Breitenlohner.
 
 Re:VIEW のプロジェクトで `rake pdf` を実行して、正常に PDF が生成されることも確認します。
 
-## Ghostscript
+- コレクションの選定は、@munepixyz さんが作られている[最小プロファイル](https://gist.github.com/munepi/cb7999cb0f4d0c8629d1593fe3117e33)を参考。
+- XeTeX パッケージは過去 `dvipdfmx` コマンドの実行に必要だったが、整理されて dvipdfmx パッケージが基本コレクションに収録されるようになったので、XeTeX を使うのでなければ選択する必要はなくなっている模様。
+
+## Ghostscript のインストール
 
 以降のフォントの自動設定をしたかったり、あるいはドキュメント内で eps 形式のファイルを使いかったりするときには、TeXLive とは別に、Postscript インタプリタの Ghostscript が必要です。
 
@@ -156,6 +152,8 @@ sudo tlmgr アクション
 Linux で `sudo` コマンドを使う場合、secure_path 設定に TeXLive のパスを追加する必要があるかもしれません。`visudo` コマンドで以下のようにパスを加えておきましょう。
 
 ```
+Defaults  secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+ ↓
 Defaults  secure_path="/usr/local/texlive/2018/bin/x86_64-linux:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 ```
 
@@ -299,14 +297,71 @@ $ sudo mktexlsr
 `kanji-config-updmap-sys` コマンドでマップを設定します。
 
 ```
-sudo kanji-config-updmap-sys status （利用可能なマップを一覧）
-sudo kanji-config-updmap-sys --jis2004 morisawa-pr6n （JIS2004のモリサワフォント）
+$ sudo kanji-config-updmap-sys status （利用可能なマップを一覧）
+$ sudo kanji-config-updmap-sys --jis2004 morisawa-pr6n （JIS2004のモリサワフォント）
 ```
 
 - ★/usr/local/share/fontsがfontconfigに設定されているのはDebian系だけだろうか。RH系でもそうならcjk-gs-integrate自体で/usr/local/share/fontsをデフォルトで探索に加えてくれるよう要望すべきか？
 
 ## フォントの設定（Linux＋Noto フォント）
 
-★Notoの説明はまだ変則的手段が必要? (kanji-config-updmap-sysの対象にない)
+Google とAdobe が作成した [Noto CJK フォント](https://www.google.com/get/noto/) は、オープンソースライセンスの高品質なフォントです。Google では Noto Serif CJK・Noto Sans CJKという名前、Adobe では源ノ明朝・源ノ角ゴシックという名前で配布されていますが、実体としては同じです。
 
+Noto CJK にはその名前のとおり中国語・日本語・韓国語の字形が含まれますが、ここではひとまず日本語のみに絞って設定する方法を紹介しておきます。まず、Serif（明朝体）と Sans（ゴシック体）の2つのフォントをダウンロードします。
 
+- [Noto Serif CJK JP](https://www.google.com/get/noto/#serif-jpan)
+- [Noto Sans CJK JP](https://www.google.com/get/noto/#sans-jpan)
+
+`/usr/local/texlive/texmf/fonts/opentype` に適当にフォルダを作って、ダウンロードした zip ファイルを展開します（OS で利用できるように別フォルダに置いた場合には、そこからシンボリックリンクを張ります）。たとえば次のようになります。
+
+```
+.
+├── noto-sanscjk
+│   ├── LICENSE_OFL.txt
+│   ├── NotoSansCJKjp-Black.otf
+│   ├── NotoSansCJKjp-Bold.otf
+│   ├── NotoSansCJKjp-DemiLight.otf
+│   ├── NotoSansCJKjp-Light.otf
+│   ├── NotoSansCJKjp-Medium.otf
+│   ├── NotoSansCJKjp-Regular.otf
+│   ├── NotoSansCJKjp-Thin.otf
+│   ├── NotoSansMonoCJKjp-Bold.otf
+│   ├── NotoSansMonoCJKjp-Regular.otf
+│   └── README
+└── noto-serifcjk
+    ├── LICENSE_OFL.txt
+    ├── NotoSerifCJKjp-Black.otf
+    ├── NotoSerifCJKjp-Bold.otf
+    ├── NotoSerifCJKjp-ExtraLight.otf
+    ├── NotoSerifCJKjp-Light.otf
+    ├── NotoSerifCJKjp-Medium.otf
+    ├── NotoSerifCJKjp-Regular.otf
+    ├── NotoSerifCJKjp-SemiBold.otf
+    └── README
+```
+
+TeX のファイルデータベースを更新するために `mktexlsr` コマンドを実行します。
+
+```
+$ sudo mktexlsr
+```
+
+Noto フォントは `kanji-config-updmap-sys` の選択肢にはないので、[使用書体の変更（upLaTeX 編）](ptex-fonts.html) にあるとおり pxchfon パッケージを使います。Re:VIEW のプロジェクトの `sty/review-custom.sty` に次のように追加します。
+
+```
+\usepackage[noto]{pxchfon}
+```
+
+JIS2004 字形にする場合は、`config.yml` の texdocumentclass パラメータに jis2004 オプションを追加します。
+
+```
+texdocumentclass: ["review-jsbook", "media=print,paper=a5"]
+  ↓
+texdocumentclass: ["review-jsbook", "media=print,paper=a5,jis2004"]
+```
+
+![JIS2004 字形の Noto フォント表示](images/noto.png)
+
+- [upLaTeX文書で源ノ明朝／Noto Serif CJKを簡単に使う方法](https://qiita.com/zr_tex8r/items/9dfeafecca2d091abd02)
+- otc 形式フォントを使いたいときには `noto-otc` を指定する。
+- Debian GNU/Linux Stretch の場合、pxchfon パッケージが古く noto マップはそもそも収録されていない。

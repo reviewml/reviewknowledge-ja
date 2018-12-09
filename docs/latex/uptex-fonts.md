@@ -24,11 +24,11 @@ LuaTeX コンパイラで LuaLaTeX-ja 環境を使えば任意の TrueType/OpenT
 
 ## pxchfon パッケージの基本
 
-pxchfon パッケージは、dvipdfmx の実行時に埋め込むべきフォントを設定することで、フォントを切り替えます。TeXLive には `kanji-config-updmap` というデフォルトの埋め込み和文フォントを設定するツールがありますが、pxchfon パッケージは TeX ソース個別に設定できます。
+pxchfon パッケージは、dvipdfmx の実行時に埋め込むべきフォントを設定することで、フォントを切り替えます。TeXLive には `kanji-config-updmap-sys` というデフォルトの埋め込み和文フォントを設定するツールがありますが、pxchfon パッケージは TeX ソース個別に設定できます。
 
 ### プリセットを使う
 
-最も簡単なのは、`kanji-config-updmap` と同等のプリセットを指定する方法です。フォントファイル名はプリセットの内容に合わせる必要があります。プリセットで想定しているファイル名の詳細は、`texdoc pxchfon` でドキュメントを参照してください。sty/review-custom.sty に次の書式で追加します。
+最も簡単なのは、`kanji-config-updmap-sys` と同等のプリセットを指定する方法です。フォントファイル名はプリセットの内容に合わせる必要があります。プリセットで想定しているファイル名の詳細は、`texdoc pxchfon` でドキュメントを参照してください。sty/review-custom.sty に次の書式で追加します。
 
 ```
 \usepackage[プリセット名]{pxchfon}
@@ -52,6 +52,10 @@ pxchfon パッケージは、dvipdfmx の実行時に埋め込むべきフォン
 - `yu-win`：遊書体（Windows 8版）
 - `yu-win10`：遊書体（Windows 10版）
 - `yu-osx`：遊書体（macOS版）
+- `sourcehan`：源ノ明朝+源ノ角ゴシック（otf）。TeXLive 2017 の dvipdmfx が必要
+- `sourcehan-otc`：源ノ明朝+源ノ角ゴシック（otc）。TeXLive 2017 の dvipdmfx が必要
+- `noto`：Noto（otf）。TeXLive 2017 の dvipdmfx が必要
+- `noto-otc`：Noto（otc）。TeXLive 2017 の dvipdmfx が必要
 
 ### 個別に指定する
 

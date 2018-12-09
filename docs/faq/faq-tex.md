@@ -5,6 +5,7 @@ FAQ（よくある質問と回答）のこのセクションは、Re:VIEW の使
 ----
 
 ## TeX 環境の構築はどうしたらよいですか？
+- [Re:VIEW 向け日本語 TeXLive 環境のセットアップ（Linux、macOS）](../latex/install-tl.html)
 
 ## LaTeX を使った PDF に変換するにはどうしたらよいですか？
 

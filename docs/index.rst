@@ -30,6 +30,7 @@ LaTeX に関連する長めの Tips
   latex/bookmark-tree
   latex/review3-latex
   latex/uptex-fonts
+  latex/install-tl
 
 EPUB に関連する長めの Tips
 ------------------------------
