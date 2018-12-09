@@ -312,6 +312,10 @@ md2review mdファイル > reファイル
 
 現時点では実装の報告はありません。
 
+## Sphinx で Re:VIEW の書式はサポートされますか？
+
+- [Sphinx ReVIEW builder](https://github.com/shirou/sphinxcontrib-reviewbuilder)
+
 ## LaTeX を使いたくないのですが、ほかの PDF 作成方法はありませんか？
 
 たとえば InDesign を使う方法と、CSS 組版を使う方法があります。
