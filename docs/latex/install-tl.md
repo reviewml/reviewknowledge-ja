@@ -1,24 +1,26 @@
-2018/12/6, 2018/12/9 by @kmuto
+2018/12/6, 2018/12/9, 2018/12/10 by @kmuto
 
-# Re:VIEW 向け日本語 TeXLive 環境のセットアップ（Linux、macOS）
+# Re:VIEW 向け日本語 TeX Live 環境のセットアップ（Linux、macOS、Windows）
 
-OS のパッケージに頼らず、TeXLive の最新版をインストールする方法を説明します。
+OS のパッケージに頼らず、TeX Live の最新版をインストールする方法を説明します。
 
 ----
 
-[TeXLive](https://www.tug.org/texlive/) は、TeX とそれにまつわる環境一式を提供する巨大な集合体です。
+[TeX Live](https://www.tug.org/texlive/) は、TeX とそれにまつわる環境一式を提供する巨大な集合体です。
 
 インストールに必要な作業自体はそう難しくはないのですが、デフォルトでは「すべて」をインストールしようとするために膨大な容量と時間を消費するほか、ネットワークからのダウンロードではエラーで失敗することも多々あります。日本語で Re:VIEW を利用する上では使わないであろうファイルもたくさんあります。
 
-ここでは「Re:VIEW の PDF 変換が通りさえすればよい」という割り切りのもとで TeXLive のセットアップ手順を紹介します。
+ここでは「Re:VIEW の PDF 変換が通りさえすればよい」という割り切りのもとで TeX Live のセットアップ手順を紹介します。
 
-- 執筆時点の TeXLive 2018 に基づいています。
-- テスト環境の都合で、Linux および macOS のみの説明としています。★Windows についてもいずれ書き足したいところです。
+- 執筆時点の TeX Live 2018 に基づいています。
+- Debian GNU/Linux・Ubuntu Linux、macOS、Windows 10 を前提にしています。
 - TeX コンパイラには upLaTeX を利用することを前提とします。特にフォントの設定については LuaLaTeX のほうがシステムフォントの探索などでのトラブルが少ないのですが、現状の Re:VIEW の基本設定では upLaTeX コンパイラをデフォルトとしています。
 - Debian GNU/Linux、Ubuntu Linux で OS のパッケージを利用して最小構成を構築したい場合は、[Re:VIEW image for Docker](https://hub.docker.com/r/vvakame/review/) の Dockerfile の内容が参考になるでしょう。
 
-## TeXLive のインストール
-TeXLive のインストーラは `install-tl` という名前のファイルです。Linux・macOS いずれでも、[サイト](https://www.tug.org/texlive/acquire-netinstall.html)から「install-tl-unx.tar.gz」をダウンロードします。
+説明の都合で、Windows のインストールは本記事の後のほうに記しています。
+
+## TeX Live のインストール（Linux・macOS）
+TeX Live のインストーラは `install-tl` という名前のファイルです。Linux・macOS いずれでも、[サイト](https://www.tug.org/texlive/acquire-netinstall.html)から「install-tl-unx.tar.gz」をダウンロードします。
 
 ここではホームの `Download` フォルダにダウンロードしたとします。ターミナルを開いて以下のように tar.gz アーカイブファイルを展開し、そのフォルダに移動します。
 
@@ -30,19 +32,19 @@ install-tl-20181205/...
 $ cd install-tl-*
 ```
 
-次に、この中の `install-tl` を root 権限で実行します。このとき、ダウンロードリポジトリを指定できます。デフォルトのままだと CDN のミラーサイトになるのですが、TeXLive のミラーサイトの品質はバラバラで、速度が出なかったり、はたまたミラーがちゃんとできていなかったりなどの余計な問題にひっかかることが多いため、最も安定していて速度も出る JAIST を選んでいます。
+次に、この中の `install-tl` を root 権限で実行します。このとき、ダウンロードリポジトリを指定できます。デフォルトのままだと CDN のミラーサイトになるのですが、TeX Live のミラーサイトの品質はバラバラで、速度が出なかったり、はたまたミラーがちゃんとできていなかったりなどの余計な問題にひっかかることが多いため、最も安定していて速度も出る JAIST を選んでいます。
 
 ```
 $ sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet/
 ```
 
-![TeXLive インストーラメインメニュー](images/tl-menu1.png)
+![TeX Live インストーラメインメニュー](images/tl-menu1.png)
 
 テキストベースのインストーラの画面が開きます。デフォルトではスキームに scheme-full が選択されていて、すべてのパッケージファイルがインストールされてしまう（5.6GB にもなる）ので、まずはこれを変更します。
 
 メニューにあるとおり `S` と入れて Enter キーを押します。
 
-スキームの選択になります。TeX のスタイルなど個々の機能や拡張はパッケージとして配布されています。TeXLive ではこのパッケージを言語あるいは TeX コンパイラなどの目的単位にグループ化し、コレクションと呼んでいます。さらにこのコレクションを、依存関係も考慮してユーザー向けにもう少しわかりやすい選択肢としてまとめたものがスキームです。
+スキームの選択になります。TeX のスタイルなど個々の機能や拡張はパッケージとして配布されています。TeX Live ではこのパッケージを言語あるいは TeX コンパイラなどの目的単位にグループ化し、コレクションと呼んでいます。さらにこのコレクションを、依存関係も考慮してユーザー向けにもう少しわかりやすい選択肢としてまとめたものがスキームです。
 
 ここではスキームを最小のものにするために「e. minimal scheme」を選ぶことにします。`e`、Enter キーと押します。これで e 行が `[X]` となるので、`R`、Enter キーと押してメニューに戻ります。
 
@@ -81,16 +83,16 @@ $ sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive
 
 これで Re:VIEW を動かすに足る最小構成ができました。`I`、Enter キーでダウンロードとインストールを実行します。ブロードバンドであれば、20〜30分ほどでダウンロードとセットアップが完了します。
 
-![TeXLive のインストール完了](images/tl-menu5.png)
+![TeX Live のインストール完了](images/tl-menu5.png)
 
-最後のメッセージにあるとおり、プログラムは `/usr/local/texlive/<TeXLiveバージョン>/bin/<アーキテクチャ名>` フォルダに用意されるので、ここにパスを通す必要があります。たとえば次のようにホームフォルダの `.bashrc` に追加します（これはパスの先頭に TeXLive へのパスを通します）。
+最後のメッセージにあるとおり、プログラムは `/usr/local/texlive/<TeX Liveバージョン>/bin/<アーキテクチャ名>` フォルダに用意されるので、ここにパスを通す必要があります。たとえば次のようにホームフォルダの `.bashrc` に追加します（これはパスの先頭に TeX Live へのパスを通します）。
 
 ```
 $ echo "PATH=/usr/local/texlive/2018/bin/x86_64-darwin:$PATH" >> ~/.bashrc （macOSの場合）
 $ echo "PATH=/usr/local/texlive/2018/bin/x86_64-linux:$PATH" >> ~/.bashrc （Linuxの場合）
 ```
 
-ターミナルを開き直し、TeXLive がインストールされていることを確認しましょう。
+ターミナルを開き直し、TeX Live がインストールされていることを確認しましょう。
 
 ```
 $ uplatex --version
@@ -111,9 +113,9 @@ Re:VIEW のプロジェクトで `rake pdf` を実行して、正常に PDF が�
 - コレクションの選定は、@munepixyz さんが作られている[最小プロファイル](https://gist.github.com/munepi/cb7999cb0f4d0c8629d1593fe3117e33)を参考。
 - XeTeX パッケージは過去 `dvipdfmx` コマンドの実行に必要だったが、整理されて dvipdfmx パッケージが基本コレクションに収録されるようになったので、XeTeX を使うのでなければ選択する必要はなくなっている模様。
 
-## Ghostscript のインストール
+## Ghostscript のインストール（Linux・macOS）
 
-以降のフォントの自動設定をしたかったり、あるいはドキュメント内で eps 形式のファイルを使いかったりするときには、TeXLive とは別に、Postscript インタプリタの Ghostscript が必要です。
+以降のフォントの自動設定をしたかったり、あるいはドキュメント内で eps 形式のファイルを使いかったりするときには、TeX Live とは別に、Postscript インタプリタの Ghostscript が必要です。
 
 Debian GNU/Linux や Ubuntu Linux の場合は deb パッケージをインストールします。
 
@@ -129,8 +131,8 @@ $ brew install ghostscript
 
 - Ghostscriptなしでフォント自動設定機能だけを使う方法（Re: MacのTexliveインストールの際のシンボリックリンクの貼り直しがうまくいかない）: [https://oku.edu.mie-u.ac.jp/tex/mod/forum/discuss.php?d=2229#p13069](https://oku.edu.mie-u.ac.jp/tex/mod/forum/discuss.php?d=2229#p13069)
 
-## パッケージの追加と TeXLive の更新
-後からパッケージが必要になったり、あるいは不要になったので削除したかったりといったときの TeXLive のパッケージ管理は `tlmgr` コマンドで行います。
+## パッケージの追加と TeX Live の更新
+後からパッケージが必要になったり、あるいは不要になったので削除したかったりといったときの TeX Live のパッケージ管理は `tlmgr` コマンドで行います。
 
 ```
 sudo tlmgr アクション
@@ -149,7 +151,7 @@ sudo tlmgr アクション
 
 コレクションやスキームもパッケージの一種なので、`tlmgr install collection-コレクション名` や `tlmgr install scheme-スキーム名` でまとめてインストールすることも可能です。
 
-Linux で `sudo` コマンドを使う場合、secure_path 設定に TeXLive のパスを追加する必要があるかもしれません。`visudo` コマンドで以下のようにパスを加えておきましょう。
+Linux で `sudo` コマンドを使う場合、secure_path 設定に TeX Live のパスを追加する必要があるかもしれません。`visudo` コマンドで以下のようにパスを加えておきましょう。
 
 ```
 Defaults  secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
@@ -161,7 +163,7 @@ Defaults  secure_path="/usr/local/texlive/2018/bin/x86_64-linux:/usr/local/sbin:
 
 生成される PDF の日本語フォント（リュウミンや中ゴシックなど）の代替書体には、デフォルトで IPA フォントが割り当てられています。macOS のシステムにデフォルトでインストールされているヒラギノフォントを利用するには、もう少し設定が必要です。
 
-これには cjk-gs-integrate-macos というパッケージが便利です。外部の商業フォントファイルを使用する cjk-gs-integrate-macos のようなパッケージは、TeXLive の主リポジトリとは分離された TLContrib というリポジトリに置かれています。
+これには cjk-gs-integrate-macos というパッケージが便利です。外部の商業フォントファイルを使用する cjk-gs-integrate-macos のようなパッケージは、TeX Live の主リポジトリとは分離された TLContrib というリポジトリに置かれています。
 
 まずそのリポジトリを使うよう `tlmgr` コマンドで設定します。
 
@@ -182,7 +184,7 @@ $ sudo tlmgr install japanese-otf-nonfree japanese-otf-uptex-nonfree ptex-fontma
 $ sudo cjk-gs-integrate --link-texmf --cleanup
 ```
 
-そして、macOS のシステムのフォントファイルを TeXLive から利用できるようにリンクします（`-macos` と付くことに注意してください）。
+そして、macOS のシステムのフォントファイルを TeX Live から利用できるようにリンクします（`-macos` と付くことに注意してください）。
 
 Mojave の場合：
 ```
@@ -280,7 +282,7 @@ $ sudo tlmgr install japanese-otf-nonfree japanese-otf-uptex-nonfree
 
 購入済みあるいは購読している小塚やモリサワ・ヒラギノのフォントを、`/usr/share/fonts` または `/usr/local/share/fonts` に入れておきます。サブフォルダを作成してもかまいません。
 
-次に、`cjk-gs-integrate` でリンクを作成します。このツールの挙動としては、`/usr/local/texlive/TeXLiveバージョン/texmf-dist/fonts/misc/cjk-gs-integrate` フォルダにある dat ファイルに定義されているフォント名と合致した場合には、シンボリックリンクが作られます。うまく作られないときには、dat ファイルと照合して、元ファイルのファイル名が正しいかを確認しましょう。
+次に、`cjk-gs-integrate` でリンクを作成します。このツールの挙動としては、`/usr/local/texlive/TeX Liveバージョン/texmf-dist/fonts/misc/cjk-gs-integrate` フォルダにある dat ファイルに定義されているフォント名と合致した場合には、シンボリックリンクが作られます。うまく作られないときには、dat ファイルと照合して、元ファイルのファイル名が正しいかを確認しましょう。
 
 ```
 $ OSFONTDIR=/usr/local/share/fonts// sudo -E cjk-gs-integrate --link-texmf
@@ -365,3 +367,66 @@ texdocumentclass: ["review-jsbook", "media=print,paper=a5,jis2004"]
 - [upLaTeX文書で源ノ明朝／Noto Serif CJKを簡単に使う方法](https://qiita.com/zr_tex8r/items/9dfeafecca2d091abd02)
 - otc 形式フォントを使いたいときには `noto-otc` を指定する。
 - Debian GNU/Linux Stretch の場合、pxchfon パッケージが古く noto マップはそもそも収録されていない。
+
+## TeX Live のインストール（Windows）
+
+ここでは Windows 10 へ TeX Live をインストールする方法を説明します。
+
+[サイト](https://www.tug.org/texlive/acquire-netinstall.html)から `install-tl-windows.exe` をダウンロードし、コマンドプロンプトから実行します（エクスプローラーからの実行の場合はミラーサイトを選択できないため、不安定なミラーサイトを自動選定されて途中でエラーが起きることがあります）。
+
+```
+> cd Downloads
+> install-tl-windows --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet/
+```
+
+「不明な発行元」の警告が表示されることがありますが、仕方がないので継続して実行しましょう。
+
+ミニインストーラが起動します。
+
+![TeX Live ミニインストーラの起動](images/tl-win1.png)
+
+デフォルトでは「Simple install (big)」が選ばれていますが、「Custom install」にチェックして「Next>」ボタンをクリックします。次に「Install」をクリックして先に進みます。しばらく待つと本番の GUI インストーラが起動します。
+
+![TeX Live インストーラ画面と警告](images/tl-win2.png)
+
+管理者権限を与えていないために現在のユーザー用にしか導入できない警告が表示されますが、通常は現在のユーザーが使えれば問題ないでしょう。「続行」をクリックします。
+
+いろいろなメニューがありますが、基本的には先の Linux・macOS と設定する項目は変わりません。
+
+- スキーム：「最小限スキーム」を選択
+- 導入コレクション：「TeX外部プログラム」「推奨されるフォント」「日本語」「LaTeX追加パッケージ」を選択（「不可欠なプログラムとファイル」「Windows限定サポートプログラム」はデフォルトで選択済み）。「追加フォント」「LuaTeXパッケージ」は必要に応じて
+- fontとmacroのdocツリーを導入：不要なら「いいえ」
+- fontとmacroのソースツリーを導入：不要なら「いいえ」
+
+![TeX Live インストーラでの設定](images/tl-win3.png)
+
+選択し終えたら、「TeX Liveの導入」をクリックします。インストールが完了すると、`C:\texlive\2018` に TeX Live が構築されます。インストーラメニューで記載があったように、パスは設定済みなので、すぐに利用できます。
+
+日本語フォントセットの変更は、Linux・macOS と同様に `kanji-config-updmap-sys` を使えます。
+
+![日本語フォントセットの変更](images/tl-win4.png)
+
+`ms` は MS 明朝・ゴシック、`yu-win10` は Windows 10 バンドルの遊書体です。ただし、バンドル版の遊書体はそれを埋め込みで利用した場合の頒布行動に対して可とも不可とも明示されておらず、極めて曖昧な状態に置かれています。
+
+新しいコマンドプロンプトを開き、Re:VIEW プロジェクトをビルドできることを確認します。
+![MS 明朝・ゴシック埋め込みでのプレビュー](images/tl-win5.png)
+
+モリサワなどのフォントがインストールされている場合は TLContrib から前掲の手順でセットアップします。
+
+```
+> tlmgr repository add http://contrib.texlive.info/current tlcontrib
+> tlmgr pinning add tlcontrib '*'
+> tlmgr install japanese-otf-nonfree japanese-otf-uptex-nonfree
+> cjk-gs-integrate --link-texmf
+> mktexlsr
+> kanji-config-updmap-sys status
+> kanji-config-updmap-sys --jis2004 マップ名
+```
+
+Noto フォントの利用は「フォントの設定（Linux＋Noto フォント）」に同じです。texmf-local のパスはデフォルトのインストールでは `C:\texlive\texmf-local` なので読み替えて実行します。
+
+- Windows 向けにはいわゆる角藤版 TeX と呼ばれる [W32TeX](http://w32tex.org/index-ja.html) も広く使われていますが、ここでは説明の統一のために TeX Live を使うことにしました。
+- Ghostscriptは必要?(epsは使わない前提で)
+- tlmgr pinningでwarningが出るのはOK?
+- cjk-gs-integrate は only partial support for Windows! だがどこの部分がパーシャル?
+- Windowsの場合、cjk-gs-integrateはgsなしでも動く模様。ただしすごく時間がかかる?
