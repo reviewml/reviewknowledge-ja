@@ -1,4 +1,4 @@
-2018/12/6, 2018/12/9, 2018/12/10 by @kmuto
+2018/12/6, 2018/12/9, 2018/12/10, 2018/12/15 by @kmuto
 
 # Re:VIEW 向け日本語 TeX Live 環境のセットアップ（Linux、macOS、Windows）
 
@@ -32,11 +32,13 @@ install-tl-20181205/...
 $ cd install-tl-*
 ```
 
-次に、この中の `install-tl` を root 権限で実行します。このとき、ダウンロードリポジトリを指定できます。デフォルトのままだと CDN のミラーサイトになるのですが、TeX Live のミラーサイトの品質はバラバラで、速度が出なかったり、はたまたミラーがちゃんとできていなかったりなどの余計な問題にひっかかることが多いため、最も安定していて速度も出る JAIST を選んでいます。
+次に、この中の `install-tl` を root 権限で実行します。
 
 ```
-$ sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet/
+$ sudo ./install-tl
 ```
+
+（最近は安定していて再現性がないのですが、このあとの工程でパッケージのダウンロードおよび検証に失敗するようであれば、ダウンロード先を明示してみると解決するかもしれません。たとえば JAST ミラーであれば、`sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet/` と指定します。）
 
 ![TeX Live インストーラメインメニュー](images/tl-menu1.png)
 
@@ -134,6 +136,8 @@ $ brew install ghostscript
 ## パッケージの追加と TeX Live の更新
 後からパッケージが必要になったり、あるいは不要になったので削除したかったりといったときの TeX Live のパッケージ管理は `tlmgr` コマンドで行います。
 
+また、本記事でインストールされる TeX Live は「開発の最新」のものであるため、まれに「壊れていて奇妙なエラーになる」ものがインストールされることがあります。たいていは該当のマクロパッケージの更新で修正されます。
+
 ```
 sudo tlmgr アクション
 ```
@@ -162,6 +166,31 @@ Defaults  secure_path="/usr/local/texlive/2018/bin/x86_64-linux:/usr/local/sbin:
 ## フォントの設定（macOS）
 
 生成される PDF の日本語フォント（リュウミンや中ゴシックなど）の代替書体には、デフォルトで IPA フォントが割り当てられています。macOS のシステムにデフォルトでインストールされているヒラギノフォントを利用するには、もう少し設定が必要です。
+
+現時点で macOS で最も手軽にヒラギノフォントを設定する方法として、@munepixyz さんが作成されている「[［改訂第7版］LaTeX2e美文書作成入門 ヒラギノフォントパッチ](https://github.com/munepi/bibunsho7-patch)」があります。名前からは『LaTeX2e美文書作成入門』（技術評論社）専用ツールに見えますが、`install-tl` で構築した TeX Live 環境にもそのまま適用可能です。
+
+パッチリリースページ [https://github.com/munepi/bibunsho7-patch/releases](https://github.com/munepi/bibunsho7-patch/releases) から、最新の dmg ファイルをダウンロードします。
+
+![Bibunsho7-patchのダウンロード](images/patch1.png)
+
+執筆時点では Bibunsho7-patch-1.3-20181128.dmg が最新だったので、これをダウンロードしました。ダウンロードした dmg ファイルを開き、この中の Patch.app を実行します。
+
+ファイル情報が表示されますが、「Patchを開く」をクリックして進みます（このとき、インターネットからダウンロードしたアプリケーションへの警告が示されることがありますが、仕方がないので「開く」を押して進みます）。
+
+![Patchの実行](images/patch2.png)
+
+ヒラギノフォントの設定に必要な処理がひととおり行われ、終了すると「完了」と表示されます。
+
+![ヒラギノフォントの自動設定処理](images/patch3.png)
+
+これで、デフォルトの日本語はヒラギノの明朝・ゴシックに自動で切り替わります。
+
+- 設定は `/usr/local/texlive/texmf-local` フォルダに対して行われます。
+- macOS のヒラギノフォントの形式および置き方は、macOS の今後の更新によって変化する可能性があります。TeX Live 開発元はヒラギノフォントの利用を何ら推奨していないことに注意してください。
+
+## フォントの設定（macOS＋一部手作業）
+
+上記の Bibunsho7-patch の内部で実行されていることも含めて、パッチプログラムによらず手動で行う方法、および別のフォントセットに切り替える方法を説明します。
 
 これには cjk-gs-integrate-macos というパッケージが便利です。外部の商業フォントファイルを使用する cjk-gs-integrate-macos のようなパッケージは、TeX Live の主リポジトリとは分離された TLContrib というリポジトリに置かれています。
 
@@ -243,8 +272,7 @@ Standby family : toppanbunkyu-sierra
 $ sudo kanji-config-updmap-sys morisawa-pr6n
 ```
 
-- TeX Wiki の記事[TLContrib](https://texwiki.texjp.org/?TLContrib)
-- [cjk-gs〜のMojave対応](https://twitter.com/aminophen/status/1054735620776570881)
+- TeX Wiki の記事[ヒラギノフォント](https://texwiki.texjp.org/?ヒラギノフォント)
 
 ### kanij-config-updmap-sys のフォントセット候補
 `kanji-config-updmap-sys` コマンドで示されるフォントセット候補をまとめておきます。セットで利用するフォントが見つからない場合は候補には表示されません。`/usr/local/texlive/texmf-local/fonts` 下位フォルダにフォントファイルを入れているはずなのに表示されないときには、`sudo mktexlsr` で TeX のファイル探索データベースを更新し直してみてください。
@@ -372,12 +400,9 @@ texdocumentclass: ["review-jsbook", "media=print,paper=a5,jis2004"]
 
 ここでは Windows 10 へ TeX Live をインストールする方法を説明します。
 
-[サイト](https://www.tug.org/texlive/acquire-netinstall.html)から `install-tl-windows.exe` をダウンロードし、コマンドプロンプトから実行します（エクスプローラーからの実行の場合はミラーサイトを選択できないため、不安定なミラーサイトを自動選定されて途中でエラーが起きることがあります）。
+[サイト](https://www.tug.org/texlive/acquire-netinstall.html)から `install-tl-windows.exe` をダウンロードし、実行します。
 
-```
-> cd Downloads
-> install-tl-windows --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet/
-```
+（こちらも、このあとの工程でパッケージのダウンロードおよび検証に失敗するようであれば、ダウンロード先を明示してみると解決するかもしれません。たとえば JAST ミラーであれば、コマンドプロンプトを開き、`cd` コマンドでダウンロードしたフォルダに移動した上で、`install-tl-windows --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet/` と指定します。）
 
 「不明な発行元」の警告が表示されることがありますが、仕方がないので継続して実行しましょう。
 
