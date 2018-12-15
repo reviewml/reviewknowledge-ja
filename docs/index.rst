@@ -16,6 +16,7 @@ review-ext.rb による拡張
 
   reviewext/review-ext-basic
   reviewext/other-idxtype
+  reviewext/list-exec
 
 LaTeX に関連する長めの Tips
 -----------------------------
