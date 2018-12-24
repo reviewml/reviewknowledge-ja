@@ -32,6 +32,8 @@ LaTeX に関連する長めの Tips
   latex/review3-latex
   latex/uptex-fonts
   latex/install-tl
+  latex/paper-layout
+
 
 EPUB に関連する長めの Tips
 ------------------------------
