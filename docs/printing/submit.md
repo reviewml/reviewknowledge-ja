@@ -180,7 +180,7 @@ Page size および MediaBox・CropBox・ArtBox は同じ値で、ビューア�
 
 LaTeX でアラビア数字のみで振る方法については、[jsbook ベースのテンプレートで、ページを頭からの通し番号にするにはどうしたらよいですか？](../faq/faq-tex.html#01580761e063df200da1a590c43c3568)に一例を挙げています。
 
-Re:VIEW 3 では、`texdocumentclass` パラメータに `startpage=1,serial_pagination=true,hiddenfolio=nikko-pc` といったオプション指定を付けることで、アラビア語通しページおよび隠しノンブルを実現できます。
+Re:VIEW 3 では、`texdocumentclass` パラメータに `startpage=1,serial_pagination=true,hiddenfolio=nikko-pc` といったオプション指定を付けることで、アラビア数字の通しページおよび隠しノンブルを実現できます。
 
 ## フォント
 
@@ -268,7 +268,7 @@ Acrobat Pro のプリフライト機能を利用して RGB→CMYK 変換、あ�
 
 ![プリフライトでの色の変更](images/colorpre_m.png)
 
-なお、Acrobat Pro の色変換には何らかの不具合が存在し、特定の PDF の変換において「点線が実線になる」「線が太くなる」といった現象が発生します。筆者の経験では、[callas pdfToolbox](https://www.callassoftware.com/en/products/pdftoolbox) での色変換については、現時点で問題は生じていません。
+なお、Acrobat Pro で DC よりも古いバージョンの場合は色変換に不具合があり、特定の PDF の変換において「点線が実線になる」「線が太くなる」といった現象が発生します。筆者の経験では、[callas pdfToolbox](https://www.callassoftware.com/en/products/pdftoolbox) での色変換については、現時点で問題は生じていません。
 
 Ghostscript でも RGB→CMYK 変換はできますが、壊れた箇所などがないか、十分に注意が必要です。以下で使用しているカラープロファイルの JapanColor2001Coated.icc は、[Japan Color](http://japancolor.jp/icc.html) で配布されています。
 

@@ -54,7 +54,8 @@ apt-get install --no-install-recommends texlive-lang-japanese texlive-fonts-reco
 
 ## TeX 環境の構築はどうしたらよいですか？
 
-[FAQ - Re:VIEW の使い方について（TeX PDF）/TeX 環境の構築はどうしたらよいですか？](faq-tex.html)
+- [FAQ - Re:VIEW の使い方について（TeX PDF）/TeX 環境の構築はどうしたらよいですか？](faq-tex.html)
+- [Re:VIEW 向け日本語 TeX Live 環境のセットアップ（Linux、macOS、Windows）](../latex/install-tl.html)
 
 ## Docker のイメージはありますか？
 
@@ -308,6 +309,14 @@ md2review mdファイル > reファイル
 
 命令体系が異なるため、変換結果の re ファイルの手直しは必要です。
 
+## Markdown に変換することはできますか？
+
+Markdown については実験的な対応をしたビルダを収録しています。rake ルールや1コマンドで全部を変換するような仕組みはないのですが、以下のようにして変換できます。
+
+```
+review-compile --target=markdown reファイル > mdファイル
+```
+
 ## pandoc で Re:VIEW の書式はサポートされますか？
 
 現時点では実装の報告はありません。
@@ -340,6 +349,8 @@ md2review mdファイル > reファイル
 ## 表のセルを連結するにはどうしたらよいですか？
 
 ## 別フォルダにあるソースコードファイルの一部を原稿内に取り込みたいと思います。動的に取り込む方法はありますか？
+
+- [コードリストブロック内でファイルの取り込みやコマンド実行を動的に行う](../reviewext/list-exec.html)
 
 ## catalog.yml での最小単位は章単位ですが、節や項に分けることはできませんか？
 
