@@ -19,7 +19,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Re:VIEW knowledge'
-copyright = '2018, Re:VIEW developers team'
+copyright = '2018-2019, Re:VIEW developers team'
 author = 'Re:VIEW developers team'
 
 # The short X.Y version
