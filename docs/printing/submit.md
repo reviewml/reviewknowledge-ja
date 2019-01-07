@@ -1,4 +1,4 @@
-2018/9/29 by @kmuto
+2018/9/29, 2018/12/15 by @kmuto
 
 # 生成した PDF の印刷所入稿
 
@@ -39,6 +39,8 @@ Re:VIEW を使った書籍の入稿においては、1冊ぶんのまとまっ�
 LaTeX で紙面サイズを設定する方法については、
 [LaTeX の紙面サイズを変更するにはどうしたらよいですか？](../faq/faq-tex.html#4b0fce76f7b548819501a275801c48c8)
 を参照してください。
+
+Re:VIEW 3 から、`texdocumentclass` パラメータの `paper=` オプションで紙面サイズを容易に変更できるようになっています。
 
 CSS 組版を使用し、ブラウザから B 列の用紙（B5 など）に出力する場合は、注意が必要です。B 列には大きさが若干異なる ISO と JIS の二種類の規格があり、日本の紙は JIS に基づいていますが、ブラウザの PDF 出力ドライバによっては ISO 規格の値を使用してずれが生じる可能性があります。
 
@@ -137,7 +139,9 @@ PDF の入稿の場合、一般に仕上がりと塗り足し領域情報から�
 
 LaTeX を使用しているときには
 [jsbook ベースのドキュメントにトンボおよびデジタルトンボを配置する](../latex/tex-tombow.html)
-が参考になるでしょう。InDesign の場合には標準でトンボ・デジタルトンボを設置する機能があります。
+が参考になるでしょう。Re:VIEW 3 では、`media=print` 時には自動でデジタルトンボが設置されます。
+
+InDesign の場合には標準でトンボ・デジタルトンボを設置する機能があります。
 
 CSS を使ったブラウザ出力 PDF の場合は、ブラウザ側からは妥当なデジタルトンボを埋め込めないので、生成された PDF を別途 LaTeX あるいは InDesign に貼り付けるなどしてデジタルトンボを設置します。
 
@@ -176,8 +180,7 @@ Page size および MediaBox・CropBox・ArtBox は同じ値で、ビューア�
 
 LaTeX でアラビア数字のみで振る方法については、[jsbook ベースのテンプレートで、ページを頭からの通し番号にするにはどうしたらよいですか？](../faq/faq-tex.html#01580761e063df200da1a590c43c3568)に一例を挙げています。
 
-- ★白紙ページに番号付けすること自体は簡単なのだが、fancy使われているとそれに合わせるというのはなかなか面倒くさい…
-- ★ノドに入れるのはスタイルでやるのとpdflatex使うのどちらがいいだろう。トンボを先に入れているほうにシフトするとすると、スタイルでやるほうが妥当かな
+Re:VIEW 3 では、`texdocumentclass` パラメータに `startpage=1,serial_pagination=true,hiddenfolio=nikko-pc` といったオプション指定を付けることで、アラビア数字の通しページおよび隠しノンブルを実現できます。
 
 ## フォント
 
@@ -265,7 +268,7 @@ Acrobat Pro のプリフライト機能を利用して RGB→CMYK 変換、あ�
 
 ![プリフライトでの色の変更](images/colorpre_m.png)
 
-なお、Acrobat Pro の色変換には何らかの不具合が存在し、特定の PDF の変換において「点線が実線になる」「線が太くなる」といった現象が発生します。筆者の経験では、[callas pdfToolbox](https://www.callassoftware.com/en/products/pdftoolbox) での色変換については、現時点で問題は生じていません。
+なお、Acrobat Pro で DC よりも古いバージョンの場合は色変換に不具合があり、特定の PDF の変換において「点線が実線になる」「線が太くなる」といった現象が発生します。筆者の経験では、[callas pdfToolbox](https://www.callassoftware.com/en/products/pdftoolbox) での色変換については、現時点で問題は生じていません。
 
 Ghostscript でも RGB→CMYK 変換はできますが、壊れた箇所などがないか、十分に注意が必要です。以下で使用しているカラープロファイルの JapanColor2001Coated.icc は、[Japan Color](http://japancolor.jp/icc.html) で配布されています。
 

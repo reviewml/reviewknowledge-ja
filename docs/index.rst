@@ -16,6 +16,7 @@ review-ext.rb による拡張
 
   reviewext/review-ext-basic
   reviewext/other-idxtype
+  reviewext/list-exec
 
 LaTeX に関連する長めの Tips
 -----------------------------
@@ -28,6 +29,11 @@ LaTeX に関連する長めの Tips
   latex/tex-tombow
   latex/prepost-num
   latex/bookmark-tree
+  latex/review3-latex
+  latex/uptex-fonts
+  latex/install-tl
+  latex/paper-layout
+
 
 EPUB に関連する長めの Tips
 ------------------------------

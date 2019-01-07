@@ -54,7 +54,8 @@ apt-get install --no-install-recommends texlive-lang-japanese texlive-fonts-reco
 
 ## TeX 環境の構築はどうしたらよいですか？
 
-[FAQ - Re:VIEW の使い方について（TeX PDF）/TeX 環境の構築はどうしたらよいですか？](faq-tex.html)
+- [FAQ - Re:VIEW の使い方について（TeX PDF）/TeX 環境の構築はどうしたらよいですか？](faq-tex.html)
+- [Re:VIEW 向け日本語 TeX Live 環境のセットアップ（Linux、macOS、Windows）](../latex/install-tl.html)
 
 ## Docker のイメージはありますか？
 
@@ -98,6 +99,12 @@ review-init プロジェクト名
 review-init --without-doc プロジェクト名
 ```
 
+Re:VIEW 3 以降では、任意の Web サーバーからプロジェクトに適用する各種ファイルをダウンロードすることもできます。Web サーバー側では、zip 形式で初期プロジェクトのうち上書きあるいは新規作成したいフォルダおよびファイルをまとめておきます（アーカイブURLにはローカルファイルを指定することもできます）。
+
+```
+review-init -p アーカイブURL プロジェクト名
+```
+
 ## プロジェクトにどのようにコンテンツを置いたらよいですか？
 
 `review-init` コマンド実行後、プロジェクトには次のようなフォルダおよびファイルが置かれます。
@@ -121,6 +128,10 @@ review-init --without-doc プロジェクト名
 
 - [Re:VIEWクイックスタートガイド](https://github.com/kmuto/review/blob/master/doc/quickstart.ja.md)
 - [プロジェクト直下がたくさんの re ファイルだらけでごちゃごちゃしてしまいました。サブフォルダにまとめて置くことはできますか？](#d127d7603580e36bf6a20ee2b0f3a264)
+
+## Re:VIEW がバージョンアップしたときに設定を追従するにはどうしたらよいですか？
+
+Re:VIEW 3 から `review-update` というコマンドが導入されました。このコマンドをプロジェクトフォルダ内で実行すると、config.yml や sty フォルダなどを最新バージョンに適したものに更新できます。
 
 ## re ファイルを書くのに専用のエディタは必要ですか？
 
@@ -298,9 +309,21 @@ md2review mdファイル > reファイル
 
 命令体系が異なるため、変換結果の re ファイルの手直しは必要です。
 
+## Markdown に変換することはできますか？
+
+Markdown については実験的な対応をしたビルダを収録しています。rake ルールや1コマンドで全部を変換するような仕組みはないのですが、以下のようにして変換できます。
+
+```
+review-compile --target=markdown reファイル > mdファイル
+```
+
 ## pandoc で Re:VIEW の書式はサポートされますか？
 
 現時点では実装の報告はありません。
+
+## Sphinx で Re:VIEW の書式はサポートされますか？
+
+- [Sphinx ReVIEW builder](https://github.com/shirou/sphinxcontrib-reviewbuilder)
 
 ## LaTeX を使いたくないのですが、ほかの PDF 作成方法はありませんか？
 
@@ -326,6 +349,8 @@ md2review mdファイル > reファイル
 ## 表のセルを連結するにはどうしたらよいですか？
 
 ## 別フォルダにあるソースコードファイルの一部を原稿内に取り込みたいと思います。動的に取り込む方法はありますか？
+
+- [コードリストブロック内でファイルの取り込みやコマンド実行を動的に行う](../reviewext/list-exec.html)
 
 ## catalog.yml での最小単位は章単位ですが、節や項に分けることはできませんか？
 
