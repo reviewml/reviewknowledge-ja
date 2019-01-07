@@ -400,6 +400,8 @@ DEF
 
 実行するたびに `#@mapfile` 〜 `#@end` の中身が書き換えられます。
 
+★取り込まれた内容に表やブロックがある場合は[#1248](https://github.com/kmuto/review/pull/1248)を含むRe:VIEW 3.1で対応
+
 - [review-preproc ユーザガイド](https://github.com/kmuto/review/blob/master/doc/preproc.ja.md)
 
 ## 見出しの一覧を出力することはできますか？
