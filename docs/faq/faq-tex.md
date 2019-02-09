@@ -321,15 +321,14 @@ Re:VIEW 3 以降では、ドキュメントクラスオプション `hiddenfolio
 
 ## 表内で @\<br\> を使ったときの見た目がよくありません
 
-★#1207
+Re:VIEW 3.0 以降で解消しているはずです（[#1207](https://github.com/kmuto/review/pull/1207)）。
 
 ## 奥付を必ず偶数ページにするにはどうしたらよいですか？
 
-Re:VIEW 3 では、`\reviewcolophonpagecont` マクロを調整し、最初に `\oddclearpage` を実行するようにします。sty/review-custom.sty に次のように追加します。
+Re:VIEW 3 では、`\reviewcolophon` マクロを変更します。デフォルトは単なる `\clearpage`（改ページ）なので、偶数になるように改ページする `\clearoddpage` に置き換えます。これには、sty/review-custom.sty に次のように追加します。
 
 ```
-\let\reviewcolophonpagecontorg\reviewcolophonpagecont
-\def\reviewcolophonpagecont{\clearoddpage\reviewcolophonpagecontorg}
+\renewcommand{\reviewcolophon}[0]{\clearoddpage}
 ```
 
 この設定で POSTDEF が空の場合、CHAPS または APPENDIX の章の最後が白ページだと、白ページが連続します。これは `\backmatter` マクロ内で改ページが行われていることが原因なので、`\backmatter` の呼び出し元の `\reviewbackmatterhook` を空にするよう sty/review-custom.sty に次のように追加します。
