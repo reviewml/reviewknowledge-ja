@@ -93,6 +93,7 @@ opf_meta: {"ebpaj:guide-version": "1.1.3", "ibooks:binding": "false"}
 
 - EPUB をそのまま PDF 変換する：[VersaType Converter](https://trim-marks.com/ja/)、[EPUB to PDF変換ツール](https://www.antenna.co.jp/epub/epubtopdf.html) など）
 - EPUB の HTML を結合し（これを簡単に実行できる `review-epub2html` というコマンドがあります）、Web ブラウザ上で整形したものを PDF として保存する（[Vivliostyle.js](https://vivliostyle.org/) など）
+- [Re:VIEW+CSS組版 執筆環境構築](https://github.com/at-grandpa/review-and-css-typesetting) の仕組みを流用する（おおむね上記のことを内部でしている）
 
 ## CSS を変更するにはどうしたらよいですか？
 
@@ -130,3 +131,9 @@ direction: "rtl"
 ## 数式を入れたいのですが良い方法はありませんか？
 
 [Re:VIEW フォーマットガイド](https://github.com/kmuto/review/blob/master/doc/format.ja.md) の「TeX 式」を参照してください。imgmath という機能で TeX 式を画像化できます。
+
+## ハイライトを有効にすると、コード内のインライン命令がそのまま出てしまいます
+
+ハイライトとインライン命令は極めて相性が悪く、現状ではまだ妥当な解決方法がありません。ハイライトを使う箇所ではコード内のインライン命令は使わないようにしてください。
+
+どうしてもという場合、いったんインライン命令を隠し、ハイライトをかけてからインライン命令を戻す、という処理が必要です。([#1256](https://github.com/kmuto/review/pull/1256))

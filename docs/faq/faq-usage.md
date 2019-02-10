@@ -330,7 +330,7 @@ review-compile --target=markdown reファイル > mdファイル
 たとえば InDesign を使う方法と、CSS 組版を使う方法があります。
 
 - InDesign：IDGXML 形式に変換し、レイアウトデザイン向けに調整した上で、Adobe InDesign で半自動 DTP を行う。
-- CSS組版：EPUB に変換し、EPUB をそのまま PDF 変換する（[VersaType Converter](https://trim-marks.com/ja/)、[EPUB to PDF変換ツール](https://www.antenna.co.jp/epub/epubtopdf.html) など）か、EPUB の HTML を結合し（Re:VIEW 3 から review-epub2html というコマンドを用意しています）、Web ブラウザ上で整形したものを PDF として保存する（[Vivliostyle.js](https://vivliostyle.org/) など）
+- CSS組版：EPUB に変換し、EPUB をそのまま PDF 変換する（[VersaType Converter](https://trim-marks.com/ja/)、[EPUB to PDF変換ツール](https://www.antenna.co.jp/epub/epubtopdf.html) など）か、EPUB の HTML を結合し（Re:VIEW 3 から review-epub2html というコマンドを用意しています）、Web ブラウザ上で整形したものを PDF として保存する（[Vivliostyle.js](https://vivliostyle.org/) など）。後者については @at_grandpa 氏による、ひとそろいセットの [Re:VIEW+CSS組版 執筆環境構築](https://github.com/at-grandpa/review-and-css-typesetting) が公開されています。
 
 これらのいずれも困難であったり、あるいは手作業工程の DTP オペレータに引き渡すということであれば、Re:VIEW 原稿をプレインテキストに変換（`rake text`）して手作業でページを制作していくほうが妥当かもしれません。
 
