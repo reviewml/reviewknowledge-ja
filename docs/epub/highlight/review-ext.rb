@@ -172,6 +172,7 @@ module ReVIEW
         raise ReVIEW::ConfigError, %Q('pygments:' in config.yml is obsoleted.)
       end
       if !highlight? || !ops[:lexer].present? # lexer指定がなければハイライトしない
+      # if !highlight? || !ops[:lexer] == 'none' # lexer指定が「none」だったらハイライトしないとしたい場合はこちらで
         return ops[:body].to_s
       end
 

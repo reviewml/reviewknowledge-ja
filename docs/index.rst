@@ -40,6 +40,8 @@ EPUB に関連する長めの Tips
 .. toctree::
   :maxdepth: 1
 
+  epub/esc-highlight
+
 InDesign に関連する長めの Tips
 ------------------------------
 .. toctree::
