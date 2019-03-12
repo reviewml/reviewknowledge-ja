@@ -69,7 +69,7 @@ File.write("#{ARGV[1]}/hook.log",
 ```
  …
 pdfmaker:
-  hook_beforetexcompile: hook_beforetexcompile.rb
+  hook_beforetexcompile: ./hook_beforetexcompile.rb
  …
 ```
 
@@ -150,7 +150,7 @@ end
 ```
  …
 pdfmaker:
-  hook_beforetexcompile: hook_beforetexcompile.rb
+  hook_beforetexcompile: ./hook_beforetexcompile.rb
  …
 ```
 
@@ -194,7 +194,7 @@ system('uplatex -interaction=nonstopmode -file-line-error __REVIEW_BOOK__.tex')
  …
 pdfmaker:
  …
-  hook_aftertexcompile: hook_aftertexcompile.rb
+  hook_aftertexcompile: ./hook_aftertexcompile.rb
  …
 ```
 
