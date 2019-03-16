@@ -150,7 +150,7 @@ gs -q -r600 -dNOPAUSE -sDEVICE=pdfwrite -o 出力PDF名 -dPDFSETTINGS=/prepress 
 
 - [見栄えが悪い箇所を「少しだけ」調整する](../latex/modify-abit.html)
 
-## @<tt> や @<code> の等幅の箇所が段落からはみ出てしまいます。途中で折り返させるにはどうしたらよいですか？
+## `@<tt>` や `@<code>` の等幅の箇所が段落からはみ出てしまいます。途中で折り返させるにはどうしたらよいですか？
 
 [見栄えが悪い箇所を「少しだけ」調整する](../latex/modify-abit.html) で提示しているように、`\allowbreak` または `\linebreak` マクロを `@<embed>` 命令を使って埋め込むことを推奨します。
 
