@@ -92,7 +92,7 @@ LaTeX はマクロの集合体です。Re:VIEW から読み込まれるカスタ
 
 ## LaTeX の紙面レイアウトとして他のテンプレートはありますか？
 
-デフォルトのもの以外に広く使われているものとして、TechBooster 提供のテンプレートがあります（2018年11月時点では Re:VIEW 3 には対応していません）。
+デフォルトのもの以外に広く使われているものとして、TechBooster 提供のテンプレートがあります (Re:VIEW 3 に対応しています)。
 
 - [https://github.com/TechBooster/ReVIEW-Template](https://github.com/TechBooster/ReVIEW-Template)
 
@@ -149,6 +149,77 @@ gs -q -r600 -dNOPAUSE -sDEVICE=pdfwrite -o 出力PDF名 -dPDFSETTINGS=/prepress 
 ## あるページの版面を少しだけ伸ばすにはどうしたらよいですか？
 
 - [見栄えが悪い箇所を「少しだけ」調整する](../latex/modify-abit.html)
+
+## @<tt> や @<code> の等幅の箇所が段落からはみ出てしまいます。途中で折り返させるにはどうしたらよいですか？
+
+[見栄えが悪い箇所を「少しだけ」調整する](../latex/modify-abit.html) で提示しているように、`\allowbreak` または `\linebreak` マクロを `@<embed>` 命令を使って埋め込むことを推奨します。
+
+どうしても「自動で折り返し」をしたいときには、次のようなマクロを `sty/review-custom.sty` に追加することで、`\reviewtt` 等の挙動を変えて分割可能です。
+
+```
+\makeatletter
+\newif\ifreview@ba@break
+\def\review@ba@end{\review@ba@end@}
+\DeclareRobustCommand{\reviewbreakall}[1]{%
+  \begingroup
+    \review@ba@breakfalse
+    \review@break@all@a#1\review@ba@end
+  \endgroup
+}
+\def\review@break@all@a{%
+  \futurelet\review@ba@tok\review@break@all@b
+}
+\def\review@break@all@b{%
+  \ifx\review@ba@tok\review@ba@end
+    \let\next\@gobble
+  \else\ifx\review@ba@tok\@sptoken
+    \let\next\review@break@all@c
+  \else\ifx\review@ba@tok~%
+    \let\next\review@break@all@d
+  \else\ifx\review@ba@tok\bgroup
+    \let\next\review@break@all@e
+  \else
+    \let\next\review@break@all@f
+  \fi\fi\fi\fi
+  \next
+}
+\expandafter\def\expandafter\review@break@all@c\space{%
+  \space
+  \review@ba@breakfalse
+  \review@break@all@a
+}
+\def\review@break@all@d#1{%
+  \review@break@all@f{\mbox{\space}}%
+}
+\def\review@break@all@e#1{%
+  \review@break@all@f{{#1}}%
+}
+\def\review@break@all@f#1{%
+  \ifreview@ba@break
+    \hskip0pt plus 0.02em\relax
+  \fi
+  #1%
+  \review@ba@breaktrue
+  \review@break@all@a
+}
+
+\DeclareRobustCommand{\reviewtt}[1]{{\ttfamily\reviewbreakall{#1}}}
+\DeclareRobustCommand{\reviewcode}[1]{{\ttfamily\reviewbreakall{#1}}}
+\DeclareRobustCommand{\reviewtti}[1]{{\ttfamily\itshape\reviewbreakall{#1}}}
+\DeclareRobustCommand{\reviewttb}[1]{{\ttfamily\bfseries\reviewbreakall{#1}}}
+\makeatother
+```
+
+## 複数のスペース文字を入れても、1つになってしまいます。どうしたらよいですか？
+
+どうしてもリテラルなスペースを入れたいときには、以下のようにして埋め込みます。
+
+```
+3つのスペースを@<embed>{|latex|~~~}@<embed>{|html|&nbsp;&nbsp;&nbsp;}と入れる
+```
+
+- ★PR #1278
+- 等幅インライン命令での参考 https://gist.github.com/kmuto/4446c219a12d1ac676dd95c9da4b9e65
 
 ## PREDEF、POSTDEF で割り当てたファイルで図表を使うと、おかしな番号の振り方になります。
 
@@ -348,3 +419,13 @@ texdocumentclass: ["review-jsbook", "media=print,paper=a5,openany"]
 ## 各書体を変えるにはどうしたらよいですか？
 
 - [使用書体の変更（upLaTeX 編）](../latex/uptex-fonts.html)
+
+## PDF の作成に時間がかかります
+
+よほど遅いプロセッサや少ないメモリでない限り、Re:VIEW 原稿から TeX 形式への変換、TeX コンパイルおよび PDF の生成には時間はあまりかからないはずです。サンプルドキュメントやプロジェクトの初期での PDF 作成時間に比して明らかに遅くなっているという場合、原因としては次のようなことが考えられます。
+
+- eps ファイルの画像が使われている。eps ファイルは内部で Ghostscript により都度 PDF に変換されるので、時間がかかる要因になります。速度および管理の観点で PDF で統一しておくことを推奨します。
+- 画像が多い。通常は数の問題ではないはずですが、config.yml のドキュメントクラスオプションに `draft` を付けて試してみるとよいかもしれません。このオプションを付けると、画像の領域は仮のボックスで代替されます。
+- re ファイル上での相互参照が多い。現状の Re:VIEW の実装では、相互参照が指定されていたときにやや力まかせな方法で都度探索しています。re ファイルから TeX ファイルへの変換に時間がかかる可能性はありますが、TeX のコンパイル時間には関係ありません。
+- review-ext.rb で時間のかかる処理を加えている。
+- LuaLaTeX を使っている (これは速度面は理解の上で使われていると思いますが)。upLaTeX に比べると、だいぶ高速化してきたとはいえ LuaLaTeX は時間がかなりかかります。
