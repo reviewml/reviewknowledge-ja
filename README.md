@@ -11,3 +11,8 @@ https://review-knowledge-ja.readthedocs.io/ 用のコンテンツです。
 - カスタマイズのほうは#で見出し、##を使わなくて済む程度のボリュームに……とはいってもなかなか難しいかもです。カスタマイズのほうは目次にはレベル1しか出さないようにしておきます。
 - 特定の宣伝にならないように注意したいですが、それしか参考書がない的な場合はやむをえず紹介します。
 - 和文のカッコ、！、？は全角。
+
+## readthedocs.io
+- https://review-knowledge-ja.readthedocs.io/
+- https://readthedocs.org/dashboard/ にログイン。「ビルド」で強制ビルドできる
+
