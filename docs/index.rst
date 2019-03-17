@@ -33,7 +33,7 @@ LaTeX に関連する長めの Tips
   latex/uptex-fonts
   latex/install-tl
   latex/paper-layout
-
+  epub/custom-pages
 
 EPUB に関連する長めの Tips
 ------------------------------
@@ -41,6 +41,7 @@ EPUB に関連する長めの Tips
   :maxdepth: 1
 
   epub/esc-highlight
+  epub/custom-pages
 
 InDesign に関連する長めの Tips
 ------------------------------
