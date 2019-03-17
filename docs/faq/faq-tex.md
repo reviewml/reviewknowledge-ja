@@ -429,3 +429,39 @@ texdocumentclass: ["review-jsbook", "media=print,paper=a5,openany"]
 - re ファイル上での相互参照が多い。現状の Re:VIEW の実装では、相互参照が指定されていたときにやや力まかせな方法で都度探索しています。re ファイルから TeX ファイルへの変換に時間がかかる可能性はありますが、TeX のコンパイル時間には関係ありません。
 - review-ext.rb で時間のかかる処理を加えている。
 - LuaLaTeX を使っている (これは速度面は理解の上で使われていると思いますが)。upLaTeX に比べると、だいぶ高速化してきたとはいえ LuaLaTeX は時間がかなりかかります。
+
+## review-jsbook において、ページ番号を下部中央に配置するには、どうしたらよいですか？
+
+review-jsbook では fancyhdr パッケージの機能を利用してヘッダおよびページ番号を設定しています。sty/review-style.sty で設定されているデフォルトでは、左側のページ（横書きにおいて偶数）の場合は左下、右側のページ（横書きにおいて奇数）の場合は右下に配置されます。
+
+下部中央に変更するには、sty/review-custom.sty にたとえば以下のように記述します。
+
+```
+% ページ番号配置を下部中央にする
+\fancyfoot{}% 既存の設定をキャンセル
+\cfoot{\thepage}% 下部中央に配置
+
+\fancypagestyle{plainhead}{% 章扉も変更
+  \fancyfoot{}% 既存の設定をキャンセル
+  \cfoot{\thepage}% 下部中央に配置
+  \fancyhead{}% 以下はオリジナルのreview-styleと同じ
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}}
+```
+
+review-jlreq では fancyhdr ではなく jlreq クラス自体の機能を利用しているので、設定は異なります。review-style.sty の「ヘッダスタイル」の記述および jlreq クラスのドキュメントを参照してください。
+
+## review-jsbook において、章名を左ページ、節名を右ページに配置するには、どうしたらよいですか？
+
+review-jsbook では fancyhdr パッケージの機能を利用してヘッダおよびページ番号を設定しています。sty/review-style.sty で設定されているデフォルトでは、ヘッダ行に章名と節名の両方が配置されます。
+
+希望の形に変更するには、sty/review-custom.sty にたとえば以下のように記述します。
+
+```
+% ヘッダをページによって切り替える
+\fancyhead{}% 既存の設定をキャンセル
+\fancyhead[LE]{\gtfamily\sffamily\bfseries\upshape \leftmark}% 左ページなら左側の見出し情報（一般に章名）
+\fancyhead[RO]{\gtfamily\sffamily\bfseries\upshape \rightmark}% 右ページなら右側の見出し情報（一般に節名）
+```
+
+review-jlreq では fancyhdr ではなく jlreq クラス自体の機能を利用しているので、設定は異なります。review-style.sty の「ヘッダスタイル」の記述および jlreq クラスのドキュメントを参照してください。
