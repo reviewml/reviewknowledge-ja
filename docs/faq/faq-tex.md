@@ -353,6 +353,35 @@ Re:VIEW 2 の場合は上記の `\includecover` を使ってみるとよいで�
 
 また、Illustrator 上でレイヤーをオフにして非表示にしていても、TeX に貼り付けた場合には表示されてしまうため、事前に表示不要なレイヤーを削除しておく必要があります。
 
+## Re:VIEW 3 で表紙が表示されません
+
+texdocumentclass パラメータで review-jsbook (デフォルト) または review-jlreq を使っており、`media=print` が指定されている（または `media=` パラメータ自体指定されていない）場合には、表紙は PDF には入りません。
+
+これは、紙書籍を印刷する場合、表紙は一般に本文 PDF とはまったく別の納品をするからです（通常、表紙+背+裏表紙を1枚にした PDF がそれに相当します）。
+
+- 電子版書籍 PDF に適した形にする `media=ebook` にすると、表紙が PDF の先頭に差し込まれます。
+- `media=print` でも、さらに `cover=true` パラメータを追加すると、表紙を差し込むことができます。
+
+## 電子版用の表紙の画像を指定しましたが、はみ出してしまいます（あるいは小さすぎてフチができてしまいます）
+
+デフォルトで、表紙画像は実寸で中央合わせで貼り付けられます。正確に指定どおりの大きさで貼り付けることが印刷では重要なので Re:VIEW のデフォルトはこのような仕様にしていますが、「用意した画像ファイルを紙面サイズに拡縮して貼り込みたい」というカジュアルな用途には不向きです。
+
+このようなときには、sty/review-custom.sty に以下のように指定します。
+
+```
+% 拡縮し、紙サイズに合わせて貼り付け
+\def\review@coverimageoption{width=\paperwidth,height=\paperheight}
+% 縦横比を変えたくない（ずれた部分は白くなる）場合は以下を利用
+%\def\review@coverimageoption{width=\paperwidth,height=\paperheight,keepaspectratio}
+```
+
+`media=print` で塗り足し領域まで拡大したい場合には、以下のように塗り足し幅×2のサイズ＝通常は6mmを追加します（とはいえ、上記のように紙の書籍印刷用で表紙を PDF に含めることは通常ないはずです）。
+
+```
+% 拡縮し、紙サイズに合わせて貼り付け。塗り足しぶんも含める
+\def\review@coverimageoption{width=\dimexpr\paperwidth+6mm,height=\dimexpr\paperheight+6mm}
+```
+
 ## Photoshop psd ファイルを配置できません
 
 2018年11月時点では、Photoshop のネイティブ形式である psd ファイルはサポートされていません。
