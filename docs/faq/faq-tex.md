@@ -382,9 +382,27 @@ texdocumentclass パラメータで review-jsbook (デフォルト) または re
 \def\review@coverimageoption{width=\dimexpr\paperwidth+6mm,height=\dimexpr\paperheight+6mm}
 ```
 
+## 裏表紙を入れるにはどうしたらよいですか？
+
+裏表紙を含めたいときには、backcover パラメータに TeX 断片ファイルのファイル名を指定します。たとえば以下のような `backcover.tex` ファイルを作成し、プロジェクトフォルダに配置します。
+
+```
+% imagesフォルダのcover-hyo4.pdfファイルを裏表紙とする
+\includefullpagegraphics{images/cover-hyo4.pdf}
+```
+
+これを PDF に含めるように config.yml で設定します。
+
+```
+ …
+pdfmaker:
+  backcover: backcover.tex
+  …
+```
+
 ## Photoshop psd ファイルを配置できません
 
-2018年11月時点では、Photoshop のネイティブ形式である psd ファイルはサポートされていません。
+2019年3月時点では、Photoshop のネイティブ形式である psd ファイルはサポートされていません。
 
 ただし、graphicxpsd パッケージを使うと、sips（macOS のツール）または covert（ImageMagick）を使用して、コンパイル時に psd ファイルを PDF に変換して利用できます。graphicxpsd パッケージは TeXLive 2017 以降に収録されているほか、`tlmgr install graphicxpsd` でインストールすることもできます。
 
