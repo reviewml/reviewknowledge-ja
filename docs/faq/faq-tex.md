@@ -218,8 +218,7 @@ gs -q -r600 -dNOPAUSE -sDEVICE=pdfwrite -o 出力PDF名 -dPDFSETTINGS=/prepress 
 3つのスペースを@<embed>{|latex|~~~}@<embed>{|html|&nbsp;&nbsp;&nbsp;}と入れる
 ```
 
-- ★PR #1278
-- 等幅インライン命令での参考 https://gist.github.com/kmuto/4446c219a12d1ac676dd95c9da4b9e65
+- 等幅インライン命令での参考 [https://gist.github.com/kmuto/4446c219a12d1ac676dd95c9da4b9e65](https://gist.github.com/kmuto/4446c219a12d1ac676dd95c9da4b9e65)
 
 ## PREDEF、POSTDEF で割り当てたファイルで図表を使うと、おかしな番号の振り方になります。
 
@@ -512,3 +511,38 @@ review-jsbook では fancyhdr パッケージの機能を利用してヘッダ�
 ```
 
 review-jlreq では fancyhdr ではなく jlreq クラス自体の機能を利用しているので、設定は異なります。review-style.sty の「ヘッダスタイル」の記述および jlreq クラスのドキュメントを参照してください。
+
+## 行番号付きリストが長いときの折り返しはどう表現したらよいですか？
+
+`//emlistnum` や `//listnum` では各行頭に行番号が付きます。行が長いときには適当に改行するのが常道ですが、行番号を付けている場合、普通に改行するとそこにも行番号が付いてしまい困ります。
+
+簡単な対処としては方法A・方法Bの2つがあります。
+
+方法Aは、強制改行し、行番号の幅だけスペースを入れます。強制改行は `@<br>{}` を使えますが、EPUB も作る場合はそちらにも影響してしまうので、以下のように `@<embed>` 命令を使うのがよいでしょう。
+
+```
+//emlistnum{
+longlonglonglonglonglonglong@<embed>$|latex|\linebreak\hspace*{5ex}$long time ago
+//}
+```
+
+`\hspace*{5ex}` は、行頭であってもかまわず（`*`）、「x」の文字幅5つぶん（`5ex`）の水平方向スペース（`hspace`）を作る LaTeX マクロです。`5ex` の部分は実際のレイアウトに合わせて調整する必要があるかもしれません。
+
+方法Bは、コードハイライトを有効にし、コードハイライトマクロの補助機能である行番号表現を使うことです。コードハイライトを有効にするには、config.yml の以下の箇所を有効にします。
+
+```
+highlight:
+  latex: "listings"
+```
+
+行の折り返しはハイライトマクロが勝手に行ってくれますが、ある程度指示したいときには、行の途中に空白文字を埋め込むとよいでしょう。
+
+```
+//emlistnum{
+longlonglonglonglonglonglong@<embed>{|latex| }long time ago
+//}
+```
+
+コードハイライトを有効にする代償として、コード内のインライン命令は動かず、すべてエスケープされた文字となってしまいます。対策のヒントは以下の記事に少し示しています。
+
+- [ハイライト内でのインライン命令の処理](../epub/esc-highlight.html)
