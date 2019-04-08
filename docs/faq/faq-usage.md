@@ -497,3 +497,21 @@ Ruby ライブラリおよび OS の対応範囲での対応となります。�
 - review-epubmaker 実行時に OPF メタファイルに書き出される modified タイムスタンプの生成（バージョン 2.5 まではローカルタイム（ただし不適切な時差表記）、バージョン 3 以降は UTC）
 
 前者は日付だけなので、OS の時刻が正しく設定されていれば夏時間は影響しません。後者は「Re:VIEW バージョン 2.5 までを使用し」「夏時間からの時刻の巻き戻しの前後で2回の EPUB ビルドをして」「その2つの EPUB をリーダー上で更新する」ときに「リーダーが modified タイムスタンプを見て更新の有無を判断する」場合に、更新がうまくいかないかもしれません。要するに、まず発生することはない、ということです。
+
+## 段落を空行区切りではなく、改行をもって区切りにすることはできませんか？
+
+Re:VIEW は空行を何らかの意味区切りとするという暗黙の想定をしており、この挙動を変更することは推奨しません。ただ、段落を判定しているのは各ビルダの `paragraph` メソッドなので、これを書き換えれば改行で区切りとすることは可能です。以下に LATEXBuilder の場合の挙動変更例を提示します。
+
+```
+module ReVIEW
+  module LATEXBuilderOverride
+    def paragraph(lines)
+      # blank→結合→blankではなく、行ごとに前後blankを入れて段落化する
+      lines.each {|line| blank; puts line; blank}
+    end
+  end
+  class LATEXBuilder
+    prepend LATEXBuilderOverride
+  end
+end
+```
