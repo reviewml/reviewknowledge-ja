@@ -113,10 +113,12 @@ Re:VIEW 3 ではデフォルト（`media=print` のとき）でトンボが付�
 
 ## 入稿先に PDF/X-1a 形式か PDF/X-4 形式にするよう求められました。どうしたらよいですか？
 
-PDF/X-1a、PDF/X-4 は印刷用 PDF として準拠の求められることの多い標準規格ですが、現時点でフリーソフトウェアの範囲ではこれに明確には対応できません。たとえば以下のような有償ソフトウェアを利用して変換することを推奨します。
+PDF/X-1a、PDF/X-4 は印刷用 PDF として準拠の求められることの多い標準規格です。安全に印刷するための基準なので、遵守することが望まれます。十分に実績のある、以下のような有償ソフトウェアを利用して変換することを推奨します。
 
 - Adobe 社 Acrobat：[https://acrobat.adobe.com/jp/ja/acrobat.html](https://acrobat.adobe.com/jp/ja/acrobat.html)
 - callas 社 pdfToolbox：[https://www.callassoftware.com/en/products/pdftoolbox](https://www.callassoftware.com/en/products/pdftoolbox)
+
+このほかに、[Vibrant](https://vibrant.pub/) というプラットフォームの [press-ready](https://github.com/vibranthq/press-ready) というツールで、フリーソフトウェア (Ghostscript) を通した PDF/X-1a の変換が実装されており、Acrobat での検証も通過する PDF/X-1a ファイルができています。
 
 ## 全体をグレースケールにするにはどうしたらよいですか？
 
