@@ -464,6 +464,31 @@ Re:VIEW 3 では、`\reviewcolophon` マクロを変更します。デフォル�
 texdocumentclass: ["review-jsbook", "media=print,paper=a5,openany"]
 ```
 
+## 日本語フォントが埋め込まれません
+
+TeXLive の場合、kanji-config-updmap-sys コマンドで妥当なフォントのマップファイルを指定すれば、埋め込まれます。W32TeX の場合は下記を参照してください。
+
+## Windowsでcould not locate a virtual/phisical font for TFM "uphgothr-h" のようなエラーになります
+
+Windows で TeXLive ではなく、W32TeX を使っている場合、デフォルトの日本語フォント設定がヒラギノフォントを参照するようになっています（厳密には W32TeX では otf パッケージ利用時の設定にヒラギノフォントが参照されています）。W32TeX には TeXLive の kanji-config-updmap-sys コマンド相当がないため、config.yml に以下のようにマップファイルを直接設定します（ここでは MS 明朝・ゴシックを割り当てています）。
+
+```
+dvioptions: "-d 5 -z 9 -f msmingoth.map"
+```
+
+行頭の#を外すのを忘れないようにしてください。
+
+- システムのデフォルトにする方法としては、W32TeX の dvipdfmx.cfg の末尾に「`f msmingoth.map`」という行を加えます。
+- W32TeX で提供されるマップファイル：hiragino.map, hiraginopron.map, hiraginopron04.map, ipa.map, ipaex.map, kozuka.map, kozukapr6n.map, kozukapr6n04.map, morisawa.map, morisawapr6n.map, morisawapr6n04.map, msmingoth.map, noembed.map, noembed04.map, yu-win10.map, yu.map
+
+## システムにインストールされているのにフォントがないと言われます
+
+利用するフォントは「TeX のファイル管理システム」から見えている必要があります。OS やほかのアプリケーションでは見えている、だけではダメなことに注意してください。
+
+`kpsewhich フォントファイル名`（たとえば `kpsewhich HiraMinPro-W3.otf`）で返ってこなかったら、そのフォントは TeX からまだ使えません。`kpsewhich -show-path="opentype fonts"` で表示されるパスのいずれかにフォントを移動・あるいはリンクした後、`mktexlsr` コマンドでファイルデータベースを更新します。
+
+- [使用書体の変更（upLaTeX 編）](../latex/uptex-fonts.html)
+
 ## 各書体を変えるにはどうしたらよいですか？
 
 - [使用書体の変更（upLaTeX 編）](../latex/uptex-fonts.html)
