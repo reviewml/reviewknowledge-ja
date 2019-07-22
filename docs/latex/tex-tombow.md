@@ -19,7 +19,7 @@ Re:VIEW 3 から、デフォルトの review-jsbook および別案の review-jl
 
 背景などどうでもいいのでともかく jsbook ベースで正しいデジタルトンボを入れる方法を示せ、というせっかちな方のために、jsbook ベースのレイアウトに以下の手順でデジタルトンボを配置できます。
 
-1. プロジェクトの sty フォルダの `review-custom.sty`（Re:VIEW 3 以降）または `reviewmacro.sty`（Re:VIEW 2 以前）に、以下を追加します。
+1. プロジェクトの sty フォルダの `reviewmacro.sty`（Re:VIEW 2 以前）に、以下を追加します。
 
     ```
     \usepackage[pdfbox]{gentombow}
