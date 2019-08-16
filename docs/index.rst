@@ -34,6 +34,7 @@ LaTeX に関連する長めの Tips
   latex/install-tl
   latex/paper-layout
   epub/custom-pages
+  latex/linebreak-verbatim
 
 EPUB に関連する長めの Tips
 ------------------------------
