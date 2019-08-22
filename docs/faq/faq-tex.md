@@ -580,3 +580,26 @@ LaTeX 上でのコラム環境の中に脚注テキストを置いてしまう�
 …\addtocounter{footnote}{-1}\footnotemark{}…
 …
 ```
+
+## 数式への番号付けをRe:VIEWのものではなく、LaTeXの番号付けにするにはどうしたらよいですか？
+デフォルトでは Re:VIEW での `//texequation` ブロック命令で記述した数式は、LaTeX の `equation*` 環境、つまり「番号なし」になります。その代わりに `//texequation` ブロックに ID およびキャプションを付けた場合には、`式<章>.<数式番号> <キャプション>` のキャプションが入ります。
+
+Re:VIEW の番号付けを使わず LaTeX 流に式の各行に番号付けをしたいというときには、`equation*` から `equation` 環境に一律に書き換えてしまうという手段があります。次のような review-ext.rb を作ります。
+
+```
+module ReVIEW
+  module LATEXBuilderOverride
+    def result
+      super.gsub('{equation*}', '{equation}')
+    end
+  end
+
+  class LATEXBuilder
+    prepend LATEXBuilderOverride
+  end
+end
+```
+
+- EPUB 等のほかの形式は諦めることになるでしょう。
+- 番号への参照はできなくなります。リテラルに書くか、式側に `\label{ラベル名}` を入れておいて、参照側では `式@<embed>$|latex|\ref{ラベル名}$` のようにする、といった手段はありますが、もう TeX で最初から書いたほうがよいのでは……という気にもなりそうです。
+- `equation*` と `equation` を混ぜたい (この場合には `\notag` を使うという手もありますが)、`eqnarray` 環境などを使いたい、といったときには、もう少しまじめに `//texequation` の挙動のほうをオーバライドして判定する必要があるでしょう。
