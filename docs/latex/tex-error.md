@@ -260,4 +260,4 @@ Re:VIEW の新しいリリースバージョンで、サードパーティのク
 
 最近流行りの絵文字も文字欠落の代表的な例です。Re:VIEW での絵文字の利用方法については、記事を改めて説明したいと思います。
 
-- [upTeXでUnicodeできない話](https://zrbabbler.hatenablog.com/entry/20150803/1438617651])
+- [upTeXでUnicodeできない話](https://zrbabbler.hatenablog.com/entry/20150803/1438617651)
