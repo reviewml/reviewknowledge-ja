@@ -36,6 +36,7 @@ LaTeX に関連する長めの Tips
   epub/custom-pages
   latex/linebreak-verbatim
   latex/tex-error
+  latex/emoji
 
 EPUB に関連する長めの Tips
 ------------------------------
