@@ -4,6 +4,8 @@
 
 Re:VIEW から TeX 経由の PDF 生成の途中でエラーが発生したときの、原因の調べ方を説明します。
 
+★まだだいぶ書きかけです
+
 ----
 
 ## TeX 実行の流れ
@@ -59,7 +61,7 @@ dvipdfmx は一番最後のプロセスなので、エラー時の画面出力�
 よくわからなければ、.tex ファイルを調査。
 `{ }` の対応関係ミスや、利用しているマクロのエラーの場合、エラー報告された行とは別のところが理由なこともよくある。
 
-一時作業フォルダ内で .tex ファイルの怪しそうなところの行頭に '%` を付けてコメントアウトし、 `uplatex -interaction=nonstopmode -file-line-error -halt-on-error __REVIEW_BOOK__.tex` を手動で実行してみる
+一時作業フォルダ内で .tex ファイルの怪しそうなところの行頭に `%` を付けてコメントアウトし、 `uplatex -interaction=nonstopmode -file-line-error -halt-on-error __REVIEW_BOOK__.tex` を手動で実行してみる
 
 `__REVIEW_BOOK__.log`
 `\endinput`
@@ -80,7 +82,7 @@ footnote
 outer
 〜.tex:647: LaTeX Error: Counter too large. ←これがエラー
 
-footnoteをcolumnの外に
+//footnoteをcolumnの外に
 
 ### 数式の記述ミス
 `//texequation`、`@<m>` の数式命令や、`//embed`、`@<embed>` のような生データ命令は、Re:VIEW の文法チェックの範囲外なので、誤った記述は TeX のコンパイルエラーや異常な結果に直結します。
