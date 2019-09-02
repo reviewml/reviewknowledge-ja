@@ -8,7 +8,7 @@ list や cmd などのコードリストブロック内で、Re:VIEW 変換時�
 
 Re:VIEW には、別ファイルの内容を取り込んだり外部コマンドの実行結果を取り込んだりする「preproc」という機能がもともと用意されています。
 
-- [review-preproc ユーザガイド](https://github.com/kmuto/review/blob/master/doc/preproc.ja.md)
+- [review-preproc ユーザガイド](https://github.com/kmuto/review/blob/master/doc/preproc.ja.md#)
 
 ただ、これは Re:VIEW 変換（review-pdfmaker, review-epubmaker, review-compile など）時に動的に行われるものではなく、その名のとおりプリプロセスとして re ファイルを書き換えるものです。
 

@@ -130,7 +130,7 @@ direction: "rtl"
 
 ## 数式を入れたいのですが良い方法はありませんか？
 
-[Re:VIEW フォーマットガイド](https://github.com/kmuto/review/blob/master/doc/format.ja.md) の「TeX 式」を参照してください。imgmath という機能で TeX 式を画像化できます。
+[Re:VIEW フォーマットガイド](https://github.com/kmuto/review/blob/master/doc/format.ja.md#) の「TeX 式」を参照してください。imgmath という機能で TeX 式を画像化できます。
 
 ## ハイライトを有効にすると、コード内のインライン命令がそのまま出てしまいます
 
