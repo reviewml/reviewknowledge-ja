@@ -50,7 +50,7 @@ GitHub のパブリックリポジトリ上で開発しており、ソースコ�
 
 大まかには毎年「2月」「6月」「10月」の月末にリリースすることにしています（開発状況によって前後することがあります）。
 
-具体的には、[ニュースリリース](https://github.com/kmuto/review/blob/master/NEWS.ja.md)に修正内容をまとめ、バージョン番号を更新し、新たな gem パッケージを RubyGems に公開してダウンロードできるようにします。
+具体的には、[ニュースリリース](https://github.com/kmuto/review/blob/master/NEWS.ja.md#)に修正内容をまとめ、バージョン番号を更新し、新たな gem パッケージを RubyGems に公開してダウンロードできるようにします。
 
 開発の先端は常に GitHub の master ブランチです。
 
@@ -71,7 +71,7 @@ Re:VIEW 自体は一切の保証はなく、また開発リソースを鑑みて
 
 ## バージョンごとの機能差異はどこかにまとまっていますか？
 
-- [ニュースリリース](https://github.com/kmuto/review/blob/master/NEWS.ja.md)
+- [ニュースリリース](https://github.com/kmuto/review/blob/master/NEWS.ja.md#)
 
 ## Re:VIEW は何の言語で書かれていますか？
 
@@ -122,7 +122,7 @@ Re:VIEW の開発スタンスとして、外部のツールやライブラリへ
 
 たとえば `//image` を変換したときの「図X.X」の「図」の部分は、ロケールファイルとして切り出しており、config.yml の language パラメータ値に `en` を指定すれば「Figure 」に変わります。既存の設定ファイルは Re:VIEW プログラムの `lib/review/i18n.yml` にあり、カスタマイズを行うには、プロジェクトフォルダに `locale.yml` という名前のファイルで定義します。
 
-- [Re:VIEWフォーマットガイド](https://github.com/kmuto/review/blob/master/doc/format.ja.md) の「国際化（i18n）」
+- [Re:VIEWフォーマットガイド](https://github.com/kmuto/review/blob/master/doc/format.ja.md#) の「国際化（i18n）」
 
 ただし、TeX を使った PDF 生成については、提供しているスタイルファイルが日本語 LaTeX 環境を前提としています。他言語で使用するには、スタイルファイルなど広範囲での改変が必要になるでしょう。
 
