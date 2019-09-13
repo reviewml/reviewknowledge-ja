@@ -620,3 +620,51 @@ end
 
 ## 記入した絵文字が消えてしまいます!
 - [Re:VIEW + upLaTeX で絵文字を使う](../latex/emoji.html)
+
+## review-jsbook の章見出しの上の空きを取るにはどうしたらよいですか？
+jsbook 側の設定により、章見出しの前には2行ぶんの空きが入っています。
+
+これを変更するには、章見出しを設定しているマクロごと書き換える必要があります。
+
+具体的には、sty/jsbook.cls に以下の定義があります。
+
+```
+ …
+\def\@makechapterhead#1{%
+  \vspace*{2\Cvs}% 欧文は50pt
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+      \if@mainmatter
+        \huge\headfont \@chapapp\thechapter\@chappos
+        \par\nobreak
+        \vskip \Cvs % 欧文は20pt
+      \fi
+    \fi
+    \interlinepenalty\@M
+    \Huge \headfont #1\par\nobreak
+    \vskip 3\Cvs}} % 欧文は40pt
+ …
+```
+
+この2行目にある `\vspace*{2\Cvs}` が見出し前2行空きの設定です。このマクロを丸ごと sty/review-custom.sty にコピーし、さらに2行目を `%` でコメントアウトします。
+
+```
+% for user-defined macro
+\def\@makechapterhead#1{%
+%  \vspace*{2\Cvs}% 欧文は50pt →上空きを無効化
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+      \if@mainmatter
+        \huge\headfont \@chapapp\thechapter\@chappos
+        \par\nobreak
+        \vskip \Cvs % 欧文は20pt
+      \fi
+    \fi
+    \interlinepenalty\@M
+    \Huge \headfont #1\par\nobreak
+    \vskip 3\Cvs}} % 欧文は40pt
+```
+
+なお、jsbook.cls は各種の調整がやや大きなマクロの中に含まれていることがあり、カスタマイズをしようとするとこのように大掛かりになりがちです。review-jsbook.cls もその制約を受けるので、jsbook.cls / review-jsbook.cls で表現の細かなカスタマイズに手を出そうとすると必然的に TeX 言語および LaTeX マクロの知識が必要になります。
+
+最初から紙面の各要素や見出しの表現などを細かに調整したいという前提があるのであれば、jlreq.cls ベースの review-jlreq.cls を使うほうがよいでしょう。[jlreq.clsのドキュメント](https://github.com/abenori/jlreq/blob/master/README-ja.md) も参照してください。
