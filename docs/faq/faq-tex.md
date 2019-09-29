@@ -669,7 +669,7 @@ jsbook 側の設定により、章見出しの前には2行ぶんの空きが入
 
 最初から紙面の各要素や見出しの表現などを細かに調整したいという前提があるのであれば、jlreq.cls ベースの review-jlreq.cls を使うほうがよいでしょう。[jlreq.clsのドキュメント](https://github.com/abenori/jlreq/blob/master/README-ja.md) も参照してください。
 
-# 書き進めたところ、ある時点から画像が消えるようになりました！
+## 書き進めたところ、ある時点から画像が消えるようになりました！
 記法ミスでなければ、TeX のコンパイル結果に実際にフォントや画像ファイルなどを埋め込んで PDF を生成する dvipdfmx ツールの内部計算に何らかの問題が発生し、処理に失敗した可能性があります。config.yml の dvioptions パラメータの行頭コメント `#` を取った上で、`-z` オプションの値を 9 の代わりに 0（圧縮しない）にして試してみましょう。
 
 ```
@@ -690,3 +690,33 @@ mogrify -format pdf *.jpg
 ```
 
 拡張子以外が同じファイルがあると TeX のコンパイル時に図版サイズの計算がおかしくなるため、古いビットマップファイルは別の場所に移動するようにしてください。
+
+## 印刷版と電子版の設定をうまく管理するにはどうしたらよいですか？
+- [PDF（review-pdfmaker）と EPUB（review-epubmaker）、あるいは印刷版 PDF と 電子版 PDF のように出力方法によって若干異なる設定にしたいと思います。重複する内容の yml ファイルを作らずに済みませんか？](../faq/faq-usage.html#6f55737230223b823889cfef3583cce2)
+
+上記のリンク先でヒントを提示しているとおり、config.yml で印刷版ほかひととおりの設定を行い、config-ebook.yml のような名前で `inherit` を使って config.yml を継承しつつ、差異のある箇所だけ上書きします。
+
+```
+inherit: ["config.yml"]
+bookname: book-ebook
+texdocumentclass: ["review-jsbook", "media=ebook,paper=a5"]
+```
+
+電子版のみスタイルファイルを変更したいときには、スタイルファイルを統括する `sty/reviewmacro.sty` を別名でコピーし、それに電子版用の設定を加えるとよいでしょう。
+
+```
+inherit: ["config.yml"]
+bookname: book-ebook
+texdocumentclass: ["review-jsbook", "media=ebook,paper=a5"]
+texstyle: ["reviewmacro-ebook"]
+```
+
+## 一部の文字が康煕部首の文字になります!
+dvipdfmx で Adobe CMap ではなく Unicode マップを使ったフォントを設定している場合、dvipdfmx のバージョンによって一部の文字が本来の文字ではなく、康煕部首の範囲の文字（U+2F00〜U+2FDF）に変わってしまうことがあります。
+
+たとえば源の明朝/ゴシック、Noto Serif/Noto Sans で TeXLive 2018 の dvipdfmx を使っている場合は、U+9577 で入れたはずの「長」が U+2FA7 の康煕文字に変わります。表示上はほとんど区別できませんが、検索したときなどに変わっていることがわかります。より古いバージョンでは「見」「入」なども同様の症状が現れます。
+
+現時点での対処方法は以下のとおりです。
+
+- より新しい TeXLive / dvipdfmx バージョンを使う。TeXLive 2018 への本件のパッチは [dvipdfm-x: tounicode for double encoded glyphs (jp-forum:2575)](https://github.com/TeX-Live/texlive-source/commit/946652fdde8194eab2dbb9d9d98ec250fe640d6f#diff-15d628ec10694d391d772238007b653d) で公開されています。
+- Unicode マップではない Adobe CMap のフォントを使う (たとえば IPA 明朝/ゴシック)。なお、源の明朝/ゴシックの字形を使った Aodbe CMap 準拠のフォントとして、[原の味フォント](https://github.com/trueroad/HaranoAjiFonts) があります。
