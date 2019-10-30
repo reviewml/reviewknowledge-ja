@@ -9,6 +9,14 @@ Re:VIEW 開発者の立場から、Re:VIEW のカスタマイズおよび「よ�
    :maxdepth: 2
    :caption: Contents:
 
+リリースに関する情報
+--------------------------
+.. toctree::
+  :maxdepth: 1
+
+  releases/review400
+  latex/review3-latex
+
 review-ext.rb による拡張
 --------------------------
 .. toctree::
