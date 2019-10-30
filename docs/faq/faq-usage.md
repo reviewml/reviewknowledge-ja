@@ -436,6 +436,7 @@ DEF
 
 - [RedPen](http://redpen.cc/)
 - [textlint](https://textlint.github.io/) および [textlint-plugin-review](https://www.npmjs.com/package/textlint-plugin-review)
+- [テキスト校正くん](https://marketplace.visualstudio.com/items?itemName=ICS.japanese-proofreading)
 
 ## 変換途中で独自の処理を挟むことはできますか？
 
