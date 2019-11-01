@@ -102,7 +102,7 @@ end
 ```
 module ReVIEW
   module LATEXBuilderOverride
-    # gem install unicode_display_width
+    # gem install unicode-display_width
     require 'unicode/display_width'
     require 'unicode/display_width/string_ext'
 
@@ -158,7 +158,7 @@ end
 
 別の紙サイズを使用していたりスタイル変更をしている場合は、`code_line`、`code_line_num` の `n` の値を適宜調整する必要があります。
 
-Unicode での文字の幅の判定のために `unicode_display_width` という gem を使っているので、`gem install unicode_display_width` でインストールしておきましょう。
+Unicode での文字の幅の判定のために `unicode-display_width` という gem を使っているので、`gem install unicode-display_width` でインストールしておきましょう。
 
 この文字折り返しの結果は次のとおりです。
 
