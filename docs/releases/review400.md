@@ -14,6 +14,20 @@ Re:VIEW は定期的に機能向上のためのリリースを続けています
 
 しかし、このバージョンでは Re:VIEW の内部実装をかなり変更しており、review-ext.rb を使って Re:VIEW の挙動を変更・拡張していたプロジェクトには多大な影響が出る可能性が見込まれます。そのため、メジャーバージョンの改訂という形で、内部実装の大きな非互換があることを表すことにしました。
 
+## 既知の問題
+### Re:VIEW 3 系のプロジェクトをそのまま利用しようとすると、`./__REVIEW_BOOK__.tex:79: LaTeX Error: Missing \begin{document}.` のようなエラーが発生する
+
+後方互換性を提供するマクロに不備がありました ([#1414](https://github.com/kmuto/review/issues/1414))。
+
+すべて更新してよければ、後述の `review-update` コマンドを使ってください。
+
+既刊書などで 4.0 のマクロでの変化を避けたい場合には、以下の2行からなるマクロを `review-custom.sty` に追加してください。
+
+```
+\DeclareRobustCommand{\reviewincludegraphics}[2][]{%
+  \includegraphics[#1]{#2}}
+```
+
 ## 既存プロジェクトのバージョンアップ追従
 
 既存のプロジェクトを更新するには、Re:VIEW 4.0 をインストール後、プロジェクトフォルダ内で `review-update` コマンドを実行してください。
