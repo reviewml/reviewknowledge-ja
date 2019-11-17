@@ -742,3 +742,71 @@ dvipdfmx で Adobe CMap ではなく Unicode マップを使ったフォント�
 
 - より新しい TeXLive / dvipdfmx バージョンを使う。TeXLive 2018 への本件のパッチは [dvipdfm-x: tounicode for double encoded glyphs (jp-forum:2575)](https://github.com/TeX-Live/texlive-source/commit/946652fdde8194eab2dbb9d9d98ec250fe640d6f#diff-15d628ec10694d391d772238007b653d) で公開されています。
 - Unicode マップではない Adobe CMap のフォントを使う (たとえば IPA 明朝/ゴシック)。なお、源の明朝/ゴシックの字形を使った Aodbe CMap 準拠のフォントとして、[原の味フォント](https://github.com/trueroad/HaranoAjiFonts) があります。
+
+## 各ページの固定位置に画像を配置するにはどうしたらよいですか？
+
+「すべてのページ」に何かを配置するには、everypage パッケージを使用できます。review-custom.sty に以下のように記述します。
+
+```
+\usepackage{everypage}
+\AddEverypageHook{
+  \myoverlayimage
+}
+```
+
+実際に各ページで呼び出すことになる \myoverlayimage ですが、「固定位置」に置く手法はいろいろあるものの、LaTeX のパッケージの中にはトンボの有無によってうまく動作しないものもあります。トンボによらず利用可能な手法として以下に2種類示します。用途に合いやすいものを選びましょう。
+
+手法1は、TikZ パッケージと bxpgfcurpage.sty を組み合わせたものです。bxpgfcurpage.sty は TeXLive にまだ含まれていないので、作者の @zr-tex8r さんの [Gist](https://gist.github.com/zr-tex8r/ee0998a76f90338c935ec8915c44d3d8) から bxpgfcurpage.sty をダウンロードし、sty フォルダに配置します。
+
+ここでは紙面の左下隅から2mmずつ離したところに images/icon.png を幅20mmで配置するものとします。review-custom.sty にさらに次のように記述します。
+
+```
+ …
+\usepackage{tikz}
+\usepackage{pxpgfmark}
+\usepackage{bxpgfcurpage}
+\newcommand{\myoverlayimage}{
+\begin{tikzpicture}[remember picture,overlay]
+  \node[anchor=south west,% 原点は左下
+        xshift=\dimexpr2truemm, % X方向2mmシフト
+        yshift=\dimexpr2truemm] % Y方向2mmシフト
+        % inner sep=0pt, draw, rectangle] 囲みとかしたいときはこれらも
+     at (current page.south west) {% ページの左下位置に貼り付け
+       \includegraphics[width=20mm]{images/icon.png}% 幅20mmの画像貼り付け
+     };%
+\end{tikzpicture}%
+```
+
+\node で原点の移動と方向、current page.でページ上の原点位置を表しています。中身は \includegraphics で画像ファイルとしていますが、文字列など任意な指定が可能です。
+
+手法2は、textpos パッケージを利用します。ただ textpos パッケージはトンボ付きのときにずれてしまうので、この修正をする [pxtextpos.sty](https://github.com/aminophen/plautopatch/blob/master/pxtextpos.sty) をダウンロードし、sty フォルダに配置します。
+
+この手法での review-custom.sty は次のようになります。
+
+```
+ …
+\usepackage[absolute,overlay]{textpos}
+\usepackage{pxtextpos}
+\newcommand{\myoverlayimage}{
+  \begin{textblock*}{20mm}(2mm,\dimexpr\paperheight-20mm-2mm)
+    \includegraphics[height=20mm]{images/icon.png}% 高さ20mmの画像貼り付け
+  \end{textblock*}
+}
+```
+
+\textblock* 環境の引数「{20mm}」は、幅 20mm のボックスを作るという意味です。その後の()内は紙面左上を基準としたX, Y座標です。ここではX座標は左から2mmとし、Y座標は「ページの高さから20mm（画像の高さ）を引いて、さらに2mm上」としています。これで、高さ20mmの画像はページ左下から2mm離れたところに置かれます。
+
+「すべてのページ」ではなく、内容のあるページだけに置きたいときには、review-jsbook を利用している場合 fancyhdr パッケージでヘッダやフッタを作っているので、これを流用するのが手軽です。review-custom.sty は次のようになります。ここでは紙面デザインでは使っていない\chead（中央のヘッダ）を流用しています。
+
+```
+\chead{\myoverlayimage}
+\fancypagestyle{plainhead}{% 既存の\fancypagestyle{plainhead}のコピー
+\chead{\myoverlayimage}% ここを追加
+\fancyfoot{} % clear all header and footer fields
+\fancyfoot[LE,RO]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}}
+```
+
+- [@doraTeXさんのTweet](https://twitter.com/doraTeX/status/1195404715506319360)
+- [@aminophenさんのTweet](https://twitter.com/aminophen/status/1195742904192364544)
