@@ -741,7 +741,7 @@ dvipdfmx で Adobe CMap ではなく Unicode マップを使ったフォント�
 現時点での対処方法は以下のとおりです。
 
 - より新しい TeXLive / dvipdfmx バージョンを使う。TeXLive 2018 への本件のパッチは [dvipdfm-x: tounicode for double encoded glyphs (jp-forum:2575)](https://github.com/TeX-Live/texlive-source/commit/946652fdde8194eab2dbb9d9d98ec250fe640d6f#diff-15d628ec10694d391d772238007b653d) で公開されています。
-- Unicode マップではない Adobe CMap のフォントを使う (たとえば IPA 明朝/ゴシック)。なお、源の明朝/ゴシックの字形を使った Aodbe CMap 準拠のフォントとして、[原の味フォント](https://github.com/trueroad/HaranoAjiFonts) があります。
+- Unicode マップではない Adobe CMap のフォントを使う (たとえば IPA 明朝/ゴシック)。なお、源の明朝/ゴシックの字形を使った Aodbe CMap 準拠のフォントとして、[原の味フォント](https://github.com/trueroad/HaranoAjiFonts) があります。Docker イメージ vvakame/review の最近のバージョンでは、原の味フォントを採用しています。
 
 ## 各ページの固定位置に画像を配置するにはどうしたらよいですか？
 
@@ -810,3 +810,37 @@ dvipdfmx で Adobe CMap ではなく Unicode マップを使ったフォント�
 
 - [@doraTeXさんのTweet](https://twitter.com/doraTeX/status/1195404715506319360)
 - [@aminophenさんのTweet](https://twitter.com/aminophen/status/1195742904192364544)
+
+## コードリストの箇所をコピーペーストすると、半角の`'が全角の‘’になってしまいます
+review-custom.sty に以下のようなトリックを入れることで、コードリスト部の‘’の文字を変更できます（コードリストを verbatim または alltt の環境で表現している場合。Re:VIEW のデフォルトでは alltt を利用しています）。
+
+```
+%%[ad-hoc] a trick to put upstyle single quotes literally in PDF
+\begingroup
+\catcode`'=\active
+\catcode``=\active
+\g@addto@macro\@noligs{%
+  \def\review@tt@textquotesingle{{\fontfamily{\ttdefault}\textquotesingle}}%
+  \def\review@tt@textasciigrave{{\fontfamily{\ttdefault}\textasciigrave}}%
+  \let'\review@tt@textquotesingle
+  \let`\review@tt@textasciigrave}%
+\endgroup
+```
+
+別解として、本文を含めて、文字の形状をヒゲありのものではない形にし、コピーペースト時も半角になるようにするには、次のような review-ext.rb を使ってすべて置換できます（コードリストを alltt の環境で表現している場合）。いささか乱暴なので、inline_tt, inline_code, common_code_block などに限定したほうが安全かもしれません。
+
+```
+module ReVIEW
+  module LATEXBuilderOverride
+    def result
+      super.gsub("'", '\textquotesingle{}').gsub('`', '\textasciigrave{}')
+    end
+  end
+
+  class LATEXBuilder
+    prepend LATEXBuilderOverride
+  end
+end
+```
+
+- [#1419](https://github.com/kmuto/review/issues/1419)
