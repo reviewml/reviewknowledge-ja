@@ -844,3 +844,84 @@ end
 ```
 
 - [#1419](https://github.com/kmuto/review/issues/1419)
+
+## 奥付に連絡先を入れるにはどうしたらよいですか？
+だいぶ昔から標準で提供していたのですが、ドキュメント化していませんでした。config.yml の `contact`  パラメータで連絡先を記載できます。
+
+```
+contact: "Re:VIEW Project (https://reviewml.org/)"
+```
+
+- [#1425](https://github.com/kmuto/review/pull/1425)
+
+## 奥付の著者・出版社等の順序を変更するにはどうしたらよいですか？
+config.yml の `colophon_order` パラメータで順序を指定できます。デフォルトは `["aut", "csl", "trl", "dsr", "ill", "cov", "edt", "pbl", "contact", "prt"]` です。
+
+## 奥付の「著　者」などを変更するにはどうしたらよいですか？
+locale.yml を使ってデフォルトの文字列から変えることができます。デフォルトの指定を継承すると次のようになります。
+
+```
+locale: ja
+aut: "著　者"
+csl: "監　修"
+dsr: "デザイン"
+ill: "イラスト"
+cov: "表　紙"
+edt: "編　集"
+pht: "撮　影"
+trl: "翻　訳"
+prt: "印刷所"
+pbl: "発行所"
+contact: "連絡先"
+```
+- [「図」「リスト」などの一部の固定文字列は locale.yml ファイルで変えられるようですが、どのように書いたらよいですか？](faq-usage.html#c9697680133190dcac2fc9be59c9e97f)
+- [Re:VIEW フォーマットガイド](https://github.com/kmuto/review/blob/master/doc/format.ja.md#) の「国際化（i18n）」
+- [i18n.yml](https://github.com/kmuto/review/blob/master/lib/review/i18n.yml)
+
+## 奥付のデザインが気に入らないので、根本的に違うものにしたいです
+
+LaTeX ソースのファイルを用意してプロジェクトフォルダに置き、config.yml の `pdfmaker:` の下にある `colophon` パラメータに指定します。
+
+```
+ …
+pdfmaker:
+  colophon: mycolphon.tex
+```
+
+ここでは mycolphon.tex を読み込むようになります。このファイル内で LaTeX の表現を駆使して奥付を作成することもできますが、別のソフトを使って PDF を作成しておき、それを貼り付けるのがおそらく課題の解決には妥当でしょう。images フォルダに mycolophon.pdf を用意したとして、次のような内容を mycolophon.tex に記述します。
+
+```
+\includefullpagegraphics{images/mycolophon.pdf}
+```
+
+## 大扉のデザインが気に入らないので、根本的に違うものにしたいです
+
+config.yml の `titlefile` パラメータに LaTeX ソースのファイルを指定します。PDF を配置したいときには、該当のソースファイル内でたとえば次のようにしておきます。
+
+```
+\includefullpagegraphics{images/mytitlepage.pdf}
+```
+
+## 大扉ページの後に権利表記のページを入れたいです
+
+config.yml の `creditfile` パラメータに LaTeX ソースのファイルを指定します。PDF を配置したいときには、該当のソースファイル内でたとえば次のようにしておきます。
+
+```
+\includefullpagegraphics{images/mycredit.pdf}
+```
+
+## プロフィールページを入れたいです
+
+config.yml の `profile` パラメータに LaTeX ソースのファイルを指定します。PDF を配置したいときには、該当のソースファイル内でたとえば次のようにしておきます。
+
+```
+\includefullpagegraphics{images/myprofile.pdf}
+```
+
+## 広告ページを入れたいです
+
+config.yml の `advfile` パラメータに LaTeX ソースのファイルを指定します。PDF を配置したいときには、該当のソースファイル内でたとえば次のようにしておきます。
+
+```
+\includefullpagegraphics{images/myadvertisement.pdf}
+```
