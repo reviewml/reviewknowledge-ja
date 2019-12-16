@@ -34,17 +34,13 @@ Re:VIEW は定期的に機能向上のためのリリースを続けています
 
 見出し内に `@<code>` や `@<tt>` を使っており、かつハイパーリンクを有効にするとマクロの解決に失敗します。
 
-対応を検討中です。
-
 - [#1432](https://github.com/kmuto/review/issues/1432)
 
-段落中の自動折り返しはできなくなりますが、次のように sty/review-custom.sty に記述することでひとまずエラーを回避することは可能です。
+次の内容を sty/review-custom.sty に記述することでエラーを回避できます（Re:VIEW 4.1 で反映予定です）。
 
 ```
-\DeclareRobustCommand{\reviewtt}[1]{{\ttfamily{#1}}}
-\DeclareRobustCommand{\reviewcode}[1]{{\ttfamily{#1}}}
-\DeclareRobustCommand{\reviewtti}[1]{{\ttfamily\itshape{#1}}}
-\DeclareRobustCommand{\reviewttb}[1]{{\ttfamily\bfseries{#1}}}
+\g@addto@macro\pdfstringdefPreHook{%
+  \def\reviewbreakall#1{#1}}
 ```
 
 ----
