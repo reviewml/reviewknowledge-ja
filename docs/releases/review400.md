@@ -14,8 +14,10 @@ Re:VIEW は定期的に機能向上のためのリリースを続けています
 
 しかし、このバージョンでは Re:VIEW の内部実装をかなり変更しており、review-ext.rb を使って Re:VIEW の挙動を変更・拡張していたプロジェクトには多大な影響が出る可能性が見込まれます。そのため、メジャーバージョンの改訂という形で、内部実装の大きな非互換があることを表すことにしました。
 
+----
+
 ## 既知の問題
-### Re:VIEW 3 系のプロジェクトをそのまま利用しようとすると、`./__REVIEW_BOOK__.tex:79: LaTeX Error: Missing \begin{document}.` のようなエラーが発生する
+#### Re:VIEW 3 系のプロジェクトをそのまま利用しようとすると、`./__REVIEW_BOOK__.tex:79: LaTeX Error: Missing \begin{document}.` のようなエラーが発生する
 
 後方互換性を提供するマクロに不備がありました ([#1414](https://github.com/kmuto/review/issues/1414))。
 
@@ -27,6 +29,25 @@ Re:VIEW は定期的に機能向上のためのリリースを続けています
 \DeclareRobustCommand{\reviewincludegraphics}[2][]{%
   \includegraphics[#1]{#2}}
 ```
+
+#### media=ebook を使うと、「! TeX capacity exceeded, sorry [input stack size=5000]」なるエラーになります
+
+見出し内に `@<code>` や `@<tt>` を使っており、かつハイパーリンクを有効にするとマクロの解決に失敗します。
+
+対応を検討中です。
+
+- [#1432](https://github.com/kmuto/review/issues/1432)
+
+段落中の自動折り返しはできなくなりますが、次のように sty/review-custom.sty に記述することでひとまずエラーを回避することは可能です。
+
+```
+\DeclareRobustCommand{\reviewtt}[1]{{\ttfamily{#1}}}
+\DeclareRobustCommand{\reviewcode}[1]{{\ttfamily{#1}}}
+\DeclareRobustCommand{\reviewtti}[1]{{\ttfamily\itshape{#1}}}
+\DeclareRobustCommand{\reviewttb}[1]{{\ttfamily\bfseries{#1}}}
+```
+
+----
 
 ## 既存プロジェクトのバージョンアップ追従
 
