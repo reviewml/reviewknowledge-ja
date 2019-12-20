@@ -938,3 +938,15 @@ config.yml の `advfile` パラメータに LaTeX ソースのファイルを指
 \g@addto@macro\pdfstringdefPreHook{%
   \def\reviewbreakall#1{#1}}
 ```
+
+## 段落の間に少し空きを入れたい
+
+review-jsbook、review-jlreq ともに段落と段落の間に空きが加わることはありません。洋書の一部などであるように段落間に空きを入れたいときには、sty/review-custom.sty に以下のような定義を入れることで空きが入るようになります。
+
+```
+\setlength\parskip{1ex plus 0.5ex minus 0.2ex}
+```
+
+これは文字「x」の高さぶんの空きを基本とし、状況によって-0.2〜+0.5の変動を許容するという意味です。`\parskip` は目次などほかの箇所にも影響する可能性があるので、指定したことで何か副作用が出ていないか確認しましょう。
+
+なお、単に「1行の空行」を入れたいときには Re:VIEW の `//blankline` 命令があります。
