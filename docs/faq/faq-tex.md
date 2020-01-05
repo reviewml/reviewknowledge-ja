@@ -96,7 +96,7 @@ LaTeX はマクロの集合体です。Re:VIEW から読み込まれるカスタ
 
 ## LaTeX の紙面レイアウトとして他のテンプレートはありますか？
 
-デフォルトのもの以外に広く使われているものとして、TechBooster 提供のテンプレートがあります (Re:VIEW 3 に対応しています)。
+デフォルトのもの以外に広く使われているものとして、TechBooster 提供のテンプレートがあります (Re:VIEW 4 に対応しています)。
 
 - [https://github.com/TechBooster/ReVIEW-Template](https://github.com/TechBooster/ReVIEW-Template)
 
@@ -133,7 +133,7 @@ Re:VIEW 3 以上で LuaTeX への対応を進めています。ただし、現�
 
 ## トンボを付けるにはどうしたらよいですか？
 
-Re:VIEW 3 ではデフォルト（`media=print` のとき）でトンボが付きます。Re:VIEW 2 以前の場合は下記を参照してください。
+Re:VIEW 3 以降ではデフォルト（`media=print` のとき）でトンボが付きます。Re:VIEW 2 以前の場合は下記を参照してください。
 
 - [jsbook ベースのドキュメントにトンボおよびデジタルトンボを配置する](../latex/tex-tombow.html)
 
@@ -164,7 +164,7 @@ gs -q -r600 -dNOPAUSE -sDEVICE=pdfwrite -o 出力PDF名 -dPDFSETTINGS=/prepress 
 
 - [フックで LaTeX 処理に割り込む](../latex/tex-hook.html)
 
-## 長い表がはみ出してしまうのですが、ページで分割するにはどうしたらよいですか？
+<!-- ## 長い表がはみ出してしまうのですが、ページで分割するにはどうしたらよいですか？ -->
 
 ## 等幅の長い文字を入れると文字の間がスカスカになってしまいます。途中で折り返させるにはどうしたらよいですか？
 
@@ -323,6 +323,27 @@ Re:VIEW 2 系のデフォルトのスタイルなどでは、この状況にな�
 \hypersetup{hidelinks}
 ```
 
+## `//image` 等で貼り付けた図版が版面幅いっぱいになってしまいます
+
+デフォルトでは `//image`、`//indepimage`、`//imgtable` で指定した図版は縦横比を保った上で版面いっぱいにサイズが拡縮されます（TeX 変換結果は `\reviewincludegraphics[width=\maxwidth]`）。
+
+各ブロック命令のメトリックスの値により、版面に対する比率を指定できるようになっています。
+
+```
+//image[ID][キャプション][メトリックス]
+//indepimage[ID][キャプション][メトリックス]
+//imgtable[ID][キャプション][メトリックス]
+```
+
+たとえばこのメトリックスに `scale=0.5` を指定すると、版面幅に対して 50% になります（TeX 変換結果は `\reviewincludegraphics[width=0.5\maxwidth]`）。
+
+この scale 値を版面に対してではなく図版の実寸からの拡縮にしたいときには、cofnig.yml の `image_scale2width` オプションを `true` にします（TeX 変換結果は `\reviewincludegraphics[scale=0.5]`）。
+
+各図版を正確な原寸で作成している場合には、拡縮自体が余計な処理と言えます。この場合、フックあるいは review-ext.rb を利用して `width=\maxwidth` を変換結果から削除する必要があるでしょう。
+
+Re:VIEW 4.1 以降では、pdfmaker セクション下に `use_original_image_size` というパラメータが追加されました。(★Re:VIEW 4.1 は 2020年2月リリース予定)
+このパラメータの値を `true` にすると、拡縮なしで原寸のまま配置するようになります。また、Re:VIEW 4.1 以降では `image_scale2width` オプションは pdfmaker セクション下に移動しています。
+
 ## 表紙を全面に貼り付けるにはどうしたらよいですか？
 
 Re:VIEW 3 以降ではデフォルトで全面貼り付けになっています。
@@ -374,7 +395,7 @@ pdfmaker:
 
 ## 挿絵を全面に入れるにはどうしたらよいですか？
 
-Re:VIEW 3 の場合、`\includefullpagegraphics` 命令を利用できます。
+Re:VIEW 3 以降の場合、`\includefullpagegraphics` 命令を利用できます。
 
 ```
 //embed[latex]{
@@ -467,7 +488,7 @@ Re:VIEW 3 以降では、ドキュメントクラスオプション `hiddenfolio
 
 ## コラム内に image や table を置くとエラーになります
 
-コラムのような囲み内で「フロート」の図表を使うと、TeX のコンパイルエラーになります。Re:VIEW 3 では次のように「必ず指定箇所に置く（H）」を図表に指定することで、エラーを回避できます。
+コラムのような囲み内で「フロート」の図表を使うと、TeX のコンパイルエラーになります。Re:VIEW 3 では次のように「必ず指定箇所に置く（H）」を図表に指定することで、エラーを回避できます。Re:VIEW 4 以降ではこれがデフォルトです。
 
 ```
 \floatplacement{figure}{H}

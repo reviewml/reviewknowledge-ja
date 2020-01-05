@@ -43,9 +43,9 @@ Re:VIEW を使ったドキュメントや生成されるファイルには Re:VI
 
 ## Re:VIEW ソフトウェアの権利者表記はどのように記すべきですか？
 
-以下のとおりです（2018年11月時点）。
+以下のとおりです（2020年1月時点）。
 
-「Copyright (c) 2006-2018 Minero Aoki, Kenshi Muto, Masayoshi Takahashi, Masanori Kado.」
+「Copyright (c) 2006-2020 Minero Aoki, Kenshi Muto, Masayoshi Takahashi, Masanori Kado.」
 
 ## review-ext.rb のライセンスはどうなりますか？
 
@@ -56,6 +56,10 @@ Re:VIEW ソフトウェアのコードの一部をコピーして改変する場
 ## Re:VIEW をフォークして新たなソフトウェアを開発してもよいですか？
 
 ライセンスを遵守する限り、問題ありません。
+
+## Re:VIEW という名前をソフトウェアやサービス、製品に使ってもよいですか？
+
+「Re:VIEW」の商標は保有していないので、私たちにそれを判断したり止めたりする権利はありません。しかし、「Re:VIEW ○○」のような名称を使う際には、それが Re:VIEW の開発チームの公式の提供物でないことを明記いただくようお願いいたします。
 
 ## Re:VIEW を Web サービスや製品に組み込みたいのですが？
 

@@ -314,7 +314,7 @@ PDF には、印刷用に適するとされる標準仕様があります。国�
 
 入稿仕様で、これらの標準に沿った PDF を入稿することを求められることがあります。PDF/X-4 が RGB をサポートしているからといって、必ずしも印刷所が RGB を受け付けるわけではないことには注意してください。PDF/X-4 を指定されている、あるいは PDF/X-4 でなければ表現できない、というのでなければ、PDF/X-1a でもなんら問題ありません。
 
-現時点で、LaTeX やブラウザから出力した PDF を PDF/X-1a、PDF/X-4 準拠とするには、有償の [Acrobat Pro]([https://acrobat.adobe.com/jp/ja/acrobat.html) か [callas pdfToolbox](https://www.callassoftware.com/en/products/pdftoolbox) を使う必要があります。
+現時点で、LaTeX やブラウザから出力した PDF を PDF/X-1a、PDF/X-4 準拠とするには、有償の [Acrobat Pro](https://acrobat.adobe.com/jp/ja/acrobat.html) か [callas pdfToolbox](https://www.callassoftware.com/en/products/pdftoolbox) を使う必要があります。
 
 ![Acrobat プリフライトでの標準化変換および検証](images/x1a_m.png)
 

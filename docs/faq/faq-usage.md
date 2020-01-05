@@ -52,7 +52,7 @@ TeX 環境など完全な環境構築としては、以下のようにするの�
 apt-get install --no-install-recommends texlive-lang-japanese texlive-fonts-recommended texlive-latex-extra texlive-generic-extra lmodern fonts-lmodern tex-gyre fonts-texgyre texlive-pictures ghostscript gsfonts zip ruby-zip ruby-nokogiri mecab ruby-mecab mecab-ipadic-utf8 poppler-data cm-super graphviz gnuplot python-blockdiag python-aafigure
 ```
 
-★TODO:macOS、Windows。TeXと合わせて独立ページにしたほうがいい？
+<!-- ★TODO:macOS、Windows。TeXと合わせて独立ページにしたほうがいい？ -->
 
 ## TeX 環境の構築はどうしたらよいですか？
 
@@ -95,10 +95,25 @@ GitHub の issue ページ
 review-init プロジェクト名
 ```
 
-デフォルトでは doc サブフォルダが作成され、Re:VIEW のドキュメントがコピーされますが、不要なときには `--without-doc` オプションを付けます。
+Re:VIEW 4 以降では、review-init の実行時に TeX のレイアウトを Web ブラウザ上で設定する機能が備わっています。`-w` オプション付きで作成します。
+
+```
+review-init -w プロジェクト名
+```
+
+すると、デフォルトではポート 18000 を使った小さな Web サーバが起動します。Web ブラウザで http://localhost:18000 につなげてみると、紙面のレイアウトを GUI のように操作できる画面になります。
+
+プロジェクト作成のデフォルトでは doc サブフォルダが作成され、Re:VIEW のドキュメントがコピーされますが、不要なときには `--without-doc` オプションを付けます。
 
 ```
 review-init --without-doc プロジェクト名
+```
+
+Re:VIEW 4.1 以降では、config.yml のコメントを除去する `--without-config-comment` オプションがあります。
+（★Re:VIEW 4.1 は2020年2月のリリース予定です）
+
+```
+review-init --without-config-comment プロジェクト名
 ```
 
 Re:VIEW 3 以降では、任意の Web サーバーからプロジェクトに適用する各種ファイルをダウンロードすることもできます。Web サーバー側では、zip 形式で初期プロジェクトのうち上書きあるいは新規作成したいフォルダおよびファイルをまとめておきます（アーカイブURLにはローカルファイルを指定することもできます）。
@@ -118,7 +133,7 @@ review-init -p アーカイブURL プロジェクト名
 - Rakefile：`rake` コマンド用のルールファイル
 - libs：Rakefile ルールの実体など
 - images：画像を置くフォルダ
-- layouts：LaTeX や HTML のテンプレートレイアウト
+- layouts：LaTeX や HTML のテンプレートレイアウト（Re:VIEW 4 以降では作成されない。必要なときには手動で作成）
 - style.css：EPUB/HTML のスタイルシート
 - sty：LaTeX のスタイルファイル
 
@@ -212,6 +227,10 @@ date: 2018-9-27
 
 この config-epdf.yml を使うには、`review-pdfmaker config-epdf.yml` のように指定して実行するか、`REVIEW_CONFIG_FILE` 環境変数に `config-epdf.yml` を設定した上で `rake` コマンドを実行します。
 
+```
+REVIEW_CONFIG_FILE=config-epdf.yml rake pdf
+```
+
 ある設定を消したいときには、値として `null` を指定します。
 
 ## 「図」「リスト」などの一部の固定文字列は locale.yml ファイルで変えられるようですが、どのように書いたらよいですか？
@@ -233,6 +252,7 @@ list: リスト
 
 ```
 rake epub
+REIVIEW_CONFIG_FILE=config-epub.yml rake epub （config-ebpub.ymlから作成したいとき）
 ```
 
 以下でも可能です（`rake epub` は中でこのコマンドを実行しています）。
@@ -247,6 +267,7 @@ review-epubmaker config.yml
 
 ```
 rake pdf
+REIVIEW_CONFIG_FILE=config-ebook.yml rake pdf （config-ebook.ymlから作成したいとき）
 ```
 
 以下でも可能です（`rake pdf` は中でこのコマンドを実行しています）。
@@ -368,7 +389,16 @@ end
 
 コード断片など、セル内で空白を文字として扱いたい場合があるからです。
 
-なお、この区切り方は `lib/review/builder.rb` の次のメソッドで実装しているので、`review-ext.rb` などを使ってビルダの挙動を上書き（たとえば `/\s{2,}/` など）すれば、空白文字による区切りも可能です。
+Re:VIEW 4.1 以降では、`table_row_separator` パラメータの値で区切り文字を変更できます。
+
+- tabs (1文字以上のタブ文字区切り。デフォルト)
+- singletab (1文字のタブ文字区切り)
+- spaces (1文字以上のスペースまたはタブ文字の区切り)
+- verticalbar ("0個以上の空白 | 0個以上の空白"の区切り)
+
+（★Re:VIEW 4.1 は2020年2月のリリース予定です）
+
+Re:VIEW 4.0 以前では、`lib/review/builder.rb` の次のメソッドで実装しているので、`review-ext.rb` などを使ってビルダの挙動を上書き（たとえば `/\s{2,}/` など）すれば、空白文字による区切りも可能です。
 
 ```
     def table(lines, id = nil, caption = nil)
@@ -376,7 +406,7 @@ end
         rows.push(line.strip.split(/\t+/).map { |s| s.sub(/\A\./, '') })
 ```
 
-## 表のセルを連結するにはどうしたらよいですか？
+<!-- ## 表のセルを連結するにはどうしたらよいですか？ -->
 
 ## 別フォルダにあるソースコードファイルの一部を原稿内に取り込みたいと思います。動的に取り込む方法はありますか？
 
@@ -432,7 +462,7 @@ DEF
 
 - [review-preproc ユーザガイド](https://github.com/kmuto/review/blob/master/doc/preproc.ja.md#)
 
-## 見出しの一覧を出力することはできますか？
+<!-- ## 見出しの一覧を出力することはできますか？ -->
 
 ## Re:VIEW に対応した日本語校正ツールはありますか？
 
@@ -503,6 +533,22 @@ Re:VIEW の言語解析ロジック上、および記法の複雑化を避ける
 この行まで//emlist内の内容です
 //}
 ```
+
+## 箇条書きを入れ子にするにはどうしたらよいですか？
+
+ビュレット箇条書き `*` のみ、`**` のように深さに応じて数を増やすことで入れ子ができます。
+
+```
+ * 第1の項目
+ ** 第1の項目のネスト
+ * 第2の項目
+ ** 第2の項目のネスト
+ * 第3の項目
+```
+
+番号箇条書きや説明箇条書きの入れ子、あるいはビュレット箇条書きの下に番号箇条書きを入れたり、箇条書きの中に図表を入れたり、といったことは現在の記法では指定できません。
+
+review-ext.rb での書き換えによる対策として、[複雑な箇条書きの入れ子に対応する](../reviewext/nest.html) を参照してください。
 
 ## Re:VIEW は夏時間に対応していますか？
 

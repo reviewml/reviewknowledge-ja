@@ -14,7 +14,18 @@ Adobe 社が開発している、プロユースの DTP ソフトウェアです
 
 ## InDesign ファイルに変換する maker コマンドがないようです。どうやって変換するのですか？
 
-Re:VIEW のコンパイルコマンドを直に使用する必要があります。IDGXML ビルダを使うよう、`--target=idgxml` を指定します。
+Re:VIEW 4 以降では、`review-idgxmlmaker` コマンドが導入されました。
+
+```
+rake idgxml
+review-idgxmlmaker config.yml
+review-idgxmlmaker -f フィルタプログラム config.yml
+REVIEW_CONFIG_FILE=config-idgxml.yml REVIEW_IDGXML_OPTIONS="-f フィルタプログラム" rake idgxml
+```
+
+フィルタプログラムは、標準入力で XML を受け取り、標準出力に加工した XML を書き出すという挙動が期待されます。フィルタプログラムで処理対象の re ファイル名を知るには、`REVIEW_FNAME` 環境変数を参照してください。
+
+Re:VIEW 3 以下では、Re:VIEW のコンパイルコマンドを直に使用する必要があります。IDGXML ビルダを使うよう、`--target=idgxml` を指定します。
 
 ```
 review-compile --yaml=config.yml --target=idgxml reファイル名 > xmlファイル名
