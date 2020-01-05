@@ -3,7 +3,9 @@ Re:VIEW ナレッジベース
 
 Re:VIEW 開発者の立場から、Re:VIEW のカスタマイズおよび「よくある質問と回答」をまとめています。
 
-ご意見・ご要望については、 https://github.com/reviewml/reviewknowledge-ja の issue 投稿、または Twitter @kmuto までお寄せください。
+Re:VIEW のセットアップおよび基本的な使い方については、Re:VIEW ( https://reviewml.org/ ) 公式の各ドキュメント https://github.com/kmuto/review/tree/master/doc をまず参照してください (特に quickstart.ja と format.ja)。
+
+このナレッジベースへのご意見・ご要望については、 https://github.com/reviewml/reviewknowledge-ja の issue 投稿、または Twitter @kmuto までお寄せください。
 
 .. toctree::
    :maxdepth: 2
