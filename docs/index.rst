@@ -3,7 +3,7 @@ Re:VIEW ナレッジベース
 
 Re:VIEW 開発者の立場から、Re:VIEW のカスタマイズおよび「よくある質問と回答」をまとめています。
 
-Re:VIEW のセットアップおよび基本的な使い方については、Re:VIEW ( https://reviewml.org/ ) 公式の各ドキュメント https://github.com/kmuto/review/tree/master/doc をまず参照してください (特に quickstart.ja と format.ja)。
+Re:VIEW のセットアップおよび基本的な使い方については、`Re:VIEW <https://reviewml.org/>`_ 公式の `各ドキュメント <https://github.com/kmuto/review/tree/master/doc>`_ をまず参照してください (特に `Re:VIEWクイックスタートガイド <https://github.com/kmuto/review/blob/master/doc/quickstart.ja.md>`_ と `Re:VIEWフォーマットガイド <https://github.com/kmuto/review/blob/master/doc/format.ja.md>`_)。
 
 このナレッジベースへのご意見・ご要望については、 https://github.com/reviewml/reviewknowledge-ja の issue 投稿、または Twitter @kmuto までお寄せください。
 
@@ -57,10 +57,10 @@ EPUB に関連する長めの Tips
   epub/esc-highlight
   epub/custom-pages
 
-InDesign に関連する長めの Tips
-------------------------------
-.. toctree::
-  :maxdepth: 1
+.. InDesign に関連する長めの Tips
+.. ------------------------------
+.. .. toctree::
+..   :maxdepth: 1
 
 印刷 に関連する長めの Tips
 ------------------------------
