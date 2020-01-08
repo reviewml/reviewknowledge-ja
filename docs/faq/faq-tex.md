@@ -796,6 +796,7 @@ dvipdfmx で Adobe CMap ではなく Unicode マップを使ったフォント�
        \includegraphics[width=20mm]{images/icon.png}% 幅20mmの画像貼り付け
      };%
 \end{tikzpicture}%
+}
 ```
 
 \node で原点の移動と方向、current page.でページ上の原点位置を表しています。中身は \includegraphics で画像ファイルとしていますが、文字列など任意な指定が可能です。
