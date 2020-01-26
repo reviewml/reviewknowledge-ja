@@ -961,7 +961,7 @@ config.yml の `advfile` パラメータに LaTeX ソースのファイルを指
   \def\reviewbreakall#1{#1}}
 ```
 
-## 段落の間に少し空きを入れたい
+## 段落の間に少し空きを入れるには？
 
 review-jsbook、review-jlreq ともに段落と段落の間に空きが加わることはありません。洋書の一部などであるように段落間に空きを入れたいときには、sty/review-custom.sty に以下のような定義を入れることで空きが入るようになります。
 
