@@ -5,6 +5,11 @@ Re:VIEW 開発者の立場から、Re:VIEW のカスタマイズおよび「よ�
 
 Re:VIEW のセットアップおよび基本的な使い方については、`Re:VIEW <https://reviewml.org/>`_ 公式の `各ドキュメント <https://github.com/kmuto/review/tree/master/doc>`_ をまず参照してください (特に `Re:VIEWクイックスタートガイド <https://github.com/kmuto/review/blob/master/doc/quickstart.ja.md>`_ と `Re:VIEWフォーマットガイド <https://github.com/kmuto/review/blob/master/doc/format.ja.md>`_)。
 
+.. image:: ./images/diagram.png
+   :align: center
+   :alt: "Re:VIEWを取り巻く環境"
+   :scale: 50
+
 このナレッジベースへのご意見・ご要望については、 https://github.com/reviewml/reviewknowledge-ja の issue 投稿、または Twitter @kmuto までお寄せください。
 
 .. toctree::
