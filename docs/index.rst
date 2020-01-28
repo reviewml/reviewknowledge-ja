@@ -7,7 +7,7 @@ Re:VIEW のセットアップおよび基本的な使い方については、`Re
 
 .. image:: ./images/diagram.svg
    :align: center
-   :alt: "Re:VIEWを取り巻く環境"
+   :alt: Re:VIEWを取り巻く環境
    :target: ./_images/diagram.svg
 
 このナレッジベースへのご意見・ご要望については、 https://github.com/reviewml/reviewknowledge-ja の issue 投稿、または Twitter @kmuto までお寄せください。
