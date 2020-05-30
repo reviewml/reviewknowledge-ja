@@ -341,7 +341,7 @@ Re:VIEW 2 系のデフォルトのスタイルなどでは、この状況にな�
 
 各図版を正確な原寸で作成している場合には、拡縮自体が余計な処理と言えます。この場合、フックあるいは review-ext.rb を利用して `width=\maxwidth` を変換結果から削除する必要があるでしょう。
 
-Re:VIEW 4.1 以降では、pdfmaker セクション下に `use_original_image_size` というパラメータが追加されました。(★Re:VIEW 4.1 は 2020年2月リリース予定)
+Re:VIEW 4.1 以降では、pdfmaker セクション下に `use_original_image_size` というパラメータが追加されました。
 このパラメータの値を `true` にすると、拡縮なしで原寸のまま配置するようになります。また、Re:VIEW 4.1 以降では `image_scale2width` オプションは pdfmaker セクション下に移動しています。
 
 ## 表紙を全面に貼り付けるにはどうしたらよいですか？
@@ -958,7 +958,7 @@ config.yml の `advfile` パラメータに LaTeX ソースのファイルを指
 
 - [#1432](https://github.com/kmuto/review/issues/1432)
 
-次の内容を sty/review-custom.sty に記述することでエラーを回避できます（Re:VIEW 4.1 で反映予定です）。
+次の内容を sty/review-custom.sty に記述することでエラーを回避できます。Re:VIEW 4.1 では修正済みです。
 
 ```
 \g@addto@macro\pdfstringdefPreHook{%
