@@ -940,6 +940,8 @@ config.yml の `profile` パラメータに LaTeX ソースのファイルを指
 \includefullpagegraphics{images/myprofile.pdf}
 ```
 
+プロフィールページはデフォルトの layout.tex.erb においては索引の後、広告・奥付の前に入ります。
+
 ## 広告ページを入れたいです
 
 config.yml の `advfile` パラメータに LaTeX ソースのファイルを指定します。PDF を配置したいときには、該当のソースファイル内でたとえば次のようにしておきます。
@@ -947,6 +949,8 @@ config.yml の `advfile` パラメータに LaTeX ソースのファイルを指
 ```
 \includefullpagegraphics{images/myadvertisement.pdf}
 ```
+
+広告ページはデフォルトの layout.tex.erb においては奥付の前に入ります。
 
 ## Re:VIEW 4.0 で media=ebook を使うと、「! TeX capacity exceeded, sorry [input stack size=5000]」なるエラーになります
 
