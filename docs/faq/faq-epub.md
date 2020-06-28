@@ -132,6 +132,25 @@ direction: "rtl"
 
 [Re:VIEW フォーマットガイド](https://github.com/kmuto/review/blob/master/doc/format.ja.md#) の「TeX 式」を参照してください。imgmath という機能で TeX 式を画像化できます。
 
+## コードハイライトを使うにはどうしたらよいですか？
+
+highlight 設定を有効にします。現時点で有効な値は `rouge` または `pygments` です。前者の場合は rouge gem パッケージ、後者の場合は pygments.rb gem パッケージおよび Python の pygments コマンドが必要です。
+
+```
+highlight:
+  html: "rouge"
+```
+
+ハイライト解析に使う言語をリストの言語設定（emlist 系では第2、list 系では第3オプション）で指定する必要があります。
+
+```
+//emlist[][ruby]{
+def hello
+  puts 'Hello.'
+end
+//}
+```
+
 ## ハイライトを有効にすると、コード内のインライン命令がそのまま出てしまいます
 
 ハイライトとインライン命令は極めて相性が悪く、現状ではまだ妥当な解決方法がありません。ハイライトを使う箇所ではコード内のインライン命令は使わないようにしてください。

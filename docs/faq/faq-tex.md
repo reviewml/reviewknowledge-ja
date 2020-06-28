@@ -989,3 +989,26 @@ upLaTeX の利用時において、「ǒ」や「é」などの一部の文字�
 ```
 
 - [［改訂新版］upLaTeXを使おう](https://qiita.com/zr_tex8r/items/5c14042078b20edbfb07#欧文のutf-8入力との併用)
+
+## コードハイライトを使うにはどうしたらよいですか？
+
+highlight 設定を有効にします。現時点で有効な値は `listings` のみです。
+
+```
+highlight:
+  latex: "listings"
+```
+
+ハイライト解析に使う言語をリストの言語設定（emlist 系では第2、list 系では第3オプション）で指定する必要があります。
+
+```
+//emlist[][ruby]{
+def hello
+  puts 'Hello.'
+end
+//}
+```
+
+なお、LaTeX のコードハイライトは listings および plistings パッケージによって解析されますが、HTML で使っている rouge や pygments に比べるとあまり十分とは言えません。
+
+上級者向けのヒントとしては、minted パッケージを使い（これは内部で pygments を呼び出します）、emlistlst マクロ等にそれを割り当てるという方法があります。
