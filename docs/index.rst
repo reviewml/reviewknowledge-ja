@@ -55,6 +55,7 @@ LaTeX に関連する長めの Tips
   latex/linebreak-verbatim
   latex/tex-error
   latex/emoji
+  latex/bibliography
 
 EPUB に関連する長めの Tips
 ------------------------------
