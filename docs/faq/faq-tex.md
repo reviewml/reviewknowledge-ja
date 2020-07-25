@@ -1063,3 +1063,36 @@ end
 なお、LaTeX のコードハイライトは listings および plistings パッケージによって解析されますが、HTML で使っている rouge や pygments に比べるとあまり十分とは言えません。
 
 上級者向けのヒントとしては、minted パッケージを使い（これは内部で pygments を呼び出します）、emlistlst マクロ等にそれを割り当てるという方法があります。
+
+## ちょっとした書き物やレポート用に利用するにはどうしたらよいですか？
+
+たとえば A4 でなるべくいっぱいに使い、章番号などは不要、表紙・目次・奥付も不要といった条件として、review-jlreq を使った例を示します（review-jsbook でも可能ですが見出しの空白などで調整すべき内容が多くなってしまうので、シンプルな review-jlreq を使っています）。
+
+まず、`review-init -t review-jlreq プロジェクト名` で作成します。
+
+次に、`config.yml` の `texdocumentclass` および `pdfmaker` セクション以下を次のように設定します。texdocumentclass パラメータの値については、`sty/README.md` ファイルを参照してください。
+
+```
+  …
+texdocumentclass: ["review-jlreq", "media=ebook,paper=a4,cover=false,gutter=20mm,fore_edge=20mm,head_space=10mm,foot_space=20mm"]
+
+pdfmaker:
+  secnolevel: 0
+  toc: null
+  titlepage: null
+  colophon: null
+```
+
+さらに `sty/review-custom.sty` でノンブル（ページ番号）の位置を中央下に変えておきます。
+
+```
+\ModifyPageStyle{headings}{nombre_position={bottom-center}}
+```
+
+これで1ファイルのみでの利用を想定し、とてもシンプルなレポートスタイルの紙面になります。
+
+ノンブルも不要なら、以下のようにします。
+
+```
+\ModifyPageStyle{headings}{nombre={}}
+```
