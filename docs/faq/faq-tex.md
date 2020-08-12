@@ -1096,3 +1096,43 @@ pdfmaker:
 ```
 \ModifyPageStyle{headings}{nombre={}}
 ```
+
+## `@<href>`命令でHTMLのように「#アンカー」でハイパーリンクを付けるにはどうしたらよいですか？
+
+TeX（label/ref 関係および hyperref パッケージ）のリンク構造と、HTML のリンク構造とはだいぶ異なります。http://〜 および https://〜 で始まる完全URLであればそれほど挙動に違いはないのですが、相対URLパスであるとか、`#`を使ったページ内アンカーリンクは HTML 固有のものであり、完全な再現は困難です。図表およびリストの参照は `@<img>`、`@<table>`、`@<list>`、章や節の参照は `@<chap>` や `@<hd>` の命令を使うことを推奨します。
+
+これ以上の任意の位置に対するハイパーリンクを実現したいという例として、いくらか制約はありますが、`@<href>` の挙動を変更して同一書籍内のハイパーリンクを実現する review-ext.rb を示します。
+
+```
+module ReVIEW
+  module LATEXBuilderOverride
+    def compile_href(url, label)
+      # @<href>{url, label} および @<href>{url} の実装メソッドを上書きする
+      if /\A\#/ =~ url # 先頭が#で始まっているならアンカーへのハイパーリンクと解釈
+        # XXX:この判定手法だとURLに「ch01.xhtml#foo」と別ファイルを指定しているときにはうまくいかないので、
+        # より柔軟性を持たせたいならさらに条件を連ねる必要がある
+        if label
+          # ラベルがあるならそれを表示に利用
+          macro('hyperlink', url.sub('#', ''), escape(label))
+        else
+          # ラベルがないなら、代替でページ参照(p.XX)に
+          'p.' + macro('pageref', url.sub('#', ''))
+        end
+      else
+        super(url, label) # ほかはデフォルト挙動を呼び出し
+      end
+    end
+
+    def label(id)
+      super(id)
+      puts macro('hypertarget', id, '') # アンカー。文字列なしでポイントのみ作成
+    end
+  end
+
+  class LATEXBuilder
+    prepend LATEXBuilderOverride
+  end
+end
+```
+
+`//label` でアンカーラベルを指定しておき、`@<href>{#アンカーラベル, 紙面表現文字列}` あるいは `@<href>{#アンカーラベル}` で参照します。後者はリンク文字列に相当するものがなくなってしまうので、代替として「p.XX」のようにアンカーラベルのある箇所のページ番号を示すようにしています。なお、単にページ番号を示す目的には、このような拡張を使う必要はなく、`@<pageref>` 命令を利用できます。
