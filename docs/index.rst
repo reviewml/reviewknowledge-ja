@@ -56,6 +56,7 @@ LaTeX に関連する長めの Tips
   latex/tex-error
   latex/emoji
   latex/bibliography
+  latex/listscale
 
 EPUB に関連する長めの Tips
 ------------------------------

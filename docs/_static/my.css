@@ -5,3 +5,7 @@ div#e8f3c5740dfe774c11a2b84a5d3aa7cb span.toggle {
 div#e8f3c5740dfe774c11a2b84a5d3aa7cb > div > ul > li {
   list-style-type: none;
 }
+
+p img {
+  border: solid 1px rgb(200, 200, 255);
+}
