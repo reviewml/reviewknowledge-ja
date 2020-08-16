@@ -6,7 +6,7 @@ FAQ（よくある質問と回答）のこのセクションは、Re:VIEW の使
 
 ## Re:VIEW を動かすにはどのような環境が必要ですか？
 
-Ruby インタプリタ 2.1 以上がインストールされた OS 環境であれば、基本的に動作します。TeX を使った PDF 生成を行う場合は、別途日本語 TeX 環境のセットアップが必要です。
+Ruby インタプリタ 2.4 以上がインストールされた OS 環境であれば、基本的に動作します。TeX を使った PDF 生成を行う場合は、別途日本語 TeX 環境のセットアップが必要です。
 
 推奨環境は Linux（特に Debian GNU/Linux 安定版 または Ubuntu 安定版）、および macOS です。
 
@@ -110,7 +110,6 @@ review-init --without-doc プロジェクト名
 ```
 
 Re:VIEW 4.1 以降では、config.yml のコメントを除去する `--without-config-comment` オプションがあります。
-（★Re:VIEW 4.1 は2020年2月のリリース予定です）
 
 ```
 review-init --without-config-comment プロジェクト名
@@ -396,8 +395,6 @@ Re:VIEW 4.1 以降では、`table_row_separator` パラメータの値で区切�
 - spaces (1文字以上のスペースまたはタブ文字の区切り)
 - verticalbar ("0個以上の空白 | 0個以上の空白"の区切り)
 
-（★Re:VIEW 4.1 は2020年2月のリリース予定です）
-
 Re:VIEW 4.0 以前では、`lib/review/builder.rb` の次のメソッドで実装しているので、`review-ext.rb` などを使ってビルダの挙動を上書き（たとえば `/\s{2,}/` など）すれば、空白文字による区切りも可能です。
 
 ```
@@ -462,7 +459,9 @@ DEF
 
 - [review-preproc ユーザガイド](https://github.com/kmuto/review/blob/master/doc/preproc.ja.md#)
 
-<!-- ## 見出しの一覧を出力することはできますか？ -->
+## 見出しの一覧を出力することはできますか？
+
+`review-index` コマンドで表示できます。
 
 ## Re:VIEW に対応した日本語校正ツールはありますか？
 

@@ -90,7 +90,7 @@ jsbook において文字列で指定可能な紙サイズを以下に示しま�
 
 標準で提供されているものを変えるには LaTeX および TeX の知識が必要となります。また、場当たりな修正は後々問題になる可能性があります。本当にそのレイアウト調整がすべきことなのかどうかをまず検討したほうがよいでしょう。レイアウトに細かなこだわりを入れたいときには、わざわざ Re:VIEW を経由するよりも、コンテンツを LaTeX 記法で記述し、レイアウト指示もそれに含めるほうが妥当です。
 
-LaTeX はマクロの集合体です。Re:VIEW から読み込まれるカスタムスタイルファイル `sty/review-custom.sty`（Re:VIEW 3 系）または `sty/reviewmacro.sty`（Re:VIEW 2 以前）にマクロを記述することで、それまでに定義されたマクロを上書きできます。
+LaTeX はマクロの集合体です。Re:VIEW から読み込まれるカスタムスタイルファイル `sty/review-custom.sty`（Re:VIEW 3 系以上）または `sty/reviewmacro.sty`（Re:VIEW 2 以前）にマクロを記述することで、それまでに定義されたマクロを上書きできます。
 
 - [pLaTeX2e 新ドキュメントクラス](https://oku.edu.mie-u.ac.jp/~okumura/jsclasses/)
 
@@ -126,7 +126,7 @@ review-init -w プロジェクト名
 
 Re:VIEW 3 以上で LuaTeX への対応を進めています。ただし、現状では LuaTeX を使うユーザーが LaTeX についての十分な知識を持っており、問題を自己解決できるだけの能力があることを前提としています。
 
-1. config.yml の `texdocumentclass` パラメータを LuaTeX-ja のものに変更する（`texdocumentclass: ["ltjsbook", "oneside"]` など）。
+1. テンプレートに review-jlreq など LuaTeX に対応しているものを選ぶ。
 2. `texcommand` パラメータを変更する。`texcommand: "lualatex"`
 3. `dvicommand` パラメータを null にする（`dvicommand: null`）。これは特に重要です。単にコメントアウトするだけでは、デフォルトの upLaTeX 用の `dvicommand` パラメータ値が有効になってしまいます。
 4. プロジェクトの sty フォルダのファイル群で LuaTeX-ja に対応していないところを調整する。
@@ -424,7 +424,7 @@ texdocumentclass パラメータで review-jsbook (デフォルト) または re
 
 ## 電子版用の表紙の画像を指定しましたが、はみ出してしまいます（あるいは小さすぎてフチができてしまいます）
 
-デフォルトで、表紙画像は実寸で中央合わせで貼り付けられます。正確に指定どおりの大きさで貼り付けることが印刷では重要なので Re:VIEW のデフォルトはこのような仕様にしていますが、「用意した画像ファイルを紙面サイズに拡縮して貼り込みたい」というカジュアルな用途には不向きです。
+デフォルトで、表紙画像は「実寸」で中央合わせで貼り付けられます。正確に指定どおりの大きさで貼り付けることが印刷では重要なので Re:VIEW のデフォルトはこのような仕様にしていますが、「用意した画像ファイルを紙面サイズに拡縮して貼り込みたい」というカジュアルな用途には不向きです。
 
 このようなときには、sty/review-custom.sty に以下のように指定します。
 
@@ -441,6 +441,8 @@ texdocumentclass パラメータで review-jsbook (デフォルト) または re
 % 拡縮し、紙サイズに合わせて貼り付け。塗り足しぶんも含める
 \def\review@coverimageoption{width=\dimexpr\paperwidth+6mm,height=\dimexpr\paperheight+6mm}
 ```
+
+- Re:VIEW 5.0 では texdocumentclass のパラメータとして、サイズに関わらず仕上がりサイズに拡縮する `cover_fit_page=true` オプションを導入予定です。
 
 ## 裏表紙を入れるにはどうしたらよいですか？
 
@@ -462,7 +464,7 @@ pdfmaker:
 
 ## Photoshop psd ファイルを配置できません
 
-2019年3月時点では、Photoshop のネイティブ形式である psd ファイルはサポートされていません。
+2020年8月時点では、Photoshop のネイティブ形式である psd ファイルは TeX の dvipdfmx ではサポートされていません。
 
 ただし、graphicxpsd パッケージを使うと、sips（macOS のツール）または covert（ImageMagick）を使用して、コンパイル時に psd ファイルを PDF に変換して利用できます。graphicxpsd パッケージは TeXLive 2017 以降に収録されているほか、`tlmgr install graphicxpsd` でインストールすることもできます。
 
@@ -503,7 +505,7 @@ Re:VIEW 3.0 以降で解消しているはずです（[#1207](https://github.com
 
 ## 奥付を必ず偶数ページにするにはどうしたらよいですか？
 
-Re:VIEW 3 では、`\reviewcolophon` マクロを変更します。デフォルトは単なる `\clearpage`（改ページ）なので、偶数になるように改ページする `\clearoddpage` に置き換えます。これには、sty/review-custom.sty に次のように追加します。
+Re:VIEW 3 以降では、`\reviewcolophon` マクロを変更します。デフォルトは単なる `\clearpage`（改ページ）なので、偶数になるように改ページする `\clearoddpage` に置き換えます。これには、sty/review-custom.sty に次のように追加します。
 
 ```
 \renewcommand{\reviewcolophon}[0]{\clearoddpage}
@@ -615,7 +617,7 @@ review-jlreq では fancyhdr ではなく jlreq クラス自体の機能を利�
 //footnote[column-footnote][…]
 ```
 
-LaTeX のモデルにおいて、脚注はやや特殊な扱いを受け、単純には利用できない箇所があります。そのため、Re:VIEW 3 では、キャプション・表・コラム の中に脚注参照があったときには、LaTeX の通常の `\footnote` マクロではなく、`\footnotemark`+`\footnotetext` マクロとなるようにしています。
+LaTeX のモデルにおいて、脚注はやや特殊な扱いを受け、単純には利用できない箇所があります。そのため、Re:VIEW 3 以降では、キャプション・表・コラム の中に脚注参照があったときには、LaTeX の通常の `\footnote` マクロではなく、`\footnotemark`+`\footnotetext` マクロとなるようにしています。
 
 `\footnotemark` は脚注の採番をして参照記号を打つマクロ、`\footnotetext` は脚注テキストをその位置のページに配置するマクロです。
 
@@ -711,6 +713,10 @@ end
 - EPUB 等のほかの形式は諦めることになるでしょう。
 - 番号への参照はできなくなります。リテラルに書くか、式側に `\label{ラベル名}` を入れておいて、参照側では `式@<embed>$|latex|\ref{ラベル名}$` のようにする、といった手段はありますが、もう TeX で最初から書いたほうがよいのでは……という気にもなりそうです。
 - `equation*` と `equation` を混ぜたい (この場合には `\notag` を使うという手もありますが)、`eqnarray` 環境などを使いたい、といったときには、もう少しまじめに `//texequation` の挙動のほうをオーバライドして判定する必要があるでしょう。
+
+## 参考文献の表現を LaTeX で一般的な形（bibliography）にしたいです
+
+- [参考文献にthebibliography環境を利用する](../latex/bibliography.html)
 
 ## 記入した絵文字が消えてしまいます!
 - [Re:VIEW + upLaTeX で絵文字を使う](../latex/emoji.html)
@@ -1136,3 +1142,7 @@ end
 ```
 
 `//label` でアンカーラベルを指定しておき、`@<href>{#アンカーラベル, 紙面表現文字列}` あるいは `@<href>{#アンカーラベル}` で参照します。後者はリンク文字列に相当するものがなくなってしまうので、代替として「p.XX」のようにアンカーラベルのある箇所のページ番号を示すようにしています。なお、単にページ番号を示す目的には、このような拡張を使う必要はなく、`@<pageref>` 命令を利用できます。
+
+## 複雑な表表現をしたいです
+
+Re:VIEW の表表現はシンプルな縦横表の記述を前提にしています。セル結合や任意の罫線、箇条書きを含めるなどの複雑な表を表現するには不向きなので、画像として作成し、`//imgtable` 命令を使って貼り込むことを検討してください。
