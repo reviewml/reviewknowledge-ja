@@ -426,7 +426,9 @@ texdocumentclass パラメータで review-jsbook (デフォルト) または re
 
 デフォルトで、表紙画像は「実寸」で中央合わせで貼り付けられます。正確に指定どおりの大きさで貼り付けることが印刷では重要なので Re:VIEW のデフォルトはこのような仕様にしていますが、「用意した画像ファイルを紙面サイズに拡縮して貼り込みたい」というカジュアルな用途には不向きです。
 
-このようなときには、sty/review-custom.sty に以下のように指定します。
+Re:VIEW 5.0 では texdocumentclass のパラメータとして、`cover_fit_page=true` オプションを導入しています。このオプションを付けると、サイズに関わらず仕上がりサイズに拡縮します。なお、塗り足し領域までは拡大しないので、印刷用にするには必ず実寸で正しく作成するようにしてください。
+
+類似のことを Re:VIEW 4 以下で行うには、sty/review-custom.sty に以下のように指定します。
 
 ```
 % 拡縮し、紙サイズに合わせて貼り付け
@@ -442,9 +444,7 @@ texdocumentclass パラメータで review-jsbook (デフォルト) または re
 \def\review@coverimageoption{width=\dimexpr\paperwidth+6mm,height=\dimexpr\paperheight+6mm}
 ```
 
-- Re:VIEW 5.0 では texdocumentclass のパラメータとして、サイズに関わらず仕上がりサイズに拡縮する `cover_fit_page=true` オプションを導入予定です。
-
-## 裏表紙を入れるにはどうしたらよいですか？
+# 裏表紙を入れるにはどうしたらよいですか？
 
 裏表紙を含めたいときには、backcover パラメータに TeX 断片ファイルのファイル名を指定します。たとえば以下のような `backcover.tex` ファイルを作成し、プロジェクトフォルダに配置します。
 
@@ -464,7 +464,7 @@ pdfmaker:
 
 ## Photoshop psd ファイルを配置できません
 
-2020年8月時点では、Photoshop のネイティブ形式である psd ファイルは TeX の dvipdfmx ではサポートされていません。
+2020年10月時点では、Photoshop のネイティブ形式である psd ファイルは TeX の dvipdfmx ではサポートされていません。
 
 ただし、graphicxpsd パッケージを使うと、sips（macOS のツール）または covert（ImageMagick）を使用して、コンパイル時に psd ファイルを PDF に変換して利用できます。graphicxpsd パッケージは TeXLive 2017 以降に収録されているほか、`tlmgr install graphicxpsd` でインストールすることもできます。
 
@@ -789,7 +789,7 @@ mogrify -format pdf *.png
 mogrify -format pdf *.jpg
 ```
 
-拡張子以外が同じファイルがあると TeX のコンパイル時に図版サイズの計算がおかしくなるため、古いビットマップファイルは別の場所に移動するようにしてください。
+Re:VIEW 4 以下においては、拡張子以外が同じファイルがあると TeX のコンパイル時に図版サイズの計算がおかしくなるため、古いビットマップファイルは別の場所に移動するようにしてください。Re:VIEW 5.0 以降ではこの問題は修正済みです。
 
 ## 印刷版と電子版の設定をうまく管理するにはどうしたらよいですか？
 - [PDF（review-pdfmaker）と EPUB（review-epubmaker）、あるいは印刷版 PDF と 電子版 PDF のように出力方法によって若干異なる設定にしたいと思います。重複する内容の yml ファイルを作らずに済みませんか？](../faq/faq-usage.html#6f55737230223b823889cfef3583cce2)

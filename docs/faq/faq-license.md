@@ -43,7 +43,7 @@ Re:VIEW を使ったドキュメントや生成されるファイルには Re:VI
 
 ## Re:VIEW ソフトウェアの権利者表記はどのように記すべきですか？
 
-以下のとおりです（2020年8月時点）。
+以下のとおりです（2020年10月時点）。
 
 「Copyright (c) 2006-2020 Minero Aoki, Kenshi Muto, Masayoshi Takahashi, Masanori Kado.」
 

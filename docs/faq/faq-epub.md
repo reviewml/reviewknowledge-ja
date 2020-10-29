@@ -53,14 +53,16 @@ review-webmaker config.yml
 
 ## Kindle 用の mobi ファイルは作れますか？
 
-Re:VIEW 自体にその機能はありませんが、Amazon が無料で配布している `kindlegen` コマンド（[https://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000765211](https://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000765211)）で EPUB から変換できます。[Kindle Previewer](https://kdp.amazon.co.jp/ja_JP/help/topic/G202131170) にも内包されています。
+Re:VIEW 自体にその機能はありませんが、Amazon が無料で配布している Kindle Previewer（[https://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000765261](https://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000765261)）というソフトウェアで EPUB から変換できます。
 
-なお、KindleGen は論理目次だけだとエラーを報告します。物理目次ページを付けるためには、次のように config.yml に設定します。
+なお、論理目次だけではエラーが報告されるようです。物理目次ページを付けるためには、次のように config.yml に設定します。
 
 ```yaml
 epubmaker:
   toc: true
 ```
+
+かつては Linux にも対応した CUI の KindleGen というコマンドがありましたが、すでに配布が停止し、Windows または macOS で動作する GUI ベースの Kindle Previewer のみが Amazon 公式の変換ツールです。
 
 ## 「電書協ガイドライン」に従った EPUB は作れますか？
 
