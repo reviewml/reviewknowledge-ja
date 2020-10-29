@@ -190,7 +190,7 @@ WARN review-epubmaker: warning: duplicate ID: fig1 (#<ReVIEW::Book::Index::Item:
 
 ### HTMLBuilder および IDGXMLBuilder において、文字列のエスケープを従来の `cgi/util` の代わりにより高速な `cgi/escape` が利用できるときにはそれを利用するようにしました。また、`ReVIEW::HTMLUtils.escape` も書き換えられました
 
-ほとんどの場合は関係ありませんが、「'」文字の取り扱いが変わります。Re:VIEW 4 系までは変換してもそのまま「'」が使われていたのに対し、Re:VIEW 5.0 では「&#39;」と実体参照になります。
+ほとんどの場合は関係ありませんが、「`'`」文字の取り扱いが変わります。Re:VIEW 4 系までは変換してもそのまま「`'`」が使われていたのに対し、Re:VIEW 5.0 では「`&#39;`」と実体参照になります。
 
 フックで HTML ファイルを書き換えるなどの加工をしていたときには注意してください。
 
