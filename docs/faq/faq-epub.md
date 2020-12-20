@@ -134,6 +134,13 @@ direction: "rtl"
 
 [Re:VIEW フォーマットガイド](https://github.com/kmuto/review/blob/master/doc/format.ja.md#) の「TeX 式」を参照してください。imgmath という機能で TeX 式を画像化できます。
 
+Re:VIEW 5.1 以降では、`math_format` パラメータの値に基づいて `@<m>` および `//texequation` に記載した TeX 数式を HTML 内で実際どう表現するかを指定できます。
+
+- `null`: 何もせず、単に文字列として配置します。
+- `mathml`: MathML で表現します。
+- `mathjax`: MathJax で表現します。
+- `imgmath`: 画像で表現します。
+
 ## コードハイライトを使うにはどうしたらよいですか？
 
 highlight 設定を有効にします。現時点で有効な値は `rouge` または `pygments` です。前者の場合は rouge gem パッケージ、後者の場合は pygments.rb gem パッケージおよび Python の pygments コマンドが必要です。

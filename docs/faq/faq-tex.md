@@ -96,7 +96,7 @@ LaTeX はマクロの集合体です。Re:VIEW から読み込まれるカスタ
 
 ## LaTeX の紙面レイアウトとして他のテンプレートはありますか？
 
-デフォルトのもの以外に広く使われているものとして、TechBooster 提供のテンプレートがあります (Re:VIEW 4 に対応しています)。
+デフォルトのもの以外に広く使われているものとして、TechBooster 提供のテンプレートがあります (Re:VIEW 5 に対応しています)。
 
 - [https://github.com/TechBooster/ReVIEW-Template](https://github.com/TechBooster/ReVIEW-Template)
 
@@ -924,6 +924,27 @@ end
 
 - [#1419](https://github.com/kmuto/review/issues/1419)
 
+## 囲み記号として全角の「“」「”」を使うと、PDFからのコピーペーストがうまくいかなくなります
+
+re ファイル側で全角の「“」「”」にしておいた箇所を TeX 上ではシングルクォート2つ・バッククォート2つにするという方法があります。こうすることで EPUB などとも共存しやすくなります。review-ext.rb で出力を書き換える例を示します。
+
+```
+# -*- coding: utf-8 -*-
+# 出力前に “ ” のクォートをバックエンド向きの形に置換する
+# Copyright 2020 Kenshi Muto
+module ReVIEW
+  module LATEXBuilderOverride
+    def result
+      super.gsub('“', '``').gsub('”', "''")
+    end
+  end
+
+  class LATEXBuilder
+    prepend LATEXBuilderOverride
+  end
+end
+```
+
 ## 奥付に連絡先を入れるにはどうしたらよいですか？
 だいぶ昔から標準で提供していたのですが、ドキュメント化していませんでした。config.yml の `contact`  パラメータで連絡先を記載できます。
 
@@ -1146,3 +1167,52 @@ end
 ## 複雑な表表現をしたいです
 
 Re:VIEW の表表現はシンプルな縦横表の記述を前提にしています。セル結合や任意の罫線、箇条書きを含めるなどの複雑な表を表現するには不向きなので、画像として作成し、`//imgtable` 命令を使って貼り込むことを検討してください。
+
+## 索引に範囲や参照を入れたいです
+
+Re:VIEW の索引命令 `@<hidx>` はシンプルなもので、単語あるいは階層を指定する程度の機能を提供しているのみです。ただ、実際には TeX の makeidx パッケージと mendex コマンドを内部で使っているので、それらがサポートしている範囲であればいろいろと実現できます。
+
+索引において特に使われそうな機能は以下のとおりです。
+
+- 範囲。`\index{単語|(}` を単語の範囲の開始、`\index{単語|)}` を範囲の終了とする。
+- 参照。`\index{単語|see{別単語}}` とすることで、ページの代わりに「→別単語」という形になる。
+
+このように展開されるよう、索引内では擬似タグを使います。たとえば範囲の開始は`@<hidx>{単語◆→BEGIN←◆}`、終了は`@<hidx>{単語◆→END←◆}`、参照は`@<hidx>{単語◆→SEE(別単語)←◆}`という表現にしたとすると、これを後処理する review-ext.rb は次のようになります。
+
+```
+# -*- coding: utf-8 -*-
+# mendexのBEGIN,END,SEEを索引内に擬似タグを入れて実現する
+# Copyright 2020 Kenshi Muto
+module ReVIEW
+  module LATEXBuilderOverride
+    def index(str)
+      post = nil
+
+      if str =~ /◆→BEGIN←◆/
+        post = '|('
+        str.sub!('◆→BEGIN←◆', '')
+      elsif str =~ /◆→END←◆/
+        post = '|)'
+        str.sub!('◆→END←◆', '')
+      elsif str =~ /◆→SEE\((.+?)\)←◆/
+        post = "|see{#{escape($1)}}"
+        str.sub!(/◆→SEE\((.+?)\)←◆/, '')
+      end
+
+      "#{super(str).chop}#{post}}"
+    end
+  end
+
+  class LATEXBuilder
+    prepend LATEXBuilderOverride
+  end
+end
+```
+
+なお、参照のデフォルトは「→ 別単語」ですが、review-custom.sty 等で `\see` マクロを定義し直すことで変更できます。
+
+```
+\renewcommand\see[2]{#1も参照}
+```
+
+- [https://github.com/reviewml/reviewknowledge-ja/tree/master/codes/mendexext](https://github.com/reviewml/reviewknowledge-ja/tree/master/codes/mendexext)
