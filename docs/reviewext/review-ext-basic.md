@@ -1,4 +1,4 @@
-2018/7/30 by @kmuto
+2018/7/30, 2020/12/20 by @kmuto
 
 # Re:VIEW のモンキーパッチによる拡張の基本
 
@@ -35,6 +35,7 @@ end
 ビルダとは、原稿ファイル（.re）から変換するルールおよび手続きを定義したクラスです。Re:VIEW がサポートする変換形式に合わせて、代表としては以下のものがあります。
 
 - `Builder`（builder.rb）：以下の各ビルダの基底クラス。主に全ビルダに新規の命令を追加したいときにこれを拡張することになるでしょう。
+- `IndexBuilder` (indexbuilder.rb) ：Re:VIEW 5.0 から導入されたクラスで、実際の各ビルダに通す前に図表などの番号の管理を行うクラス。
 - `HTMLBuilder`（htmlbuilder.rb）：epubmaker や webmaker で使っている HTML 変換のビルダクラス。
 - `LATEXBuilder`（latexbuilder.rb）：pdfmaker で使っている LaTeX 変換のビルダクラス。
 - `IDGXMLBuilder`（idgxmlbuilder.rb）：InDesign XML 変換のビルダクラス。
@@ -200,7 +201,7 @@ LaTeX 変換のデフォルトで使われる upLaTeX コンパイラは UTF-8 �
 
 ```
     def result
-      @output.string
+      solve_nest(@output.string)
     end
 ```
 
@@ -268,6 +269,18 @@ Compiler.defsingle :命令名, オプション数
 
 ```
 module ReVIEW
+  module IndexBuilderOverride
+    Compiler.defblock :marquee, 0..1
+
+    def marquee(lines, behavior=nil)
+      # nil
+    end
+  end
+
+  class IndexBuilder
+    prepend IndexBuilderOverride
+  end
+
   module HTMLBuilderOverride
     Compiler.defblock :marquee, 0..1
 
@@ -283,6 +296,8 @@ module ReVIEW
   end
 end
 ```
+
+Re:VIEW 5.0 以降において、あるビルダ向けに命令を新設したときには、中身は適当でよいので `IndexBuilder`、または全ビルダの基底クラスである `Builder` にも定義が必要です。上記では `IndexBuilder` に追加しました。
 
 ブロック命令の実装用メソッド（ここでは `marquee`）の1つめの引数にブロックコンテンツが渡されます。`split_paragraph` はコンテンツを空行を段落の区切りと見なして段落に分割するメソッドです。
 
