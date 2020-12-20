@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 # 出力前に “ ” のクォートをバックエンド向きの形に置換する
+# Copyright 2020 Kenshi Muto
 module ReVIEW
   module HTMLBuilderOverride
     def result

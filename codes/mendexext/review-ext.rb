@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# BEGIN,END,SEEを実現してみる
+# mendexのBEGIN,END,SEEを索引内に擬似タグを入れて実現する
+# Copyright 2020 Kenshi Muto
 module ReVIEW
   module LATEXBuilderOverride
     def index(str)

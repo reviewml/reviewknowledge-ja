@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# 説明箇条書き (:) の見出しに脚注を入れたときの対処
+# Copyright 2020 Kenshi Muto
 module ReVIEW
   module CompilerOverride
     def compile_dlist(f)
