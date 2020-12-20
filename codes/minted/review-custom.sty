@@ -1,0 +1,16 @@
+% for user-defined macro
+\usepackage{minted}
+% GitHubスタイルはPygments公式にないので、https://github.com/thecodechef/pygments-style-extras を利用。
+% 手元ではpipがうまくいかなかったので、styles/github.pyを直接Pygmentsライブラリのフォルダにコピーした
+% なお、Jupyter Notebookに近いのは「manni」
+\usemintedstyle{github}
+
+% 明るい背景アミ
+\definecolor{lightshadecolor}{gray}{0.95}
+
+% \newmintedで定義すると、\begin{rubycode}、\begin{pythoncode}のような環境が生える。
+% オプションは多数にのぼるため、texdoc minted を確認のこと。
+% Pythonリスト環境の事前定義
+\newminted{python}{fontsize={\fontsize{9pt}{14pt}},showspaces=true,breaklines=true,breakanywhere=true,bgcolor=lightshadecolor}
+% Rubyリスト環境の事前定義
+\newminted{ruby}{fontsize={\fontsize{8pt}{12pt}},breaklines=true,breakanywhere=true,frame=single}
