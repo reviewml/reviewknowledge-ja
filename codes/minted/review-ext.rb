@@ -76,19 +76,9 @@ module ReVIEW
       if lineno
         args = "linenos=true,firstnumber=#{lineno}"
       end
-      if @predefined_mint_style.include?(lang)
-        # 事前定義ありの場合は 「言語code」環境を利用
-        puts %Q(\\begin{#{lang}code*}{#{args}})
-        print body
-        puts %Q(\\end{#{lang}code*})
-      else
-        # 事前定義なしの場合のデフォルト表現
-        args += ',' if args
-        args += 'breaklines=true,breakanywhere=true,frame=lines'
-        puts %Q(\\begin{minted}[#{args}]{#{lang}})
-        print body
-        puts %Q(\\end{minted})
-      end
+      puts %Q(\\begin{minted}[#{args}]{#{lang}})
+      print body
+      puts %Q(\\end{minted})
 
       if !caption_top?('list') && captionstr
         puts captionstr

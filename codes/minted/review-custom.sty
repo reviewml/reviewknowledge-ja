@@ -5,12 +5,13 @@
 % なお、Jupyter Notebookに近いのは「manni」
 \usemintedstyle{github}
 
-% 明るい背景アミ
 \definecolor{lightshadecolor}{gray}{0.95}
 
-% \newmintedで定義すると、\begin{rubycode}、\begin{pythoncode}のような環境が生える。
+% \setminted[lexer名]{オプション} でlexer名(言語)に対する追加スタイル設定となる。
 % オプションは多数にのぼるため、texdoc minted を確認のこと。
-% Pythonリスト環境の事前定義
-\newminted{python}{fontsize={\fontsize{9pt}{14pt}},showspaces=true,breaklines=true,breakanywhere=true,bgcolor=lightshadecolor}
 % Rubyリスト環境の事前定義
-\newminted{ruby}{fontsize={\fontsize{8pt}{12pt}},breaklines=true,breakanywhere=true,frame=single}
+\setminted[ruby]{fontsize={\fontsize{8pt}{12pt}},breaklines=true,breakanywhere=true,frame=single}
+% Pythonリスト環境の事前定義
+\setminted[python]{fontsize={\fontsize{9pt}{14pt}},showspaces=true,breaklines=true,breakanywhere=true,bgcolor=lightshadecolor}
+% Emacs Lispリスト環境の事前定義
+\setminted[elisp]{breaklines=true,breakanywhere=true,frame=lines}
