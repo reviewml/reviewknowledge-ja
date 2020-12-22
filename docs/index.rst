@@ -59,6 +59,7 @@ LaTeX に関連する長めの Tips
   latex/bibliography
   latex/listscale
   latex/htmltable
+  latex/minted
 
 EPUB に関連する長めの Tips
 ------------------------------

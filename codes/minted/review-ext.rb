@@ -19,11 +19,6 @@ module ReVIEW
   end
 
   module LATEXBuilderOverride
-    def builder_init_file
-      super
-      @predefined_mint_style = %w[python ruby]
-    end
-
     def cmd(lines, caption = nil, lang = nil)
       # cmdについてはハイライトなし版のみを使う
       blank
