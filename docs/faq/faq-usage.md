@@ -331,6 +331,12 @@ md2review mdファイル > reファイル
 
 命令体系が異なるため、変換結果の re ファイルの手直しは必要です。
 
+ほかの方法として、[pandoc2review](https://github.com/kmuto/pandoc2review) があります。汎用ドキュメント変換ソフトウェアである pandoc を利用し、Markdown を含め docx などの多様なドキュメント形式から re ファイルに変換できます。
+
+```
+pandoc2review.rb mdファイル > reファイル
+```
+
 ## Markdown に変換することはできますか？
 
 Markdown については実験的な対応をしたビルダを収録しています。rake ルールや1コマンドで全部を変換するような仕組みはないのですが、以下のようにして変換できます。
