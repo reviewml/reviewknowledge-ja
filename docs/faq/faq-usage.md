@@ -334,8 +334,10 @@ md2review mdファイル > reファイル
 ほかの方法として、[pandoc2review](https://github.com/kmuto/pandoc2review) があります。汎用ドキュメント変換ソフトウェアである pandoc を利用し、Markdown を含め docx などの多様なドキュメント形式から re ファイルに変換できます。
 
 ```
-pandoc2review.rb mdファイル > reファイル
+pandoc2review mdファイル > reファイル
 ```
+
+pandoc2review のサンプルには、Re:VIEW 環境と統合することで、Markdown ファイルを原稿データとしたまま Re:VIEW 原稿と混在して利用する例も収録されています。
 
 ## Markdown に変換することはできますか？
 
