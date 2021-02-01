@@ -74,12 +74,13 @@ EPUB に関連する長めの Tips
 .. .. toctree::
 ..   :maxdepth: 1
 
-印刷 に関連する長めの Tips
+その他の長めの Tips
 ------------------------------
 .. toctree::
   :maxdepth: 1
 
   printing/submit
+  printing/pandoc2review
 
 FAQ（よくある質問と回答）
 -------------------------
