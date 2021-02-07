@@ -1,0 +1,21 @@
+review_version: 5.0
+bookname: book
+language: ja
+booktitle: Re:VIEWサンプル書籍
+aut: [{name: "青木峰郎", file-as: "アオキミネロウ"}, "武藤健志", "高橋征義", "角征典"]
+date: 2021-02-07
+history: [["2021-02-07"]]
+debug: null
+stylesheet: ["style.css"]
+toclevel: 3
+secnolevel: 2
+toc: true
+coverimage: cover.jpg
+epubmaker:
+  htmlext: xhtml
+texstyle: ["reviewmacro"]
+texdocumentclass: ["review-jsbook", "media=print,paper=a5"]
+contentdir: _refiles
+pdfmaker:
+  coverimage: cover-a5.ai
+  colophon: true
