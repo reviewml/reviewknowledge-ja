@@ -18,13 +18,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+REVIEW_VSBIN = ENV['REVIEW_VSBIN'] || 'vivliostyle'
+REVIEW_VSBIN_USESANDBOX = ENV['REVIEW_VSBIN_USESANDBOX'] ? '' : '--no-sandbox'
+REVIEW_VSBIN_OPTIONS = ENV['REVIEW_VSBIN_OPTIONS'] || ''
+
 desc 'run vivliostyle'
 task 'vivliostyle:preview': BOOK_EPUB do
-  sh "lib/tasks/make-vivliostyle-config.rb #{BOOK_EPUB} preview"
+  sh "#{REVIEW_VSBIN} preview #{REVIEW_VSBIN_USESANDBOX} #{REVIEW_VSBIN_OPTIONS} #{BOOK_EPUB}"
 end
 
 task 'vivliostyle:build': BOOK_EPUB do
-  sh "lib/tasks/make-vivliostyle-config.rb #{BOOK_EPUB}"
+  sh "#{REVIEW_VSBIN} build #{REVIEW_VSBIN_USESANDBOX} #{REVIEW_VSBIN_OPTIONS} #{BOOK_EPUB}"
 end
 
 task vivliostyle: 'vivliostyle:build'
