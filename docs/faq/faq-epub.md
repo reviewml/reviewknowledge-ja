@@ -202,7 +202,7 @@ Re:VIEW の表表現はシンプルな縦横表の記述を前提にしていま
 
 EPUB/Web 向けの実装例を以下で掲載しています。
 
-- https://github.com/kmuto/review-index-sample
+- [https://github.com/kmuto/review-index-sample](https://github.com/kmuto/review-index-sample)
 
 上記2つの問題への対応として、次のアプローチをとっています。
 
