@@ -444,7 +444,7 @@ Re:VIEW 5.0 では texdocumentclass のパラメータとして、`cover_fit_pag
 \def\review@coverimageoption{width=\dimexpr\paperwidth+6mm,height=\dimexpr\paperheight+6mm}
 ```
 
-# 裏表紙を入れるにはどうしたらよいですか？
+## 裏表紙を入れるにはどうしたらよいですか？
 
 裏表紙を含めたいときには、backcover パラメータに TeX 断片ファイルのファイル名を指定します。たとえば以下のような `backcover.tex` ファイルを作成し、プロジェクトフォルダに配置します。
 
