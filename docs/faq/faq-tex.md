@@ -1231,3 +1231,13 @@ end
 ```
 
 - [https://github.com/reviewml/reviewknowledge-ja/tree/master/codes/mendexext](https://github.com/reviewml/reviewknowledge-ja/tree/master/codes/mendexext)
+
+## コード内で `@<u>` を使った下線を引こうとするとエラーになります
+
+review-jsbook で利用している下線スタイルの jumoline.sty だと、コード環境と競合するようです。次のように review-custom.sty で `\reviewunderline` マクロをデフォルトの `\underline` に割り当てればひとまずコード内下線については回避できます（review-jlreq ではこれがデフォルトになっています）。
+
+```
+\DeclareRobustCommand{\reviewunderline}[1]{\underline{#1}}
+```
+
+ただし、こうすると段落途中での改行はされないので、必要に応じて手動で `@<u>` を付け直すといった作業が必要になります。
