@@ -93,6 +93,10 @@ opf_meta: {"ebpaj:guide-version": "1.1.3", "ibooks:binding": "false"}
 
 ## EPUB から PDF を作ることはできませんか？
 
+Re:VIEW 5.1.0 から、CSS 組版ソフトウェア [Vivliostyle-CLI](https://github.com/vivliostyle/vivliostyle-cli) を呼び出す Rake ルールを追加しています。Vivliostyle-CLI をインストールした環境において、`rake vivliostyle:build` または `rake vivliostyle` で PDF を作成、`rake vivliostyle:preview` でブラウザのプレビューが開きます。
+
+関連して以下のような手法・ドキュメントがあります。
+
 - EPUB をそのまま PDF 変換する：[VersaType Converter](https://trim-marks.com/ja/)、[EPUB to PDF変換ツール](https://www.antenna.co.jp/epub/epubtopdf.html) など）
 - EPUB の HTML を結合し（これを簡単に実行できる `review-epub2html` というコマンドがあります）、Web ブラウザ上で整形したものを PDF として保存する（[Vivliostyle.js](https://vivliostyle.org/) など）
 - [Re:VIEW+CSS組版 執筆環境構築](https://github.com/at-grandpa/review-and-css-typesetting) の仕組みを流用する（おおむね上記のことを内部でしている）
