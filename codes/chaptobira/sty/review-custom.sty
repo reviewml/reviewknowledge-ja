@@ -1,0 +1,14 @@
+% for user-defined macro
+% \chapterを書き換える前に現在のをバックアップ
+\SaveHeading{chapter}{\restoreoldchapter}
+
+% chapterが1以上のときに images/chapter番号.aiを使う。PDFなら.pdfにする
+\RenewTobiraHeading{chapter}{0}{
+  type = han,
+  label_format={第\thechapter 章},
+  format = { \ifnum \thechapter>0 \includefullpagegraphics{images/chapter\thechapter.ai} \else #2 \fi }
+}
+
+% 目次のchapterは昔のを使う
+\let\orgtableofcontents\tableofcontents
+\renewcommand{\tableofcontents}{\restoreoldchapter\orgtableofcontents}

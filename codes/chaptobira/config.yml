@@ -1,0 +1,22 @@
+review_version: 5.0
+bookname: book
+language: ja
+booktitle: 労働基準法
+aut: ["日本国"]
+date: 2020-4-1
+history: [["2020-4-1"]]
+debug: null
+stylesheet: ["style.css"]
+toclevel: 3
+secnolevel: 2
+toc: true
+coverimage: cover.jpg
+
+epubmaker:
+  htmlext: xhtml
+texstyle: ["reviewmacro"]
+texdocumentclass: ["review-jlreq", "media=print,paper=a5,serial_pagination=true"]
+
+pdfmaker:
+  coverimage: cover-a5.ai
+  colophon: true
