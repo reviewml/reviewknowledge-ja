@@ -189,5 +189,7 @@ def on_doctree_resolved(app, doctree, docname):
 
 def setup(app):
     app.connect('doctree-resolved', on_doctree_resolved)
-    app.add_javascript('my.js')
-    app.add_stylesheet('my.css')
+    #app.add_javascript('my.js')
+    app.add_js_file('my.js')
+    #app.add_stylesheet('my.css')
+    app.add_css_file('my.css')
