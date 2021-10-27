@@ -129,7 +129,6 @@ Re:VIEW 3 以上で LuaTeX への対応を進めています。ただし、現�
 1. テンプレートに review-jlreq など LuaTeX に対応しているものを選ぶ。
 2. `texcommand` パラメータを変更する。`texcommand: "lualatex"`
 3. `dvicommand` パラメータを null にする（`dvicommand: null`）。これは特に重要です。単にコメントアウトするだけでは、デフォルトの upLaTeX 用の `dvicommand` パラメータ値が有効になってしまいます。
-4. プロジェクトの sty フォルダのファイル群で LuaTeX-ja に対応していないところを調整する。
 
 ## トンボを付けるにはどうしたらよいですか？
 
