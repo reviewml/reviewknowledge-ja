@@ -133,6 +133,10 @@ Re:VIEW 2 より前に作った書籍案件の EPUB 付き増刷、という作�
 
 `tate` オプションで縦書き表現可能な review-jlreq ですが、表紙配置にも使っている `\includefullpagegprahics` が縦配置の計算に対応していなかったので、@munepi さんに修正していただきました（いつもありがとうございます！）。
 
+### plantuml の jar ファイル探索先を作業フォルダのほか、`/usr/share/plantuml`、`/usr/share/java` からも探すようにしました
+
+UML 図を描く plantuml が Debian 11 bullseye でパッケージ化されていたので、作業フォルダになくても、システムにインストールされていたらそれを使うようにしてみました。Homebrew でもできないかなと思ったんですが、/usr/local/Cellar/バージョン になっていて同定できないので今回は諦め。plantuml コマンドを呼ぶようにしたほうがよいかもという気はしていますが、そうすると今度は Windows でにっちもさっちもとなりそうです。
+
 ## ドキュメント
 ### format.ja.md, format.md: SVG数式を作成するコマンドラインの間違いを修正しました
 
