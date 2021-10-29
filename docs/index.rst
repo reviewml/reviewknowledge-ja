@@ -21,6 +21,7 @@ Re:VIEW のセットアップおよび基本的な使い方については、`Re
 .. toctree::
   :maxdepth: 1
 
+  releases/review530
   releases/review520
   releases/review510
   releases/review500
