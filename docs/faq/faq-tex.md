@@ -1240,3 +1240,23 @@ review-jsbook で利用している下線スタイルの jumoline.sty だと、�
 ```
 
 ただし、こうすると段落途中での改行はされないので、必要に応じて手動で `@<u>` を付け直すといった作業が必要になります。
+
+## 部や章の番号の表記方法が locale.yml で変更しても変わりません
+
+デフォルトでは部番号はローマ数字大文字（Ⅰ、Ⅱ、……）、章番号はアラビア数字となっています。EPUB などではこれを locale.yml の `part`、`part_short`、`chapter`、`chapter_short` の値を変えることで調整できるようになっています。
+
+しかし、review-jsbook・review-jlreq ではどちらもクラスファイルレベルで部や章の番号表記スタイルが定義されており、locale.yml に対応する柔軟な変更は困難です。`@<chapref>` などで参照している箇所は Re:VIEW でリテラルな文字展開をしているので locale.yml での指定どおりになりますが、見出しや目次においてはクラスファイル側の既定値のままとなります。
+
+review-jsbook・review-jlreq において部番号をアラビア数字にしたいとき（locale.yml で `part: "第%d部"`・`part_short: "%d"` としたことに対応）には、review-custom.sty で次のように指定します。
+
+```
+\renewcommand{\thepart}{\arabic{part}}
+```
+
+同様に、章番号をローマ数字大文字にしたいとき（locale.yml で `chapter: "第%pRW部"`・`part_short: "%pRW"` としたことに対応）には、review-custom.sty で次のように指定します。
+
+```
+\renewcommand{\thechapter}{\Roman{chapter}}
+```
+
+対応付けると、`%d`→`\arabic`（アラビア数字）、`%pRW`→`\Roman`（ローマ数字大文字）、`%pr`→`\roman`（ローマ数字小文字）、`%pA`→`\Alph`（アルファベット大文字）、`%pa`→`\Alph`（アルファベット小文字）です。`%pAW`（アルファベット大文字全角）・`%paW`（アルファベット小文字全角）・`%pJ`（漢数字）・`%pdW`（アラビア数字2桁全角）・`%pDW`（アラビア数字すべて全角）に相当させるためにはrenewcommand 内で内容を見て適宜処理する必要があるでしょう。
