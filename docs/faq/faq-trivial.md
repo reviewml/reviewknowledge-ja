@@ -75,7 +75,7 @@ Re:VIEW 自体は一切の保証はなく、また開発リソースを鑑みて
 
 ## Re:VIEW は何の言語で書かれていますか？
 
-Ruby 言語で書かれています。2021年12月時点では、Ruby 2.4 以上を想定しています。
+Ruby 言語で書かれています。2021年12月時点では、Ruby 2.4 以上を想定しています。なお、2022年6月のリリースにおいて Ruby 2.7 未満のサポートを停止する予定です（Ruby の YAML ライブラリに非互換の変更点があるため）。
 
 Ruby 実装との完全な互換性はありませんが、JavaScript による実装も存在します。[https://github.com/vvakame/review.js](https://github.com/vvakame/review.js)
 
