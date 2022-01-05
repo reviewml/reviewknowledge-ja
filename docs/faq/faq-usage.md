@@ -98,6 +98,12 @@ GitHub の issue ページ
 [https://github.com/kmuto/review/issues](https://github.com/kmuto/review/issues)
 までお寄せください（日本語または英語）。
 
+## 使い方の質問はどこに投稿するとよいですか？
+
+GitHub の Discussions ページ [https://github.com/kmuto/review/discussions](https://github.com/kmuto/review/discussions) があります。
+
+Twitter で [@kmuto](https://twitter.com/kmuto) に適切な表現でメンションいただければ、可能な範囲でお答えもできます。
+
 ## プロジェクト（作業フォルダ）を作るにはどうしたらよいですか？
 
 `review-init` コマンドを使います。
