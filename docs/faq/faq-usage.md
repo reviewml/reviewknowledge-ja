@@ -13,6 +13,7 @@ Ruby インタプリタ 2.4 以上がインストールされた OS 環境であ
 Windows でも、ネイティブ環境でのセットアップ、WSL（Windows Subsystem for Linux）でのセットアップの報告があります。
 
 - 現時点では、Ruby 2.4〜3.0のテストのみをしています。もし2.1〜2.3で奇妙な挙動を示すときにはご報告ください。(ただし、やむを得ず古いバージョンには非対応になる可能性はあります)
+- 2022年6月のリリースにおいて Ruby 2.7 未満のサポートを停止する予定です（Ruby の YAML ライブラリに非互換の変更点があるため）。
 
 ## Re:VIEW はどうやってインストールしたらよいですか？
 
@@ -70,6 +71,16 @@ docker pull vvakame/review
 利用方法などは以下を参照してください。
 
 - [https://github.com/vvakame/docker-review](https://github.com/vvakame/docker-review)
+
+## docker pull で mac M1 (arm64) 用のイメージがありません
+
+2022年1月時点で動作可能な Docker イメージ設定は用意しているのですが、Docker Hub に置く前提としての CI ビルドがうまく動いていません。
+
+[vvakame/docker-review](https://github.com/vvakame/docker-review) 直下にある Dockerfile をダウンロードし、`docker build` コマンドで手元でビルドすれば動作する環境を構築できます。
+
+CI をうまく動作させる方法がわかりましたら下記 PR にご提案お願いします。
+
+- [vvakame/review PR#70](https://github.com/vvakame/docker-review/pull/70)
 
 ## 基礎的なガイダンスを記した公式のドキュメントはありますか？
 
