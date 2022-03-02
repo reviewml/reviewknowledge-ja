@@ -689,7 +689,7 @@ Ruby 3.1 で YAML ライブラリ (Psych) が変更されたことにより、Re
 
 Re:VIEW 5.4.0 以降では修正済みです。
 
-Ruby 3.1 以上でかつ Re:VIEW 5.3.0 でどうしても利用する必要があるときには、下記の差分を参考に Re:VIEW のプログラムを変更してください。
+Ruby 3.1 以上でかつ Re:VIEW 5.3.0 以下でどうしても利用する必要があるときには、下記の差分を参考に Re:VIEW のプログラムを変更してください。
 
 - [https://github.com/kmuto/review/pull/1767/commits/16c4e5ff997db781564d6a3756abc189326326d2](https://github.com/kmuto/review/pull/1767/commits/16c4e5ff997db781564d6a3756abc189326326d2)
 
