@@ -1,4 +1,4 @@
-2018/11/18 by @kmuto
+2018/11/18, 2022/3/29 by @kmuto
 
 # 使用書体の変更（upLaTeX 編）
 
@@ -26,6 +26,8 @@ LuaTeX コンパイラで LuaLaTeX-ja 環境を使えば任意の TrueType/OpenT
 
 pxchfon パッケージは、dvipdfmx の実行時に埋め込むべきフォントを設定することで、フォントを切り替えます。TeXLive には `kanji-config-updmap-sys` というデフォルトの埋め込み和文フォントを設定するツールがありますが、pxchfon パッケージは TeX ソース個別に設定できます。
 
+なお、vvakame/review Docker イメージでは、デフォルトで「原の味」フォントを和文埋め込みフォントとしています。
+
 ### プリセットを使う
 
 最も簡単なのは、`kanji-config-updmap-sys` と同等のプリセットを指定する方法です。フォントファイル名はプリセットの内容に合わせる必要があります。プリセットで想定しているファイル名の詳細は、`texdoc pxchfon` でドキュメントを参照してください。sty/review-custom.sty に次の書式で追加します。
@@ -34,12 +36,14 @@ pxchfon パッケージは、dvipdfmx の実行時に埋め込むべきフォン
 \usepackage[プリセット名]{pxchfon}
 ```
 
+- `haranoaji`:原の味フォント
 - `ms-hg`：MS系フォント+HGフォント
 - `ipa-hg`：IPAフォント+HGフォント
 - `ipaex-hg`：IPAexフォント+HGフォント
 - `moga-mobo`：Mogaフォント+Moboフォント
 - `moga-mobo-ex`：MogaExフォント+MoboExフォント
 - `moga-maruberi`：Mogaフォント+モトヤLマルベリ
+- `ume`: 梅フォント
 - `kozuka-pro`：小塚フォントPro
 - `kozuka-pr6`：小塚フォントPr6
 - `kozuka-pr6n`：小塚フォントPr6N
@@ -54,6 +58,7 @@ pxchfon パッケージは、dvipdfmx の実行時に埋め込むべきフォン
 - `yu-osx`：遊書体（macOS版）
 - `sourcehan`：源ノ明朝+源ノ角ゴシック（otf）。TeXLive 2017 の dvipdmfx が必要
 - `sourcehan-otc`：源ノ明朝+源ノ角ゴシック（otc）。TeXLive 2017 の dvipdmfx が必要
+- `sourcehan-jp`：源ノ明朝+源ノ角ゴシック（JP otf）。TeXLive 2017 の dvipdmfx が必要
 - `noto`：Noto（otf）。TeXLive 2017 の dvipdmfx が必要
 - `noto-otc`：Noto（otc）。TeXLive 2017 の dvipdmfx が必要
 
