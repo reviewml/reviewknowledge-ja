@@ -1178,6 +1178,16 @@ end
 
 `//label` でアンカーラベルを指定しておき、`@<href>{#アンカーラベル, 紙面表現文字列}` あるいは `@<href>{#アンカーラベル}` で参照します。後者はリンク文字列に相当するものがなくなってしまうので、代替として「p.XX」のようにアンカーラベルのある箇所のページ番号を示すようにしています。なお、単にページ番号を示す目的には、このような拡張を使う必要はなく、`@<pageref>` 命令を利用できます。
 
+## 長いURLを折り返させるのはどうしたらよいですか？
+
+`@<href>` で入るリンクは、ときに版面を越えてはみ出すことがあります。いくぶん強硬なやり方として、sty/review-custom.sty に以下のように記述し、ほとんどの文字で折り返しを許容することができます。
+
+```
+\renewcommand{\UrlBreaks}{\do\/\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z}
+```
+
+折り返しの不満な箇所がごく一部で、明示的に指示したいときには、[URLの折り返し](../latex/tex-hook.html#5f16d3400b8bcafe3fbe932c945d8a5e)を参照してください。
+
 ## 複雑な表表現をしたいです
 
 Re:VIEW の表表現はシンプルな縦横表の記述を前提にしています。セル結合や任意の罫線、箇条書きを含めるなどの複雑な表を表現するには不向きなので、画像として作成し、`//imgtable` 命令を使って貼り込むことを検討してください。
