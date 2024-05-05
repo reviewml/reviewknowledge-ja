@@ -8,4 +8,4 @@ sphinx:
 
 python:
   install:
-    - docs/requirements.txt
+    requirements: docs/requirements.txt
